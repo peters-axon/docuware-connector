@@ -36,5 +36,8 @@
 			<attribute name="test" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry exported="true" kind="lib" path="lib/generated/rest/jaxRsClient_a2d3cbd3-4bd4-4ac0-b440-f7c0882bac3f.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/generated/rest/jaxRsClient_58929e4d-4dcc-4c05-8954-10dde0bdee74.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/generated/rest/jaxRsClient_8fd7fc8b-a6a2-4511-a1f9-584847e2a9a1.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
