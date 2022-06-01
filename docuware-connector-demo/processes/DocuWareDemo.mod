@@ -57,16 +57,18 @@ Do0 f3 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 Do0 f3 168 42 112 44 -47 -8 #rect
 Do0 f4 111 64 168 64 #arcP
 Do0 f2 280 64 337 64 #arcP
-Do0 f5 outLink loadOrganizations.ivp #txt
+Do0 f5 outLink organizations.ivp #txt
 Do0 f5 inParamDecl '<> param;' #txt
 Do0 f5 requestEnabled true #txt
 Do0 f5 triggerEnabled false #txt
-Do0 f5 callSignature loadOrganizations() #txt
+Do0 f5 callSignature organizations() #txt
+Do0 f5 startName 'Log Organization names' #txt
+Do0 f5 startDescription 'Fetch organizations of this DocuWare instance and log them to the log file.' #txt
 Do0 f5 caseData businessCase.attach=true #txt
 Do0 f5 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
     <language>
-        <name>loadOrganizations.ivp</name>
+        <name>organizations.ivp</name>
     </language>
 </elementInfo>
 ' #txt

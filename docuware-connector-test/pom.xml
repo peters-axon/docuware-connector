@@ -8,16 +8,16 @@
   <packaging>iar</packaging>
   <dependencies>
     <dependency>
-      <groupId>com.axonivy.market</groupId>
-      <artifactId>docuware-connector</artifactId>
-      <version>${project.version}</version>
-      <type>iar</type>
+      <groupId>com.axonivy.ivy.test</groupId>
+      <artifactId>unit-tester</artifactId>
+      <version>9.2.0</version>
+      <scope>test</scope>
     </dependency>
     <dependency>
-    	<groupId>com.axonivy.ivy.test</groupId>
-    	<artifactId>unit-tester</artifactId>
-    	<version>9.2.0</version>
-    	<scope>test</scope>
+      <groupId>com.axonivy.market</groupId>
+      <artifactId>docuware-connector-demo</artifactId>
+      <version>[{project.version},)</version>
+      <type>iar</type>
     </dependency>
   </dependencies>
   <build>
@@ -36,7 +36,6 @@
           <skip>true</skip>
         </configuration>
       </plugin>
-      
     </plugins>
   </build>
 </project>
