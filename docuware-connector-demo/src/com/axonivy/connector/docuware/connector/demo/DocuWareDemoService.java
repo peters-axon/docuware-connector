@@ -38,18 +38,22 @@ public class DocuWareDemoService {
 		StringWriter sw = new StringWriter();
 		PrintWriter pw = new PrintWriter(sw);
 
-		pw.println("Response:");
-		pw.format("Status: %s%n", response.getStatusInfo());
-		pw.println("Headers:");
+		pw.println("Response");
+		pw.println("========");
+		pw.println("Status: " + response.getStatusInfo());
 		pw.println();
+		pw.println("Headers");
+		pw.println("=======");
 
 		for (Entry<String, List<Object>> entry : response.getHeaders().entrySet()) {
 			for (Object header : entry.getValue()) {
 				pw.format("%s: %s%n", entry.getKey(), header);
 			}
 		}
-		pw.println("---");
 		pw.println();
+		
+		pw.println("Result");
+		pw.println("======");
 
 		printWriterConsumer.accept(pw);
 

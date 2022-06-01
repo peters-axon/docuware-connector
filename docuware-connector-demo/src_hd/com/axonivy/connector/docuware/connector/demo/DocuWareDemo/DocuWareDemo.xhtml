@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:body>
-	<ui:composition template="/layouts/basic-9.xhtml">
+	<ui:composition template="/layouts/frame-9.xhtml">
 		<ui:define name="title">DocuWareDemo</ui:define>
 		<ui:define name="content">
 			<h:form id="form" enctype="multipart/form-data">
@@ -15,36 +15,42 @@
 					<p:fieldset id="commands" legend="Commands">
 						<div class="ui-g">
 							<div class="ui-g-2">
-								<p:commandButton id="organizations" actionListener="#{logic.organizations}"
-									value="Organizations" update="form" />
+								<p:commandButton id="organizations"
+									actionListener="#{logic.organizations}" value="Organizations"
+									update="form" />
 							</div>
 							<div class="ui-g-2">
-								<p:commandButton id="fileCabinets" actionListener="#{logic.fileCabinets}"
-									value="File Cabinets" update="form" />
+								<p:commandButton id="fileCabinets"
+									actionListener="#{logic.fileCabinets}" value="File Cabinets"
+									update="form" />
 							</div>
 						</div>
 					</p:fieldset>
 					<p:fieldset id="upload" legend="Upload">
 						<div class="ui-g">
 							<div class="ui-g-5">
-								<p:outputLabel for="fileCabinetId" value="Cabinet Id: "/>
-								<p:inputText id="fileCabinetId" style="width:20em" value="#{data.fileCabinetId}" maxlength="50"/>
+								<p:outputLabel for="fileCabinetId" value="Cabinet Id: " />
+								<p:inputText id="fileCabinetId" style="width:20em"
+									value="#{data.fileCabinetId}" maxlength="50" />
 							</div>
 							<div class="ui-g-4">
-								<p:fileUpload id="fileUpload" value="#{data.file}" mode="simple" update="messages"/>
+								<p:fileUpload id="fileUpload" value="#{data.file}" mode="simple"
+									update="messages" />
 							</div>
+							<div class="ui-g-1"></div>
 							<div class="ui-g-1">
-							</div>
-							<div class="ui-g-1">
-				            	<p:commandButton value="Upload" actionListener="#{logic.fileUpload}" ajax="false" id="fileUploadButton" icon="ui-icon-cloud-upload" style="width:10em"/>
+								<p:commandButton value="Upload"
+									actionListener="#{logic.fileUpload}" ajax="false"
+									id="fileUploadButton" icon="ui-icon-cloud-upload"
+									style="width:10em" />
 							</div>
 						</div>
 					</p:fieldset>
 					<p:fieldset id="result" legend="Result">
 						<div class="ui-g">
 							<div class="ui-g-12">
-							<pre>
-								<h:outputText value="#{data.result}"/>
+								<pre>
+								<h:outputText value="#{data.result}" />
 							</pre>
 							</div>
 						</div>
