@@ -2,7 +2,7 @@ RestClients:
   #This collection contains requests and stored responses you can use when preparing for a Platform workshop.
   DocuWare:
     UUID: 02d1eec1-32e9-4316-afc3-793448486203
-    Url: https://YOUR-DOCUWARE-URL/docuware/platform
+    Url: https://DOCUWARE-URL/docuware/platform
     Icon: res:/webContent/icons/docuware.png
     Features:
     - ch.ivyteam.ivy.rest.client.mapper.JsonFeature
@@ -18,4 +18,3 @@ RestClients:
     OpenAPI:
       SpecUrl: file:///X:/AxonIvy/marketplace/docuware/openapi-handmade.json
       Namespace: com.axonivy.connector.docuware.connector.model
-      ResolveFully: true

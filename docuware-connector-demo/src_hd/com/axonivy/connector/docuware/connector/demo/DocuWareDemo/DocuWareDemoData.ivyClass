@@ -1,0 +1,10 @@
+DocuWareDemoData #class
+com.axonivy.connector.docuware.connector.demo.DocuWareDemo #namespace
+result String #field
+result PERSISTENT #fieldModifier
+file File #field
+file PERSISTENT #fieldModifier
+fileCabinetId String #field
+fileCabinetId PERSISTENT #fieldModifier
+documentId String #field
+documentId PERSISTENT #fieldModifier
