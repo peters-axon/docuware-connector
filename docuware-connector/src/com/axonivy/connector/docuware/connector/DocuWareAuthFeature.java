@@ -30,7 +30,7 @@ import ch.ivyteam.ivy.rest.client.internal.ExternalRestWebServiceCall;
  * 
  * If they are not there, make a login request.
  */
-public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResponseFilter {
+public class DocuWareAuthFeature implements Feature, ClientRequestFilter, ClientResponseFilter {
 
 	private static final String ACCOUNT_LOGON_PATH = "Account/Logon";
 	private static final String USERNAME_PROPERTY = "username";
@@ -68,7 +68,7 @@ public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResp
 
 				if(StringUtils.isBlank(target)) {
 					try {
-						// Note: this API is not public and will change in future Ivy versions.
+						// Note: this API is not public and will probably change in future Ivy versions.
 						ExternalRestWebServiceCall externalRestWebServiceCall = (ExternalRestWebServiceCall) reqContext.getProperty(ExternalRestWebServiceCall.class.getCanonicalName());
 						if(externalRestWebServiceCall != null) {
 							target = externalRestWebServiceCall.getWebTarget().getUri().toString();
@@ -84,20 +84,36 @@ public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResp
 				}
 
 				if(StringUtils.isNotBlank(target)) {
-					Response response = reqContext.getClient()
-							.target(target)
-							.path(ACCOUNT_LOGON_PATH)
-							.request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-							.accept(MediaType.APPLICATION_JSON)
-							.post(Entity.form(form));
+					Response response = logon(reqContext, form, target);
 
 					Ivy.log().debug("Response: {0}", response);
+
 					if(getCookies() == null) {
 						Ivy.log().error("Still missing DocuWare cookies for context {0}", reqContext);
 					}
 				}
 			}
+
+			requestHook(reqContext);
 		}
+	}
+
+	protected Response logon(ClientRequestContext reqContext, Form form, String target) {
+		Response response = reqContext.getClient()
+				.target(target)
+				.path(ACCOUNT_LOGON_PATH)
+				.request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+				.accept(MediaType.APPLICATION_JSON)
+				.post(Entity.form(form));
+		return response;
+	}
+
+	/**
+	 * Manipulate request if needed (probably only useful for tests).
+	 * 
+	 * @param reqContext
+	 */
+	protected void requestHook(ClientRequestContext reqContext) {
 	}
 
 	@Override
@@ -195,7 +211,7 @@ public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResp
 		public static final String DW_PLATFORM_BROWSER_ID = "DWPLATFORMBROWSERID";
 		public static final int DW_COOKIES_EXPIRY_SECONDS = 86400;
 
-		private NewCookie platformCookie;
+		private NewCookie auth;
 		private NewCookie browserId;
 
 		private DocuWareCookies(Map<String, NewCookie> cookies) {
@@ -205,7 +221,7 @@ public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResp
 					Ivy.log().debug("Received cookie: {0}: Name: {1} Expiry: {2} Max Age: {3}", entry.getKey(), cookie.getName(), cookie.getExpiry(), cookie.getMaxAge());
 				}
 			}
-			platformCookie = cookies.get(DocuWareCookies.DW_PLATFORM_AUTH_COOKIE);
+			auth = cookies.get(DocuWareCookies.DW_PLATFORM_AUTH_COOKIE);
 			browserId = cookies.get(DocuWareCookies.DW_PLATFORM_BROWSER_ID); 
 		}
 
@@ -221,18 +237,34 @@ public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResp
 		}
 
 		/**
+		 * Get the browser id cookie.
+		 * @return
+		 */
+		public NewCookie getBrowserId() {
+			return browserId;
+		}
+
+		/**
+		 * Get the auth cookie.
+		 * 
+		 * @return
+		 */
+		public NewCookie getAuth() {
+			return auth;
+		}
+
+		/**
 		 * Do we have th expected cookies?
 		 * 
 		 * @return
 		 */
 		public boolean isValid() {
-			return platformCookie != null && browserId != null;
+			return auth != null && browserId != null;
 		}
 
 		@Override
 		public String toString() {
-			return String.format("DocuWareCookies [platformCookie=%s, browserId=%s]",
-					platformCookie,	browserId);
+			return String.format("DocuWareCookies [auth=%s, browserId=%s]", auth, browserId);
 		}
 	}
 }

@@ -4,7 +4,7 @@ RestClients:
     Url: http://{ivy.engine.host}:{ivy.engine.http.port}/{ivy.request.application}/api/docuWareMock
     Features:
     - ch.ivyteam.ivy.rest.client.mapper.JsonFeature
-    - com.axonivy.connector.docuware.connector.DocuWareFeature
+    - com.axonivy.market.docuware.connector.test.DocuWareAuthTestFeature
     - org.glassfish.jersey.media.multipart.MultiPartFeature
     Properties:
       com.sun.jersey.impl.client.httpclient.handleCookies: 'true'
