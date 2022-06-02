@@ -40,7 +40,7 @@ public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResp
 
 	@Override
 	public boolean configure(FeatureContext context) {
-		Ivy.log().info("DocuWare feature configure: {0}", context);
+		Ivy.log().debug("DocuWare feature configure.");
 		invalidateCookiesCacheEntry();
 		context.register(this, Priorities.AUTHORIZATION);
 		return true;
@@ -49,13 +49,11 @@ public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResp
 	@Override
 	public void filter(ClientRequestContext reqContext) throws IOException {
 		if(isLogonRequest(reqContext.getUri())) {
-			Ivy.log().info("Logon request: {0}", reqContext);
+			Ivy.log().info("DocuWare logon request.");
 		}
 		else {
-			Ivy.log().debug("Client request: {0}.", reqContext);
-
 			if(getCookies() == null) {
-				Ivy.log().info("Have to get DocuWare cookies for context {0}.", reqContext);
+				Ivy.log().info("DocuWare logon, fetching cookies.");
 
 				Configuration configuration = reqContext.getConfiguration();
 
@@ -105,10 +103,21 @@ public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResp
 	@Override
 	public void filter(ClientRequestContext reqContext, ClientResponseContext rspContext) throws IOException {
 		if(isLogonRequest(reqContext.getUri())) {
-			Ivy.log().info("Logon response: request context {0}, response context {1}.", reqContext, rspContext);
+			int status = rspContext.getStatus();
+			if(status >= 200 && status < 300) {
+				Ivy.log().info("DocuWare logon successful: Status: {1}", status);
 
-			DocuWareCookies docuWareCookies = DocuWareCookies.create(rspContext.getCookies());
-			setCookiesCacheEntry(docuWareCookies);
+				DocuWareCookies docuWareCookies = DocuWareCookies.create(rspContext.getCookies());
+				if(docuWareCookies.isValid()) {
+					setCookiesCacheEntry(docuWareCookies);
+				}
+				else {
+					Ivy.log().error("DocuWare logon unsuccessful, did not receive the required cookies: {0} (URI: {1} Status: {2})", docuWareCookies, reqContext.getUri(), status);
+				}
+			}
+			else {
+				Ivy.log().error("DocuWare logon unsuccessful, URI: {0} Status: {1}", reqContext.getUri(), status);
+			}
 		}
 	}
 
@@ -209,6 +218,15 @@ public class DocuWareFeature implements Feature, ClientRequestFilter, ClientResp
 		public static DocuWareCookies create(Map<String, NewCookie> cookies) {
 			DocuWareCookies docuWareCookies = new DocuWareCookies(cookies);
 			return docuWareCookies;
+		}
+
+		/**
+		 * Do we have th expected cookies?
+		 * 
+		 * @return
+		 */
+		public boolean isValid() {
+			return platformCookie != null && browserId != null;
 		}
 
 		@Override
