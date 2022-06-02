@@ -6,4 +6,19 @@
 # '<project>/Config/_<environment>/variables.yaml
 #
 Variables:
-#  myVariable: value
+  # DocuWare user name
+  docuware.username: USER
+  
+  # DocuWare password
+  # [password]
+  docuware.password: PASS
+  
+  # DocuWare host id
+  docuware.hostid: HOSTID
+  
+  # The Logon URL will be automatically determined. If this fails, override the
+  # automatic determination and set the full URL here.
+  # It typically looks like https://.../Acount/Logon
+  # If you want to keep the automatic, set this variable to AUTO
+  docuware.logonurl: AUTO
+

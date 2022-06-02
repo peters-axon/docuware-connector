@@ -16,11 +16,11 @@ Do0 @PushWFArc f4 '' #zField
 Do0 @PushWFArc f2 '' #zField
 Do0 @StartRequest f5 '' #zField
 Do0 @RestClientCall f6 '' #zField
-Do0 @PushWFArc f7 '' #zField
 Do0 @EndTask f8 '' #zField
 Do0 @GridStep f10 '' #zField
 Do0 @PushWFArc f11 '' #zField
 Do0 @PushWFArc f9 '' #zField
+Do0 @PushWFArc f14 '' #zField
 >Proto Do0 Do0 DocuWareDemo #zField
 Do0 f0 outLink start.ivp #txt
 Do0 f0 inParamDecl '<> param;' #txt
@@ -59,6 +59,15 @@ Do0 f4 111 64 168 64 #arcP
 Do0 f2 280 64 337 64 #arcP
 Do0 f5 outLink organizations.ivp #txt
 Do0 f5 inParamDecl '<> param;' #txt
+Do0 f5 actionCode 'import org.apache.commons.lang3.StringUtils;
+ivy.log.info("Username: {0}", ivy.var.docuware_username);
+ivy.log.info("Password set: {0}", StringUtils.isNotBlank(ivy.var.docuware_password));
+ivy.log.info("HostId: {0}", ivy.var.docuware_hostid);
+ivy.log.info("LogonUrl: {0}", ivy.var.docuware_logonurl);
+
+
+
+' #txt
 Do0 f5 requestEnabled true #txt
 Do0 f5 triggerEnabled false #txt
 Do0 f5 callSignature organizations() #txt
@@ -91,7 +100,6 @@ Do0 f6 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Do0 f6 168 202 112 44 -53 -8 #rect
-Do0 f7 111 224 168 224 #arcP
 Do0 f8 497 209 30 30 0 15 #rect
 Do0 f10 actionTable 'out=in;
 ' #txt
@@ -111,6 +119,7 @@ Do0 f10 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 Do0 f10 320 202 128 44 -55 -8 #rect
 Do0 f11 280 224 320 224 #arcP
 Do0 f9 448 224 497 224 #arcP
+Do0 f14 111 224 168 224 #arcP
 >Proto Do0 .type com.axonivy.market.docuware.connector.demo.Data #txt
 >Proto Do0 .processKind NORMAL #txt
 >Proto Do0 0 0 32 24 18 0 #rect
@@ -119,9 +128,9 @@ Do0 f0 mainOut f4 tail #connect
 Do0 f4 head f3 mainIn #connect
 Do0 f3 mainOut f2 tail #connect
 Do0 f2 head f1 mainIn #connect
-Do0 f5 mainOut f7 tail #connect
-Do0 f7 head f6 mainIn #connect
 Do0 f6 mainOut f11 tail #connect
 Do0 f11 head f10 mainIn #connect
 Do0 f10 mainOut f9 tail #connect
 Do0 f9 head f8 mainIn #connect
+Do0 f5 mainOut f14 tail #connect
+Do0 f14 head f6 mainIn #connect

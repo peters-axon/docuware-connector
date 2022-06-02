@@ -36,7 +36,7 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 	private static final String USERNAME_PROPERTY = "username";
 	private static final String PASSWORD_PROPERTY = "password";
 	private static final String HOSTID_PROPERTY = "hostid";
-	private static final String URI_PROPERTY = "uri";
+	private static final String LOGONURL_PROPERTY = "logonurl";
 
 	@Override
 	public boolean configure(FeatureContext context) {
@@ -64,17 +64,17 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 						.param("RedirectToMyselfInCaseOfError", "false")
 						;
 
-				String target = (String) configuration.getProperty(URI_PROPERTY);
+				String target = (String) configuration.getProperty(LOGONURL_PROPERTY);
 
-				if(StringUtils.isBlank(target)) {
+				if(StringUtils.isBlank(target) || target.trim().equalsIgnoreCase("AUTO")) {
 					try {
 						// Note: this API is not public and will probably change in future Ivy versions.
 						ExternalRestWebServiceCall externalRestWebServiceCall = (ExternalRestWebServiceCall) reqContext.getProperty(ExternalRestWebServiceCall.class.getCanonicalName());
 						if(externalRestWebServiceCall != null) {
-							target = externalRestWebServiceCall.getWebTarget().getUri().toString();
+							target = externalRestWebServiceCall.getWebTarget().path(ACCOUNT_LOGON_PATH).getUri().toString();
 						}
 					} catch (Throwable t) {
-						String message = String.format("Could not determine DocuWare target URL automatically, please set it in REST client property '%s'. Put there the same URL as used for the client.", URI_PROPERTY);
+						String message = String.format("Could not determine DocuWare target URL automatically, please set it in REST client property '%s'. Put there the same URL as used for the client.", LOGONURL_PROPERTY);
 						Ivy.log().error(message, t);
 						reqContext.abortWith(Response.status(Response.Status.PRECONDITION_FAILED)
 								.type(MediaType.TEXT_PLAIN)
@@ -101,7 +101,6 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 	protected Response logon(ClientRequestContext reqContext, Form form, String target) {
 		Response response = reqContext.getClient()
 				.target(target)
-				.path(ACCOUNT_LOGON_PATH)
 				.request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
 				.accept(MediaType.APPLICATION_JSON)
 				.post(Entity.form(form));
