@@ -28,7 +28,7 @@
         "projects": [
           {
             "groupId": "com.axonivy.market",
-            "artifactId": "docusign-connector-demo",
+            "artifactId": "docuware-connector-demo",
             "version": "${version}",
             "type": "iar"
           }
