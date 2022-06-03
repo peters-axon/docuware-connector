@@ -19,7 +19,7 @@ Before any interactions between the Axon Ivy Engine and DocuWare services can be
 
 1. Get a DocuWare account and the DocuWare cloud host-name, user-name, password and host-id to use.
 
-1. Override the global variables for host-name, user-name, password and host-id in your project as shown in the example below.
+1. Override the global variables for host-name, user-name, password and host-id in the demo project as shown in the example below.
 
 ```
 Variables:
