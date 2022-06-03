@@ -6,4 +6,14 @@
 # '<project>/Config/_<environment>/variables.yaml
 #
 Variables:
-#  myVariable: value
+  
+  docuware-connector:
+  
+    host: <myhost>.docuware.cloud
+
+    username: <myuser>
+  
+    # [password]
+    password: <mypass>
+    
+    hostid: <mhostid>

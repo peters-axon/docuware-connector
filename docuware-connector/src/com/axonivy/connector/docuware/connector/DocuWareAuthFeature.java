@@ -75,7 +75,10 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 						// Note: this API is not public and will probably change in future Ivy versions.
 						ExternalRestWebServiceCall externalRestWebServiceCall = (ExternalRestWebServiceCall) reqContext.getProperty(ExternalRestWebServiceCall.class.getCanonicalName());
 						if(externalRestWebServiceCall != null) {
-							logonUrl = externalRestWebServiceCall.getWebTarget().resolveTemplate("host", reqContext.getUri().getHost()).path(ACCOUNT_LOGON_PATH).getUri().toString();
+							// String host = Ivy.var().get("docuware-connector.host");
+							String host = reqContext.getUri().getHost();
+
+							logonUrl = externalRestWebServiceCall.getWebTarget().resolveTemplate("host", host).path(ACCOUNT_LOGON_PATH).getUri().toString();
 						}
 					} catch (Throwable t) {
 						String message = String.format("Could not determine DocuWare target URL automatically, please set it in REST client property '%s'. Put there the same URL as used for the client.", LOGONURL_PROPERTY);
