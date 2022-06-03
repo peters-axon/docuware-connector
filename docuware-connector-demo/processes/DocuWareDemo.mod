@@ -60,10 +60,10 @@ Do0 f2 280 64 337 64 #arcP
 Do0 f5 outLink organizations.ivp #txt
 Do0 f5 inParamDecl '<> param;' #txt
 Do0 f5 actionCode 'import org.apache.commons.lang3.StringUtils;
-ivy.log.info("Username: {0}", ivy.var.docuware_username);
-ivy.log.info("Password set: {0}", StringUtils.isNotBlank(ivy.var.docuware_password));
-ivy.log.info("HostId: {0}", ivy.var.docuware_hostid);
-ivy.log.info("LogonUrl: {0}", ivy.var.docuware_logonurl);
+ivy.log.info("Username: {0}", ivy.var.get("docuware-connector.username"));
+ivy.log.info("Password set: {0}", StringUtils.isNotBlank(ivy.var.get("docuware-connector_password")));
+ivy.log.info("HostId: {0}", ivy.var.get("docuware-connector_hostid"));
+ivy.log.info("BaseUrl: {0}", ivy.var.get("docuware-connector_baseurl"));
 
 
 

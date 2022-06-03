@@ -23,6 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 
 import ch.ivyteam.ivy.data.cache.IDataCacheEntry;
 import ch.ivyteam.ivy.environment.Ivy;
+import ch.ivyteam.ivy.rest.client.FeatureConfig;
 import ch.ivyteam.ivy.rest.client.internal.ExternalRestWebServiceCall;
 
 /**
@@ -33,10 +34,10 @@ import ch.ivyteam.ivy.rest.client.internal.ExternalRestWebServiceCall;
 public class DocuWareAuthFeature implements Feature, ClientRequestFilter, ClientResponseFilter {
 
 	private static final String ACCOUNT_LOGON_PATH = "Account/Logon";
-	private static final String USERNAME_PROPERTY = "username";
-	private static final String PASSWORD_PROPERTY = "password";
-	private static final String HOSTID_PROPERTY = "hostid";
-	private static final String LOGONURL_PROPERTY = "logonurl";
+	private static final String USERNAME_PROPERTY = "UserName";
+	private static final String PASSWORD_PROPERTY = "Password";
+	private static final String HOSTID_PROPERTY = "HostId";
+	private static final String LOGONURL_PROPERTY = "LogonUrl";
 
 	@Override
 	public boolean configure(FeatureContext context) {
@@ -48,6 +49,7 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 
 	@Override
 	public void filter(ClientRequestContext reqContext) throws IOException {
+
 		if(isLogonRequest(reqContext.getUri())) {
 			Ivy.log().info("DocuWare logon request.");
 		}
@@ -57,21 +59,23 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 
 				Configuration configuration = reqContext.getConfiguration();
 
+				FeatureConfig config = new FeatureConfig(configuration, DocuWareAuthFeature.class);
+
 				Form form = new Form()
-						.param("UserName", (String) configuration.getProperty(USERNAME_PROPERTY))
-						.param("Password", (String) configuration.getProperty(PASSWORD_PROPERTY))
-						.param("HostID", (String) configuration.getProperty(HOSTID_PROPERTY))
+						.param("UserName", config.readMandatory(USERNAME_PROPERTY))
+						.param("Password", config.readMandatory(PASSWORD_PROPERTY))
+						.param("HostID", config.readMandatory(HOSTID_PROPERTY))
 						.param("RedirectToMyselfInCaseOfError", "false")
 						;
 
-				String target = (String) configuration.getProperty(LOGONURL_PROPERTY);
+				String logonUrl = config.read(LOGONURL_PROPERTY).orElse(null);
 
-				if(StringUtils.isBlank(target) || target.trim().equalsIgnoreCase("AUTO")) {
+				if(StringUtils.isBlank(logonUrl) || logonUrl.trim().equalsIgnoreCase("AUTO")) {
 					try {
 						// Note: this API is not public and will probably change in future Ivy versions.
 						ExternalRestWebServiceCall externalRestWebServiceCall = (ExternalRestWebServiceCall) reqContext.getProperty(ExternalRestWebServiceCall.class.getCanonicalName());
 						if(externalRestWebServiceCall != null) {
-							target = externalRestWebServiceCall.getWebTarget().path(ACCOUNT_LOGON_PATH).getUri().toString();
+							logonUrl = externalRestWebServiceCall.getWebTarget().resolveTemplate("host", reqContext.getUri().getHost()).path(ACCOUNT_LOGON_PATH).getUri().toString();
 						}
 					} catch (Throwable t) {
 						String message = String.format("Could not determine DocuWare target URL automatically, please set it in REST client property '%s'. Put there the same URL as used for the client.", LOGONURL_PROPERTY);
@@ -83,14 +87,12 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 					}
 				}
 
-				if(StringUtils.isNotBlank(target)) {
-					Response response = logon(reqContext, form, target);
+				Ivy.log().info("DocuWare logon via URL {0}", logonUrl);
 
-					Ivy.log().debug("Response: {0}", response);
+				Response response = logon(reqContext, form, logonUrl);
 
-					if(getCookies() == null) {
-						Ivy.log().error("Still missing DocuWare cookies for context {0}", reqContext);
-					}
+				if(getCookies() == null) {
+					Ivy.log().error("DocuWare logon, still missing DocuWare cookies for context {0} after logon.", reqContext);
 				}
 			}
 
@@ -194,7 +196,7 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 	 * @return
 	 */
 	private boolean isLogonRequest(URI uri) {
-		return uri != null && uri.getPath().endsWith(ACCOUNT_LOGON_PATH);
+		return uri != null && uri.toString().endsWith(ACCOUNT_LOGON_PATH);
 	}
 
 	/**

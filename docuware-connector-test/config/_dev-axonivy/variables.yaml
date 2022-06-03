@@ -6,3 +6,13 @@
 # '<project>/Config/_<environment>/variables.yaml
 #
 Variables:
+  
+  docuware-connector:
+  
+    username: TESTUSER
+  
+    # [password]
+    password: TESTPASS
+    
+    hostid: TESTHOSTID
+    
