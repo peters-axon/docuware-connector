@@ -94,6 +94,8 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 
 				Response response = logon(reqContext, form, logonUrl);
 
+				Ivy.log().info("DocuWare logon returned with status {0}", response.getStatusInfo());
+
 				if(getCookies() == null) {
 					Ivy.log().error("DocuWare logon, still missing DocuWare cookies for context {0} after logon.", reqContext);
 				}
