@@ -1,26 +1,45 @@
 # DocuSign Connector
 Axon Ivy’s [DocuWare](https://start.docuware.com/) connector helps you to accelerate process automation initiatives by integrating DocuWare into your process application within no time.
+
 This connector:
 
+-	**Only provides a very limited subset of DocuWare functions.**
 -	Is based on REST webservice technologies.
--	Provides access to the examplary features of DocuWare to access and upload files.
+-	Provides access to some exemplary features of DocuWare.
 -	Supports you with an easy-to-copy demo implementation to reduce your integration effort.
--	Enables low code citizen developers to enhance existing business processes with DocuWare features.
-
 
 ## Demo
 
 1. Upload a document to a DocuWare file cabinet.
 2. Provide a GUI to test some basic DocuWare calls.
 
-
 ## Setup
 
 Before any interactions between the Axon Ivy Engine and DocuWare services can be run, they have to be introducted to each other. This can be done as follows:
 
-1. Get a DocuWare account and the URL, user, password and hostid to use
+1. Get a DocuWare account and the DocuWare cloud host-name, user-name, password and host-id to use.
 
-1. configure these values in the corresponding global variables.  
+1. Override the global variables for host-name, user-name, password and host-id in your project as shown in the example below.
 
-1. run `start.ivp` of the DocuWareDemo demo process to test your setup.
+```
+Variables:
+  
+  docuware-connector:
+  
+    host: <myhost>.docuware.cloud
 
+    username: <myuser>
+  
+    # [password]
+    password: <mypass>
+    
+    hostid: <mhostid>
+```
+
+If your REST URL does not follow the predefined REST URL pattern of this connector, you can change the URL in the Engine Cockpit. To change the URL in the Designer, you have to unpack the connector project and change it there.
+
+Run `start.ivp` of the DocuWareDemo demo process to test your setup.
+
+## State of the Connector
+
+Currently, the connector only provides some very basic functionality shown in the Demo GUI. The connector would not be usable in real-live scenarios. It will be extended in future versions.
