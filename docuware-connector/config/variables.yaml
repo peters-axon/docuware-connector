@@ -11,12 +11,12 @@ Variables:
   
     host: ''
     
-    username: USER
+    username: 
   
     # [password]
-    password: PASS
+    password: 
     
-    hostid: HOSTID
+    hostid: 
     
     # The Logon URL will be automatically determined.
     # If this variable is set (not-empty), this URL
