@@ -1,19 +1,20 @@
 RestClients:
-  #This collection contains requests and stored responses you can use when preparing for a Platform workshop.
   DocuWare:
     UUID: 02d1eec1-32e9-4316-afc3-793448486203
-    Url: https://DOCUWARE-URL/docuware/platform
+    Url: https://{host}/docuware/platform
     Icon: res:/webContent/icons/docuware.png
     Features:
     - ch.ivyteam.ivy.rest.client.mapper.JsonFeature
-    - com.axonivy.connector.docuware.connector.DocuWareFeature
+    - com.axonivy.connector.docuware.connector.DocuWareAuthFeature
     - org.glassfish.jersey.media.multipart.MultiPartFeature
     Properties:
+      PATH.host: ${ivy.var.docuware-connector.host}
+      UserName: ${ivy.var.docuware-connector.username}
+      Password: ${ivy.var.docuware-connector.password}
+      HostId: ${ivy.var.docuware-connector.hostid}
+      LogonUrl: ${ivy.var.docuware-connector.logonurl}
       com.sun.jersey.impl.client.httpclient.handleCookies: 'true'
       http.protocol.handle-redirects: 'true'
-      username: MyUser
-      password: ${decrypt:\u002C\u007D\u00BD\u00DD\u002E\u00F1\u00B2\u004E\u00CC\u0050\u0037\u00D4\u0035\u00C8\u00A5\u002C\u004E\u0082\u0029\u00D4\u004F\u002D\u00FC\u003B\u0054\u006F\u00AF\u00D2\u0003\u00D1\u008F\u0057\u001D\u00F6\u00A4\u00B9\u009F\u0014\u006C\u0072\u00E4\u00BE\u0063\u003A\u00BB\u003A\u003B\u006E}
-      hostid: MyHost
       JSON.Serialization.PROPERTY_INCLUSION: NON_NULL
     OpenAPI:
       SpecUrl: file:///X:/AxonIvy/marketplace/docuware/openapi-handmade.json
