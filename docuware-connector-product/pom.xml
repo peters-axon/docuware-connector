@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.axonivy.market</groupId>
   <artifactId>docuware-connector-product</artifactId>
-  <version>9.3.4</version>
+  <version>9.3.5-SNAPSHOT</version>
   <packaging>pom</packaging>
   <build>
     <plugins>
