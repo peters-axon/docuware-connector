@@ -3,7 +3,7 @@
   <groupId>com.axonivy.connector.docuware</groupId>
   <name>docuware-connector</name>
   <artifactId>docuware-connector-modules</artifactId>
-  <version>9.3.5-SNAPSHOT</version>
+  <version>9.3.5</version>
   <packaging>pom</packaging>
 
   <modules>
@@ -15,7 +15,7 @@
 
   <scm>
     <developerConnection>scm:git:https://github.com/axonivy-market/${project.name}.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>v9.3.5</tag>
   </scm>
 
   <build>
