@@ -5,7 +5,7 @@ This connector:
 
 -	Is based on REST webservice technologies.
 -	Gives you access to sample DocuWare functionality
--	To reduce the integration effort to a minimum use the demo implementation, there you will find examples for the calls
+-	reduces the integration effort to a minimum: Use the demo implementation, there you will find examples for the calls
 
 ## Demo
 
