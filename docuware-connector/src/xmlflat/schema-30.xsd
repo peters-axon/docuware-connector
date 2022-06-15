@@ -1,4 +1,14 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?><xs:schema xmlns:c="http://dev.docuware.com/settings/common" xmlns:interop="http://dev.docuware.com/settings/interop" xmlns:svc="http://dev.docuware.com/schema/public/services" xmlns:t="http://dev.docuware.com/schema/public/services/platform" xmlns:ann="http://dev.docuware.com/schema/public/services/annotations" xmlns:intellix="http://dev.docuware.com/public/intellix" xmlns="http://dev.docuware.com/schema/public/services/platform" elementFormDefault="qualified" targetNamespace="http://dev.docuware.com/schema/public/services/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?>
+<xs:schema xmlns:common="http://dev.docuware.com/settings/common" 
+  xmlns:interop="http://dev.docuware.com/settings/interop" 
+  xmlns:svc="http://dev.docuware.com/schema/public/services"
+  xmlns:t="http://dev.docuware.com/schema/public/services/platform" 
+  xmlns:ann="http://dev.docuware.com/schema/public/services/annotations" 
+  xmlns:intellix="http://dev.docuware.com/public/intellix"
+  xmlns="http://dev.docuware.com/schema/public/services/platform" 
+  elementFormDefault="qualified" targetNamespace="http://dev.docuware.com/schema/public/services/platform" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="schema-2.xsd" namespace="http://dev.docuware.com/schema/public/services" />
   <xs:import schemaLocation="schema-28.xsd" namespace="http://dev.docuware.com/settings/common" />
   <xs:import schemaLocation="schema-27.xsd" namespace="http://dev.docuware.com/settings/interop" />
@@ -125,11 +135,6 @@
         <xs:documentation>Gets the number of digits after the decimal point in case of a numeric field.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute default="Text" name="DWFieldType" type="interop:DWFieldType">
-      <xs:annotation>
-        <xs:documentation>The DocuWare type of the field.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
     <xs:attribute name="Mask" type="xs:string">
       <xs:annotation>
         <xs:documentation>Mask(regular expression) for limiting the input options for the form field.</xs:documentation>
@@ -176,11 +181,6 @@
     <xs:attribute name="Name" type="xs:string" use="required">
       <xs:annotation>
         <xs:documentation>Name of the index field that will be changed by the stamp.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="DWType" type="interop:DWFieldType" use="required">
-      <xs:annotation>
-        <xs:documentation>The DocuWare type of the index field that will be changed by the stamp.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
     <xs:attribute name="Length" type="xs:int" use="required">
@@ -272,11 +272,6 @@
     <xs:attribute name="Signature" type="t:StampSignatureType" use="required">
       <xs:annotation>
         <xs:documentation>The type of the stamp signature if there is any.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="Color" type="c:Color" use="required">
-      <xs:annotation>
-        <xs:documentation>The color of the stamp content</xs:documentation>
       </xs:annotation>
     </xs:attribute>
     <xs:attribute name="Name" type="xs:string" use="required">
@@ -394,13 +389,6 @@
       <xs:element minOccurs="0" name="Strokes" type="t:PolyLineEntry">
         <xs:annotation>
           <xs:documentation>A polyline entry in case of stroke stamps.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element minOccurs="0" name="Location" type="c:DWPoint">
-        <xs:annotation>
-          <xs:documentation>The location of the stamp.</xs:documentation>
-          <xs:documentation>The coordinates are in twips (1/1440 inches).</xs:documentation>
-          <xs:documentation>If this field is &lt;c&gt;null&lt;/c&gt; then the stamp is placed automatically.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element minOccurs="0" maxOccurs="5" name="Field" type="t:FormFieldValue">

@@ -258,16 +258,6 @@
           </xs:appinfo>
         </xs:annotation>
       </xs:element>
-      <xs:element minOccurs="0" name="Suggestions" type="t:SuggestionFields">
-        <xs:annotation>
-          <xs:documentation>Suggestions for the simple fields of a document</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element minOccurs="0" name="TableFieldSuggestions" type="t:SuggestionTableFields">
-        <xs:annotation>
-          <xs:documentation>Suggestions for the table fields of a document</xs:documentation>
-        </xs:annotation>
-      </xs:element>
     </xs:sequence>
     <xs:attribute name="Id" type="xs:int" use="required">
       <xs:annotation>
@@ -681,16 +671,6 @@
       <xs:element name="Fields" type="t:DocumentIndexFields">
         <xs:annotation>
           <xs:documentation>Fields of a document</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element minOccurs="0" name="Suggestions" type="t:SuggestionFields">
-        <xs:annotation>
-          <xs:documentation>Suggestions for the simple fields of a document</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element minOccurs="0" name="TableFieldSuggestions" type="t:SuggestionTableFields">
-        <xs:annotation>
-          <xs:documentation>Suggestions for the table fields of a document</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element minOccurs="0" name="Flags" type="t:DocumentFlags">

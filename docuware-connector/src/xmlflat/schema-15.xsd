@@ -164,7 +164,6 @@
   </xs:complexType>
   <xs:complexType name="AnnotationToolSettings">
     <xs:attribute name="Type" type="t:AnnotationTools" use="required" />
-    <xs:attribute name="Color" type="comm:Color" use="optional" />
   </xs:complexType>
   <xs:complexType name="ViewerPreferences">
     <xs:sequence>

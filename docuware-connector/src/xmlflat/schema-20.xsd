@@ -1,8 +1,18 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?><xs:schema xmlns:tw="http://dev.docuware.com/schema/public/services/platform/workflow" xmlns:svc="http://dev.docuware.com/schema/public/services" xmlns:t="http://dev.docuware.com/schema/public/services/platform" xmlns:types="http://dev.docuware.com/types" xmlns:common="http://dev.docuware.com/settings/common" xmlns:ann="http://dev.docuware.com/schema/public/services/annotations" xmlns="http://dev.docuware.com/schema/public/services/platform/workflow" elementFormDefault="qualified" targetNamespace="http://dev.docuware.com/schema/public/services/platform/workflow" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?>
+  <xs:schema xmlns:tw="http://dev.docuware.com/schema/public/services/platform/workflow" 
+  xmlns:svc="http://dev.docuware.com/schema/public/services" xmlns:t="http://dev.docuware.com/schema/public/services/platform"
+  xmlns:types="http://dev.docuware.com/types" 
+  xmlns:common="http://dev.docuware.com/settings/common" 
+  xmlns:ann="http://dev.docuware.com/schema/public/services/annotations" 
+  xmlns="http://dev.docuware.com/schema/public/services/platform/workflow"
+  elementFormDefault="qualified" targetNamespace="http://dev.docuware.com/schema/public/services/platform/workflow" 
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="schema-2.xsd" namespace="http://dev.docuware.com/schema/public/services" />
   <xs:import schemaLocation="schema-25.xsd" namespace="http://dev.docuware.com/schema/public/services/platform" />
   <xs:import schemaLocation="schema-37.xsd" namespace="http://dev.docuware.com/schema/public/services/platform" />
   <xs:import schemaLocation="schema-23.xsd" namespace="http://dev.docuware.com/schema/public/services/platform" />
+  
   <xs:complexType name="Workflows">
     <xs:annotation>
       <xs:documentation>List of workflows.</xs:documentation>

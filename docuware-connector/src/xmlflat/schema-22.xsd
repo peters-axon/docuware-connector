@@ -1,4 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?><xs:schema xmlns:dw="http://dev.docuware.com/settings/common" xmlns="http://dev.docuware.com/public/intellix" elementFormDefault="qualified" targetNamespace="http://dev.docuware.com/public/intellix" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?>
+<xs:schema xmlns:common="http://dev.docuware.com/settings/common" 
+xmlns="http://dev.docuware.com/public/intellix" 
+elementFormDefault="qualified" targetNamespace="http://dev.docuware.com/public/intellix"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="schema-35.xsd" namespace="http://dev.docuware.com/settings/common" />
   <xs:simpleType name="DistanceType">
     <xs:annotation>
@@ -259,7 +264,6 @@
         <xs:element name="rulerline" type="Rulerline" />
       </xs:choice>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="BarCodes" type="BarCodeZone" />
-      <xs:element minOccurs="0" name="metadata" type="dw:KeyValuePairs" />
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Candidates" type="CandidateInfo" />
     </xs:sequence>
     <xs:attribute name="Lang" type="Languages" use="optional" />
@@ -330,7 +334,6 @@
       <xs:appinfo />
     </xs:annotation>
     <xs:sequence>
-      <xs:element minOccurs="0" name="metadata" type="dw:KeyValuePairs" />
       <xs:element minOccurs="0" maxOccurs="unbounded" name="Embedded">
         <xs:annotation>
           <xs:documentation>For internal use: Embedded data.</xs:documentation>

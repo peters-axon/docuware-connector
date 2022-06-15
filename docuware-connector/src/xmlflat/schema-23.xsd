@@ -92,11 +92,6 @@
         <xs:documentation>DEPRECATED! No longer used since 7.0. The type can be retrieved by the class name.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute default="#000000" name="Color" type="c:Color">
-      <xs:annotation>
-        <xs:documentation>Color of the annotation.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
     <xs:attribute default="0" name="Rotation" type="t:RotationType">
       <xs:annotation>
         <xs:documentation>Rotaion of the annotation.</xs:documentation>

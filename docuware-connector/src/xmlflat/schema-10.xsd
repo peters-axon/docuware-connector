@@ -1,4 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?><xs:schema xmlns:svc="http://dev.docuware.com/schema/public/services" xmlns:t="http://dev.docuware.com/schema/public/services/platform" xmlns:types="http://dev.docuware.com/types" xmlns:common="http://dev.docuware.com/settings/common" xmlns:ann="http://dev.docuware.com/schema/public/services/annotations" xmlns="http://dev.docuware.com/schema/public/services/platform" elementFormDefault="qualified" targetNamespace="http://dev.docuware.com/schema/public/services/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?>
+<xs:schema xmlns:svc="http://dev.docuware.com/schema/public/services" 
+xmlns:t="http://dev.docuware.com/schema/public/services/platform" 
+xmlns:types="http://dev.docuware.com/types" 
+xmlns:common="http://dev.docuware.com/settings/common"
+  xmlns:ann="http://dev.docuware.com/schema/public/services/annotations" 
+  xmlns="http://dev.docuware.com/schema/public/services/platform" elementFormDefault="qualified" targetNamespace="http://dev.docuware.com/schema/public/services/platform"
+  xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="schema-2.xsd" namespace="http://dev.docuware.com/schema/public/services" />
   <xs:import schemaLocation="schema-3.xsd" namespace="http://dev.docuware.com/types" />
   <xs:import schemaLocation="schema-5.xsd" namespace="http://dev.docuware.com/settings/common" />
@@ -12,11 +19,6 @@
       <xs:documentation>Main class for managing adhoc rendering file.</xs:documentation>
     </xs:annotation>
     <xs:sequence>
-      <xs:element name="MetaData" type="common:KeyValuePairs">
-        <xs:annotation>
-          <xs:documentation>Gets the meta data for the file. This usually contains the entries from the user dictionary of a PDF file or the meta data settings from a MS word file.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
       <xs:element minOccurs="0" ref="t:Pages">
         <xs:annotation>
           <xs:documentation>Gets the pages of this file up to a server defined limit.</xs:documentation>
@@ -82,13 +84,6 @@
       </xs:documentation>
       <xs:documentation>In case you do not specify the size or resolution a default rendering resolution of 72 dpi is assumed.</xs:documentation>
     </xs:annotation>
-    <xs:sequence>
-      <xs:element minOccurs="0" name="Size" type="common:DWSize">
-        <xs:annotation>
-          <xs:documentation>Gets or sets the size in pixels of the rendering canvas.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-    </xs:sequence>
     <xs:attribute default="0" name="Page" type="xs:int">
       <xs:annotation>
         <xs:documentation>Gets or sets page number to be rendered.</xs:documentation>

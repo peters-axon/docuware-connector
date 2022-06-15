@@ -164,11 +164,6 @@
         <xs:documentation>Gets or sets the new value of the property.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="DWFieldType" type="int:DWFieldType" use="required">
-      <xs:annotation>
-        <xs:documentation>The DocuWare type of the field</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
   </xs:complexType>
   <xs:complexType name="DocumentAuditEventTableProperty">
     <xs:annotation>
@@ -204,11 +199,6 @@
     <xs:attribute name="Name" type="xs:string" use="required">
       <xs:annotation>
         <xs:documentation>Gets or sets the name of the column that has been changed.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="Type" type="int:DWFieldType" use="required">
-      <xs:annotation>
-        <xs:documentation>The DocuWare type of the field</xs:documentation>
       </xs:annotation>
     </xs:attribute>
   </xs:complexType>

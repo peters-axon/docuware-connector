@@ -1,4 +1,8 @@
-<?xml version="1.0" encoding="utf-8"?><?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?><xs:schema xmlns:tw="http://dev.docuware.com/schema/public/services/platform/workflow" xmlns:svc="http://dev.docuware.com/schema/public/services" xmlns:t="http://dev.docuware.com/schema/public/services/platform" xmlns:types="http://dev.docuware.com/types" xmlns:ann="http://dev.docuware.com/schema/public/services/annotations" xmlns="http://dev.docuware.com/schema/public/services/platform" elementFormDefault="qualified" targetNamespace="http://dev.docuware.com/schema/public/services/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<?xml version="1.0" encoding="utf-8"?>
+<?xml-stylesheet type="text/xsl" href="/DocuWare/Platform/Content/schemadoc.xslt"?>
+<xs:schema xmlns:tw="http://dev.docuware.com/schema/public/services/platform/workflow" xmlns:svc="http://dev.docuware.com/schema/public/services" xmlns:t="http://dev.docuware.com/schema/public/services/platform"
+  xmlns:types="http://dev.docuware.com/types" xmlns:ann="http://dev.docuware.com/schema/public/services/annotations" xmlns="http://dev.docuware.com/schema/public/services/platform" elementFormDefault="qualified"
+  targetNamespace="http://dev.docuware.com/schema/public/services/platform" xmlns:xs="http://www.w3.org/2001/XMLSchema">
   <xs:import schemaLocation="schema-2.xsd" namespace="http://dev.docuware.com/schema/public/services" />
   <xs:import schemaLocation="schema-3.xsd" namespace="http://dev.docuware.com/types" />
   <xs:import schemaLocation="schema-4.xsd" namespace="http://dev.docuware.com/settings/common" />
@@ -356,11 +360,6 @@
       <xs:element name="Documentation" type="t:ServiceDescriptionDocumentation">
         <xs:annotation>
           <xs:documentation>Documentation links for platform.</xs:documentation>
-        </xs:annotation>
-      </xs:element>
-      <xs:element name="Resources" type="svc:UriTemplateDescriptions">
-        <xs:annotation>
-          <xs:documentation>Resource definitions/templates.</xs:documentation>
         </xs:annotation>
       </xs:element>
       <xs:element name="Statistics" type="t:ServiceDescriptionStatistics">

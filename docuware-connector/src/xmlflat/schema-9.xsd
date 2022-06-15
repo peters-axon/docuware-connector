@@ -143,11 +143,6 @@
         <xs:documentation>The id of the assigned dialog (result list for search dialogs, info dialog for result dialogs, etc.)</xs:documentation>
       </xs:annotation>
     </xs:attribute>
-    <xs:attribute name="Color" type="c:Color" use="required">
-      <xs:annotation>
-        <xs:documentation>Color of the dialog icon.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
     <xs:attribute default="false" name="IsDefault" type="xs:boolean">
       <xs:annotation>
         <xs:documentation>Gets or sets if this dialog is a default dialog.</xs:documentation>
@@ -886,11 +881,6 @@
     <xs:attribute name="DlgLabel" type="xs:string">
       <xs:annotation>
         <xs:documentation>Label (display name) of the field.</xs:documentation>
-      </xs:annotation>
-    </xs:attribute>
-    <xs:attribute name="DWFieldType" type="int:DWFieldType" use="required">
-      <xs:annotation>
-        <xs:documentation>The DocuWare type of the field.</xs:documentation>
       </xs:annotation>
     </xs:attribute>
     <xs:attribute default="false" name="Locked" type="xs:boolean">
