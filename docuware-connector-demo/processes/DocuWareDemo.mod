@@ -87,9 +87,8 @@ Do0 f6 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
 Do0 f6 path /Organizations #txt
 Do0 f6 headers 'Accept=application/json;
 ' #txt
-Do0 f6 resultType com.axonivy.connector.docuware.connector.model.OrganizationContainer #txt
-Do0 f6 responseMapping 'out.organizations=result;
-' #txt
+Do0 f6 resultType com.docuware.dev.schema._public.services.platform.Organizations #txt
+Do0 f6 responseCode out.organizations.getOrganization().addAll(result.getOrganization()); #txt
 Do0 f6 clientErrorCode ivy:error:rest:client #txt
 Do0 f6 statusErrorCode ivy:error:rest:client #txt
 Do0 f6 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
@@ -103,10 +102,10 @@ Do0 f6 168 202 112 44 -53 -8 #rect
 Do0 f8 497 209 30 30 0 15 #rect
 Do0 f10 actionTable 'out=in;
 ' #txt
-Do0 f10 actionCode 'import com.axonivy.connector.docuware.connector.model.Organization;
+Do0 f10 actionCode 'import com.docuware.dev.schema._public.services.platform.Organization;
 
-ivy.log.info("Found organizations: {0}", in.organizations.organization.size());
-for(Organization org : in.organizations.organization) {
+ivy.log.info("Found organizations: {0}", in.organizations.getOrganization().size());
+for(Organization org : in.organizations.getOrganization()) {
 	ivy.log.info("Organization: {0} ({1})", org.name, org.id);
 }' #txt
 Do0 f10 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>

@@ -98,7 +98,7 @@ Ds0 f15 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
 Ds0 f15 path /Organizations #txt
 Ds0 f15 headers 'Accept=application/json;
 ' #txt
-Ds0 f15 resultType com.axonivy.connector.docuware.connector.model.OrganizationContainer #txt
+Ds0 f15 resultType com.docuware.dev.schema._public.services.platform.Organizations #txt
 Ds0 f15 responseCode 'import com.axonivy.connector.docuware.connector.demo.DocuWareDemoService;
 
 out.result = DocuWareDemoService.get().getLog(response, result);
@@ -119,7 +119,7 @@ Ds0 f17 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
 Ds0 f17 path /FileCabinets #txt
 Ds0 f17 headers 'Accept=application/json;
 ' #txt
-Ds0 f17 resultType com.axonivy.connector.docuware.connector.model.FileCabinetContainer #txt
+Ds0 f17 resultType com.docuware.dev.schema._public.services.platform.Organizations #txt
 Ds0 f17 responseCode 'import com.axonivy.connector.docuware.connector.demo.DocuWareDemoService;
 
 out.result = DocuWareDemoService.get().getLog(response, result);
