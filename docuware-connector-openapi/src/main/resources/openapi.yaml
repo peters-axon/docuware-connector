@@ -278,8 +278,9 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
-  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckoutToFileSystem:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/FileCabinet"
     post:
       tags:
         - Check-in check-out a document.
@@ -324,55 +325,7 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0, s-maxage=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '160'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:36:10 GMT
-            Expires:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:36:10 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=100
-            Last-Modified:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:36:10 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*,Accept-Encoding'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
+          
           content:
             text/plain:
               schema:
@@ -1124,8 +1077,9 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
-  /FileCabinets/{FileCabinetId}/Documents:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Documents"
     get:
       tags:
         - Search in FileCabinets > Search in single FileCabinet
@@ -1217,66 +1171,10 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, must-revalidate, max-age=0, s-maxage=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '574'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 21:00:56 GMT
-            ETag:
-              schema:
-                type: string
-                example: '"_3d4dae4d-635707764250000000"'
-            Expires:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 21:00:56 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=100
-            Last-Modified:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 21:00:56 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
-            text/plain:
+            application/xml:
               schema:
-                type: string
-              example: >-
-                {"SignatureStatus":["Allow_Annotations","Allow_Stamps","Allow_Signature_Stamps"],"Pages":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=False"}]},"Thumbnails":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=True"}]},"Links":[{"rel":"document","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/20"},{"rel":"deepZoomImage","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/woa/dz.dzi"},{"rel":"deepZoomImageWithAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/level%3dall/dz.dzi"},{"rel":"fileDownload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/FileDownload"},{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Data"},{"rel":"textshot","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Textshot"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0"},{"rel":"textAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/TextAnnotation"},{"rel":"pagesBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlockResult"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Thumbnail?v=635707763771210165\u0026page=0"},{"rel":"positions","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Positions"}],"Id":"20-0","ContentType":"application/pdf","HaveMorePages":false,"PageCount":1,"FileSize":96674,"OriginalFileName":"365bc42b-9503-4552-bf17-1a28ba0c51cd.pdf","ContentModified":"\/Date(1435179624609)\/","HasTextAnnotation":false}
-  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}:
+                $ref: "#/components/schemas/Document"
     get:
       tags:
         - Update index values
@@ -2551,5 +2449,11 @@ components:
     Organizations:
       type: object
     FileCabinets:
+      type: object
+    FileCabinet:
+      type: object
+    Documents:
+      type: object
+    Document:
       type: object
 

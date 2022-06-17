@@ -29,6 +29,8 @@ Do0 @PushWFArc f18 '' #zField
 Do0 @PushWFArc f13 '' #zField
 Do0 @GridStep f19 '' #zField
 Do0 @PushWFArc f20 '' #zField
+Do0 @RestClientCall f21 '' #zField
+Do0 @PushWFArc f22 '' #zField
 Do0 @PushWFArc f16 '' #zField
 >Proto Do0 Do0 DocuWareDemo #zField
 Do0 f0 outLink start.ivp #txt
@@ -133,6 +135,9 @@ Do0 f7 inParamDecl '<> param;' #txt
 Do0 f7 requestEnabled true #txt
 Do0 f7 triggerEnabled false #txt
 Do0 f7 callSignature fileCabinets() #txt
+Do0 f7 startName 'Load File Cabinets' #txt
+Do0 f7 startDescription 'Load FileCabinets
+from your Organization' #txt
 Do0 f7 caseData businessCase.attach=true #txt
 Do0 f7 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <elementInfo>
@@ -162,7 +167,7 @@ Do0 f12 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Do0 f12 328 330 112 44 -14 -7 #rect
-Do0 f15 657 337 30 30 0 15 #rect
+Do0 f15 817 337 30 30 0 15 #rect
 Do0 f17 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
 Do0 f17 path /Organizations #txt
 Do0 f17 headers 'Accept=application/xml;
@@ -198,7 +203,19 @@ Do0 f19 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 ' #txt
 Do0 f19 488 330 112 44 -40 -7 #rect
 Do0 f20 440 352 488 352 #arcP
-Do0 f16 600 352 657 352 #arcP
+Do0 f21 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
+Do0 f21 path /FileCabinets/{FileCabinetId} #txt
+Do0 f21 templateParams 'FileCabinetId=in.fileCabinets.getFileCabinet().get(0).id;
+' #txt
+Do0 f21 headers 'Accept=application/xml;
+' #txt
+Do0 f21 resultType com.docuware.dev.schema._public.services.platform.FileCabinet #txt
+Do0 f21 responseCode 'ivy.log.info("first cabinet: "+result.name);' #txt
+Do0 f21 clientErrorCode ivy:error:rest:client #txt
+Do0 f21 statusErrorCode ivy:error:rest:client #txt
+Do0 f21 648 330 112 44 0 -7 #rect
+Do0 f22 600 352 648 352 #arcP
+Do0 f16 760 352 817 352 #arcP
 >Proto Do0 .type com.axonivy.market.docuware.connector.demo.Data #txt
 >Proto Do0 .processKind NORMAL #txt
 >Proto Do0 0 0 32 24 18 0 #rect
@@ -219,5 +236,7 @@ Do0 f17 mainOut f13 tail #connect
 Do0 f13 head f12 mainIn #connect
 Do0 f12 mainOut f20 tail #connect
 Do0 f20 head f19 mainIn #connect
-Do0 f19 mainOut f16 tail #connect
+Do0 f19 mainOut f22 tail #connect
+Do0 f22 head f21 mainIn #connect
+Do0 f21 mainOut f16 tail #connect
 Do0 f16 head f15 mainIn #connect

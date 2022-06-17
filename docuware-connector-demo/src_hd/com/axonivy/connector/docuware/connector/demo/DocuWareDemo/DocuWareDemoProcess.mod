@@ -96,9 +96,11 @@ Ds0 f12 83 435 26 26 -28 15 #rect
 Ds0 f13 339 435 26 26 0 12 #rect
 Ds0 f15 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
 Ds0 f15 path /Organizations #txt
-Ds0 f15 headers 'Accept=application/json;
+Ds0 f15 headers 'Accept=application/xml;
 ' #txt
 Ds0 f15 resultType com.docuware.dev.schema._public.services.platform.Organizations #txt
+Ds0 f15 responseMapping 'out.organizations=result;
+' #txt
 Ds0 f15 responseCode 'import com.axonivy.connector.docuware.connector.demo.DocuWareDemoService;
 
 out.result = DocuWareDemoService.get().getLog(response, result);
@@ -117,9 +119,14 @@ Ds0 f16 109 256 168 256 #arcP
 Ds0 f8 280 256 339 256 #arcP
 Ds0 f17 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
 Ds0 f17 path /FileCabinets #txt
-Ds0 f17 headers 'Accept=application/json;
+Ds0 f17 queryParams 'orgid=in.organizations.getOrganization().get(0).id;
 ' #txt
-Ds0 f17 resultType com.docuware.dev.schema._public.services.platform.Organizations #txt
+Ds0 f17 headers 'Accept=application/xml;
+' #txt
+Ds0 f17 resultType com.docuware.dev.schema._public.services.platform.FileCabinets #txt
+Ds0 f17 responseMapping 'out.fileCabinetId=result.getFileCabinet().get(0).id;
+out.fileCabinets=result;
+' #txt
 Ds0 f17 responseCode 'import com.axonivy.connector.docuware.connector.demo.DocuWareDemoService;
 
 out.result = DocuWareDemoService.get().getLog(response, result);
@@ -137,17 +144,21 @@ Ds0 f17 168 330 112 44 -36 -8 #rect
 Ds0 f18 109 352 168 352 #arcP
 Ds0 f11 280 352 339 352 #arcP
 Ds0 f19 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
-Ds0 f19 path /FileCabinets/{fileCabinetId}/Documents #txt
-Ds0 f19 templateParams 'fileCabinetId=in.fileCabinetId;
+Ds0 f19 path /FileCabinets/{FileCabinetId}/Documents #txt
+Ds0 f19 queryParams 'StoreDialogId=;
 ' #txt
-Ds0 f19 headers 'Accept=application/json;
+Ds0 f19 templateParams 'fileCabinetId=;
+FileCabinetId=in.fileCabinetId;
+' #txt
+Ds0 f19 headers 'Accept=application/xml;
 ' #txt
 Ds0 f19 method POST #txt
 Ds0 f19 bodyInputType FORM #txt
 Ds0 f19 bodyMediaType multipart/form-data #txt
-Ds0 f19 bodyForm 'file=in.file.getJavaFile();
+Ds0 f19 bodyForm 'document=;
+file[]=in.file.getJavaFile();
 ' #txt
-Ds0 f19 bodyObjectType com.axonivy.connector.docuware.connector.model.FileCabinetIdDocumentsBody #txt
+Ds0 f19 bodyObjectType com.docuware.dev.schema._public.services.platform.FileCabinetIdDocumentsBody #txt
 Ds0 f19 resultType com.docuware.dev.schema._public.services.platform.Document #txt
 Ds0 f19 responseMapping 'out.documentId=result.id.toString();
 ' #txt
