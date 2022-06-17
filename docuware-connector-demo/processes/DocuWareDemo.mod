@@ -24,10 +24,12 @@ Do0 @PushWFArc f14 '' #zField
 Do0 @StartRequest f7 '' #zField
 Do0 @RestClientCall f12 '' #zField
 Do0 @EndTask f15 '' #zField
-Do0 @PushWFArc f16 '' #zField
 Do0 @RestClientCall f17 '' #zField
 Do0 @PushWFArc f18 '' #zField
 Do0 @PushWFArc f13 '' #zField
+Do0 @GridStep f19 '' #zField
+Do0 @PushWFArc f20 '' #zField
+Do0 @PushWFArc f16 '' #zField
 >Proto Do0 Do0 DocuWareDemo #zField
 Do0 f0 outLink start.ivp #txt
 Do0 f0 inParamDecl '<> param;' #txt
@@ -160,8 +162,7 @@ Do0 f12 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Do0 f12 328 330 112 44 -14 -7 #rect
-Do0 f15 497 337 30 30 0 15 #rect
-Do0 f16 440 352 497 352 #arcP
+Do0 f15 657 337 30 30 0 15 #rect
 Do0 f17 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
 Do0 f17 path /Organizations #txt
 Do0 f17 headers 'Accept=application/xml;
@@ -180,6 +181,24 @@ Do0 f17 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 Do0 f17 168 330 112 44 -53 -8 #rect
 Do0 f18 111 352 168 352 #arcP
 Do0 f13 280 352 328 352 #arcP
+Do0 f19 actionTable 'out=in;
+' #txt
+Do0 f19 actionCode 'import com.docuware.dev.schema._public.services.platform.FileCabinet;
+
+
+for(FileCabinet fc : in.fileCabinets.getFileCabinet()) {
+  ivy.log.info("FileCabinet: "+fc.getName());
+}' #txt
+Do0 f19 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>Log Cabinets</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f19 488 330 112 44 -40 -7 #rect
+Do0 f20 440 352 488 352 #arcP
+Do0 f16 600 352 657 352 #arcP
 >Proto Do0 .type com.axonivy.market.docuware.connector.demo.Data #txt
 >Proto Do0 .processKind NORMAL #txt
 >Proto Do0 0 0 32 24 18 0 #rect
@@ -194,9 +213,11 @@ Do0 f10 mainOut f9 tail #connect
 Do0 f9 head f8 mainIn #connect
 Do0 f5 mainOut f14 tail #connect
 Do0 f14 head f6 mainIn #connect
-Do0 f12 mainOut f16 tail #connect
-Do0 f16 head f15 mainIn #connect
 Do0 f7 mainOut f18 tail #connect
 Do0 f18 head f17 mainIn #connect
 Do0 f17 mainOut f13 tail #connect
 Do0 f13 head f12 mainIn #connect
+Do0 f12 mainOut f20 tail #connect
+Do0 f20 head f19 mainIn #connect
+Do0 f19 mainOut f16 tail #connect
+Do0 f16 head f15 mainIn #connect
