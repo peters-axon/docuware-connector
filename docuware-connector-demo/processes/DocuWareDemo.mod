@@ -85,7 +85,7 @@ Do0 f5 @C|.responsibility Everybody #txt
 Do0 f5 81 209 30 30 -52 33 #rect
 Do0 f6 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
 Do0 f6 path /Organizations #txt
-Do0 f6 headers 'Accept=application/json;
+Do0 f6 headers 'Accept=application/xml;
 ' #txt
 Do0 f6 resultType com.docuware.dev.schema._public.services.platform.Organizations #txt
 Do0 f6 responseCode out.organizations.getOrganization().addAll(result.getOrganization()); #txt
