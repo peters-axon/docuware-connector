@@ -6,7 +6,7 @@ info:
     preparing for a Platform workshop.
   version: 1.0.0
 servers:
-  - url: http://{{serverurl}}
+  - url: http://{{serverurl}}/docuware/platform
   - url: https://sdkinc.inhouse.docuware.cloud
 tags:
   - name: Authentication
@@ -34,7 +34,7 @@ tags:
   - name: Document Clip/Unclip Stack/Unstack
   - name: User/Group/Role handling
 paths:
-  /{Platform}/Account/Logon:
+  /Account/Logon:
     post:
       tags:
         - Authentication
@@ -191,7 +191,7 @@ paths:
                 content="0;url=/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon"><body>You
                 are redirected to enter your <a
                 href="/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon">credentials</a></body></html>
-  /{Platform}/Organization/LoginToken:
+  /Organization/LoginToken:
     post:
       tags:
         - Authentication
@@ -332,7 +332,7 @@ paths:
                 content="0;url=/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon"><body>You
                 are redirected to enter your <a
                 href="/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon">credentials</a></body></html>
-  /{Platform}/Account/TokenLogOn:
+  /Account/TokenLogOn:
     post:
       tags:
         - Authentication
@@ -481,7 +481,7 @@ paths:
                 content="0;url=/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon"><body>You
                 are redirected to enter your <a
                 href="/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon">credentials</a></body></html>
-  /{Platform}/Account/TrustedLogOn:
+  /Account/TrustedLogOn:
     post:
       tags:
         - Authentication
@@ -554,7 +554,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/Organizations:
+  /Organizations:
     get:
       tags:
         - Basics
@@ -630,7 +630,7 @@ paths:
               example: >-
                 {"Organization":[{"Links":[{"rel":"filecabinets","href":"/DocuWare/Platform/FileCabinets?orgid=1"},{"rel":"self","href":"/DocuWare/Platform/Organizations/1"},{"rel":"users","href":"/DocuWare/Platform/Organizations/1/Users"},{"rel":"dialogs","href":"/DocuWare/Platform/Organizations/1/Dialogs"},{"rel":"roles","href":"/DocuWare/Platform/Organizations/1/Roles"},{"rel":"webSettings","href":"/DocuWare/Platform/Organizations/1/WebSettings"},{"rel":"loginToken","href":"/DocuWare/Platform/Organizations/1/LoginToken"},{"rel":"userInfo","href":"/DocuWare/Platform/Organizations/1/UserInfo"},{"rel":"bpwService","href":"/DocuWare/Platform/Bpw?orgID=1"}],"Name":"Peters
                 Engineering","Id":"1"}]}
-  /{Platform}/FileCabinets:
+  /FileCabinets:
     get:
       tags:
         - Basics
@@ -714,7 +714,7 @@ paths:
                 {"FileCabinet":[{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/FieldValueStatistics"}],"Color":"Black","Name":"Document
                 Pool","Id":"8581a8cf-99e5-432f-9193-b2d908e9b2b5","IsBasket":false,"Usable":true,"Default":false,"VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false},{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/FieldValueStatistics"}],"Color":"Green","Name":"Inbox","Id":"b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f","IsBasket":true,"Usable":true,"Default":true,"AssignedCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false},{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/FieldValueStatistics"}],"Color":"Green","Name":"Platform
                 Workshop","Id":"41537414-0df0-4d08-adb5-fa40564b80f9","IsBasket":false,"Usable":true,"Default":false,"VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false}]}
-  /{Platform}/FileCabinets/{FileCabinetId}:
+  /FileCabinets/{FileCabinetId}:
     get:
       tags:
         - Basics
@@ -743,7 +743,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckoutToFileSystem:
+  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckoutToFileSystem:
     post:
       tags:
         - Check-in check-out a document.
@@ -848,7 +848,7 @@ paths:
                 type: string
               example: >-
                 {"Links":[{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/18-0/Data?documentInfoInFileName=True"}]}
-  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckInFromFileSystem:
+  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckInFromFileSystem:
     post:
       tags:
         - Check-in check-out a document.
@@ -1033,7 +1033,7 @@ paths:
                     </Sections>
                     <ContentType>application/pdf</ContentType>
                 </Document>
-  /{Platform}/FileCabinets/{FileCabinetId}/Operations/ProcessDocumentAction:
+  /FileCabinets/{FileCabinetId}/Operations/ProcessDocumentAction:
     put:
       tags:
         - Check-in check-out a document.
@@ -1503,7 +1503,7 @@ paths:
                 IntellixTrust: None
                 VersionStatus: Manual
                 FileCabinetId: 2063b42c-416c-46f5-a529-f2fdaa2836c4
-  /{Platform}/FileCabinets/{FileCabinetId}/Rendering/{DocumentId}-{Section}/Thumbnail:
+  /FileCabinets/{FileCabinetId}/Rendering/{DocumentId}-{Section}/Thumbnail:
     get:
       tags:
         - Download
@@ -1547,7 +1547,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/FileDownload:
+  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/FileDownload:
     get:
       tags:
         - Download
@@ -1584,7 +1584,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Sections/{Section}/Data:
+  /FileCabinets/{FileCabinetId}/Sections/{Section}/Data:
     get:
       tags:
         - Download
@@ -1615,7 +1615,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Documents:
+  /FileCabinets/{FileCabinetId}/Documents:
     get:
       tags:
         - Search in FileCabinets > Search in single FileCabinet
@@ -1778,7 +1778,7 @@ paths:
                 type: string
               example: >-
                 {"SignatureStatus":["Allow_Annotations","Allow_Stamps","Allow_Signature_Stamps"],"Pages":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=False"}]},"Thumbnails":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=True"}]},"Links":[{"rel":"document","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/20"},{"rel":"deepZoomImage","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/woa/dz.dzi"},{"rel":"deepZoomImageWithAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/level%3dall/dz.dzi"},{"rel":"fileDownload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/FileDownload"},{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Data"},{"rel":"textshot","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Textshot"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0"},{"rel":"textAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/TextAnnotation"},{"rel":"pagesBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlockResult"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Thumbnail?v=635707763771210165\u0026page=0"},{"rel":"positions","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Positions"}],"Id":"20-0","ContentType":"application/pdf","HaveMorePages":false,"PageCount":1,"FileSize":96674,"OriginalFileName":"365bc42b-9503-4552-bf17-1a28ba0c51cd.pdf","ContentModified":"\/Date(1435179624609)\/","HasTextAnnotation":false}
-  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}:
+  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}:
     get:
       tags:
         - Update index values
@@ -1940,7 +1940,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{DestinationFileCabinetId}/Task/Transfer:
+  /FileCabinets/{DestinationFileCabinetId}/Task/Transfer:
     post:
       tags:
         - Documents
@@ -1999,7 +1999,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Sections:
+  /FileCabinets/{FileCabinetId}/Sections:
     get:
       tags:
         - Sections
@@ -2126,7 +2126,7 @@ paths:
                 type: string
               example: >-
                 {"SignatureStatus":["Allow_Annotations","Allow_Stamps","Allow_Signature_Stamps"],"Pages":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=False"}]},"Thumbnails":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=True"}]},"Links":[{"rel":"document","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/20"},{"rel":"deepZoomImage","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/woa/dz.dzi"},{"rel":"deepZoomImageWithAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/level%3dall/dz.dzi"},{"rel":"fileDownload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/FileDownload"},{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Data"},{"rel":"textshot","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Textshot"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0"},{"rel":"textAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/TextAnnotation"},{"rel":"pagesBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlockResult"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Thumbnail?v=635707763771210165\u0026page=0"},{"rel":"positions","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Positions"}],"Id":"20-0","ContentType":"application/pdf","HaveMorePages":false,"PageCount":1,"FileSize":96674,"OriginalFileName":"365bc42b-9503-4552-bf17-1a28ba0c51cd.pdf","ContentModified":"\/Date(1435179624609)\/","HasTextAnnotation":false}
-  /{Platform}/FileCabinets/{FileCabinetId}/Sections/{Section}:
+  /FileCabinets/{FileCabinetId}/Sections/{Section}:
     get:
       tags:
         - Sections
@@ -2182,7 +2182,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Dialogs:
+  /FileCabinets/{FileCabinetId}/Dialogs:
     get:
       tags:
         - Search in FileCabinets > Get search dialog
@@ -2289,7 +2289,7 @@ paths:
                 Workshop","DisplayName":"Standard List View Result
                 Dialog","IsForMobile":false,"AssignedDialogId":"i_41d3c3ad-3393-4767-9422-2c13d5259b3b","Color":"Green","IsDefault":true,"Type":"ResultList"},{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=00000000-0000-0000-0000-000000000000"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/00000000-0000-0000-0000-000000000000?dialogType=Search"}],"Id":"00000000-0000-0000-0000-000000000000","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
                 Workshop","DisplayName":"custom","IsForMobile":false,"Color":"Green","IsDefault":false,"Type":"Search"}]}
-  /{Platform}/FileCabinets/{FileCabinetId}/Dialogs/{SearchDialogId}:
+  /FileCabinets/{FileCabinetId}/Dialogs/{SearchDialogId}:
     get:
       tags:
         - Search in FileCabinets > Get search dialog
@@ -2393,7 +2393,7 @@ paths:
                 Date","DWFieldType":"Date","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":false,"Length":-1,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false}],"Query":{"ForceRefresh":false,"Expression":"dialog;76301253-0b28-469d-9388-4e8eef51193a","Fields":["COMPANY","CONTACT","SUBJECT","DOCTYPE","DATE","STATUS"],"SortOrder":[{"Field":"DWSTOREDATETIME","Direction":"Desc"}],"Links":[{"rel":"result","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?q=dialog%3B76301253-0b28-469d-9388-4e8eef51193a\u0026sortOrder=DWSTOREDATETIME%20Desc\u0026fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS"},{"rel":"dialogExpression","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/DialogExpression?sortOrder=DWSTOREDATETIME%20Desc\u0026fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS\u0026dialogId=76301253-0b28-469d-9388-4e8eef51193a"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/76301253-0b28-469d-9388-4e8eef51193a/BatchUpdateFields?sortOrder=DWSTOREDATETIME%20Desc\u0026fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS"}]},"Properties":{"$type":"DialogPropertiesSearch","LogicalOperator":{"DefaultOperator":"And","Show":false}},"Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/76301253-0b28-469d-9388-4e8eef51193a?dialogType=Search"},{"rel":"assignedDialog","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=ResultList"},{"rel":"selectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a"}],"Id":"76301253-0b28-469d-9388-4e8eef51193a","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
                 Workshop","DisplayName":"Standard Search
                 Dialog","IsForMobile":false,"AssignedDialogId":"41d3c3ad-3393-4767-9422-2c13d5259b3b","Color":"Green","IsDefault":true,"Type":"Search"}
-  /{Platform}/FileCabinets/{FileCabinetId}/Query/CountExpression:
+  /FileCabinets/{FileCabinetId}/Query/CountExpression:
     get:
       tags:
         - Get total amount of documents
@@ -2430,7 +2430,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Query/DialogExpressionLink:
+  /FileCabinets/{FileCabinetId}/Query/DialogExpressionLink:
     post:
       tags:
         - Search in FileCabinets > Search in single FileCabinet
@@ -2539,7 +2539,7 @@ paths:
                 type: string
               example: >-
                 /DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?q=dialog%3B76301253-0b28-469d-9388-4e8eef51193a%3B%3BOr%3B%3BCOMPANY%3AUS-Steel%3BDATE%3A%3E%3D2010-03-01%20AND%20%3C%3D2010-03-30&fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS&sortOrder=COMPANY%20Asc
-  /{Platform}/FileCabinets/{FileCabinetId}/Query/DialogExpression:
+  /FileCabinets/{FileCabinetId}/Query/DialogExpression:
     post:
       tags:
         - Search in FileCabinets
@@ -2578,7 +2578,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/Fields:
+  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/Fields:
     put:
       tags:
         - Update index values
@@ -2745,7 +2745,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/DocumentApplicationProperties:
+  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/DocumentApplicationProperties:
     post:
       tags:
         - ApplicationProperties
@@ -2790,7 +2790,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/Annotation:
+  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/Annotation:
     post:
       tags:
         - Annotations/Stamps
@@ -2861,7 +2861,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/WorkflowHistory:
+  /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/WorkflowHistory:
     get:
       tags:
         - History
@@ -2887,7 +2887,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/Workflows/0c135ffb-1616-4607-9d9f-f3ea7789de12/Instances/be39345c-af7e-521e-81ca-12fc4b8c7d02/History:
+  /Workflows/0c135ffb-1616-4607-9d9f-f3ea7789de12/Instances/be39345c-af7e-521e-81ca-12fc4b8c7d02/History:
     get:
       tags:
         - History
@@ -2903,7 +2903,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{FileCabinetId}/Query/SelectListExpression:
+  /FileCabinets/{FileCabinetId}/Query/SelectListExpression:
     post:
       tags:
         - SelectLists
@@ -2955,7 +2955,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{BasketId}/Operations/ContentMerge:
+  /FileCabinets/{BasketId}/Operations/ContentMerge:
     post:
       tags:
         - Document Clip/Unclip Stack/Unstack
@@ -3007,7 +3007,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/FileCabinets/{BasketId}/Operations/ContentDivide:
+  /FileCabinets/{BasketId}/Operations/ContentDivide:
     post:
       tags:
         - Document Clip/Unclip Stack/Unstack
@@ -3061,7 +3061,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/Organization/Users:
+  /Organization/Users:
     get:
       tags:
         - User/Group/Role handling
@@ -3082,7 +3082,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/Organization/UserByID:
+  /Organization/UserByID:
     get:
       tags:
         - User/Group/Role handling
@@ -3108,7 +3108,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/Organization/UserInfo:
+  /Organization/UserInfo:
     post:
       tags:
         - User/Group/Role handling
@@ -3144,7 +3144,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/Organization/Roles:
+  /Organization/Roles:
     get:
       tags:
         - User/Group/Role handling
@@ -3165,7 +3165,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/Organization/UserRoles:
+  /Organization/UserRoles:
     get:
       tags:
         - User/Group/Role handling
@@ -3216,7 +3216,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/Organization/Groups:
+  /Organization/Groups:
     get:
       tags:
         - User/Group/Role handling
@@ -3237,7 +3237,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /{Platform}/Organization/UserGroups:
+  /Organization/UserGroups:
     get:
       tags:
         - User/Group/Role handling
