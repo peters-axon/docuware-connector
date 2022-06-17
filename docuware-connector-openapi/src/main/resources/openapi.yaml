@@ -1,0 +1,3290 @@
+openapi: 3.0.0
+info:
+  title: Platform Workshop
+  description: >-
+    This collection contains requests and stored responses you can use when
+    preparing for a Platform workshop.
+  version: 1.0.0
+servers:
+  - url: http://{{serverurl}}
+  - url: https://sdkinc.inhouse.docuware.cloud
+tags:
+  - name: Authentication
+  - name: Basics
+    description: Hera you find request you usually will start with.
+  - name: Check-in check-out a document.
+  - name: Download
+  - name: Documents
+  - name: Sections
+  - name: Get total amount of documents
+  - name: Search in FileCabinets
+  - name: Search in FileCabinets > Get search dialog
+  - name: Search in FileCabinets > Search in single FileCabinet
+  - name: Update index values
+  - name: How to create data record and upload files
+  - name: IFrame
+    description: >-
+      Parameter p = SRLV (search dialog, result list and viewer), RLV (result
+      list and viewer) ,  V (Viewer) , D (Download) 
+  - name: ApplicationProperties
+    description: Examples about how to handle ApplicationProperties
+  - name: Annotations/Stamps
+  - name: History
+  - name: SelectLists
+  - name: Document Clip/Unclip Stack/Unstack
+  - name: User/Group/Role handling
+paths:
+  /{Platform}/Account/Logon:
+    post:
+      tags:
+        - Authentication
+      summary: Forms Authentication include HostID
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                LicenseType:
+                  type: string
+                Organization:
+                  type: string
+                  description: Organisationsname, Nutzername
+                  example: '{{Organization}},{{Username}}'
+                Password:
+                  type: string
+                  example: '{{Password}}'
+                RedirectToMyselfInCaseOfError:
+                  type: boolean
+                  example: 'false'
+                RememberMe:
+                  type: boolean
+                  example: 'false'
+                UserName:
+                  type: string
+                  example: '{{Username}}'
+                HostID:
+                  type: string
+                  example: This_Is_A_Test
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/x-www-form-urlencoded
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '1467'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:13:46 GMT
+            Expires:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:13:45 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=98
+            Last-Modified:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:13:45 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*,Accept-Encoding'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"Links":[{"rel":"organizations","href":"/DocuWare/Platform/Organizations"},{"rel":"uriTemplates","href":"/DocuWare/Platform/Home/Templates"},{"rel":"loginCookie","href":"/DocuWare/Platform/Home/Token"},{"rel":"login","href":"/DocuWare/Platform/Account/Logon"},{"rel":"guestLogin","href":"/DocuWare/Platform/Account/LogOnGuest"},{"rel":"trustedLogin","href":"/DocuWare/Platform/Account/TrustedLogOn"},{"rel":"windowsLogin","href":"/DocuWare/Platform/Account/LogonNTLM"},{"rel":"changePassword","href":"/DocuWare/Platform/Account/ChangePassword"},{"rel":"resetPassword","href":"/DocuWare/Platform/Account/ResetPassword"},{"rel":"tokenLogin","href":"/DocuWare/Platform/Account/TokenLogOn"},{"rel":"logout","href":"/DocuWare/Platform/Account/Logoff"},{"rel":"disconnect","href":"/DocuWare/Platform/Account/Disconnect"},{"rel":"rootSchema","href":"/DocuWare/Platform/Schema/File/schema-0.xsd"},{"rel":"log","href":"/DocuWare/Platform/Home/LogMessages"},{"rel":"adhocRendering","href":"/DocuWare/Platform/AdhocRendering"},{"rel":"permanentUrl","href":"/DocuWare/Platform/Account/PermanentUrl"},{"rel":"-webClientDirectAccessTemplate","href":"/DocuWare/Platform/WebClient/Viewer/DocumentData?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}"}],"Tests":{"Links":[{"rel":"htmlTestClient","href":"/DocuWare/Platform/HtmlClient/Html"}]},"Documentation":{"Links":[{"rel":"schemaSearch","href":"/DocuWare/Platform/Schema/Search"},{"rel":"uriTemplatesDocumentation","href":"/DocuWare/Platform/Home/UriTemplatesDocumentation"},{"rel":"schemas","href":"/DocuWare/Platform/Schema"},{"rel":"linkModelOverview","href":"/DocuWare/Platform/Content/PlatformLinkModel.pdf"},{"rel":"documentation","href":"/DocuWare/Platform/Documentation","type":"text/html"}]},"Resources":[{"Name":"workflowDocumentHistory","UriPattern":"/DocuWare/Platform/Bpw/Workflows/DocumentHistory?orgID={orgID}\u0026fileCabinetID={fileCabinetID}\u0026dwVerID={dwVerID}"},{"Name":"processDocumentAction","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Operations/ProcessDocumentAction?docId={docId}"},{"Name":"createPermanentUrl","UriPattern":"/DocuWare/Platform/Account/PermanentUrl?clientSideChecksum={clientSideChecksum}"},{"Name":"dialog","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Dialogs/{id}?dialogType={dialogType}"},{"Name":"batchDialogUpdateFields","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Dialogs/{id}/BatchUpdateFields?fields={fields}\u0026sortOrder={sortOrder}"},{"Name":"documentDelete","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"document","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"documentAppendFiles","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"documents","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents?q={q}\u0026fields={fields}\u0026sortOrder={sortOrder}\u0026start={start}\u0026msStart={msStart}\u0026count={count}\u0026format={format}"},{"Name":"uploadDocument","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents?processTextshot={processTextshot}\u0026imageProcessing={imageProcessing}\u0026redirect={redirect}\u0026storeDialogId={storeDialogId}\u0026checkFileNameForCheckinInfo={checkFileNameForCheckinInfo}"},{"Name":"documentIndexFields","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Fields"},{"Name":"intellixSuggestions","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Suggestions?normalizeCoordinates={normalizeCoordinates}"},{"Name":"documentsFileDownload","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/FileDownload?targetFileType={targetFileType}\u0026keepAnnotations={keepAnnotations}\u0026downloadFile={downloadFile}\u0026autoPrint={autoPrint}\u0026layers={layers}\u0026append={append}"},{"Name":"documentRights","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Rights"},{"Name":"documentDocumentLinks","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/DocumentLinks"},{"Name":"checkout","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckOutToFileSystem"},{"Name":"checkoutDocument","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckoutDocument"},{"Name":"checkin","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckInFromFileSystem"},{"Name":"documentAnnotations","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Annotation"},{"Name":"fileCabinet","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}"},{"Name":"pagesBlock","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Sections/{id}/PagesBlock?start={start}\u0026count={count}\u0026embedThumbnailData={embedThumbnailData}\u0026thumbnailSize={thumbnailSize}\u0026thumbnailsOnly={thumbnailsOnly}"},{"Name":"annotation","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Sections/{id}/Annotation?page={page}"},{"Name":"clientSetupData","UriPattern":"/DocuWare/Platform/Home/ClientSetupInfo?orgId={orgId}\u0026baseAddress={baseAddress}"},{"Name":"validateUser","UriPattern":"/DocuWare/Platform/Organizations/{id}/ValidateUser"},{"Name":"webSettings","UriPattern":"/DocuWare/Platform/Organizations/{id}/WebSettings"},{"Name":"storeIntegration","UriPattern":"/DocuWare/Platform/WebClient/Client/Store?dlgID={dlgID}\u0026fc={fc}\u0026culture={culture}\u0026orgId={orgId}\u0026validateMandatoryFields={validateMandatoryFields}"},{"Name":"indexesIntegration","UriPattern":"/DocuWare/Platform/WebClient/Client/Indexes?rl={rl}\u0026fc={fc}\u0026did={did}\u0026culture={culture}\u0026orgId={orgId}"},{"Name":"stamps","UriPattern":"/DocuWare/Platform/WebClient/Viewer/Stamps?fileCabinetId={fileCabinetId}\u0026stampType={stampType}"},{"Name":"documentData","UriPattern":"/DocuWare/Platform/WebClient/Viewer/DocumentData?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026includeDocument={includeDocument}\u0026includeSection={includeSection}\u0026includePage={includePage}\u0026checksum={checksum}\u0026latestVersion={latestVersion}\u0026withContentArea={withContentArea}"},{"Name":"getDocument","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetDocument?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026checksum={checksum}\u0026latestVersion={latestVersion}\u0026withContentArea={withContentArea}"},{"Name":"getSection","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetSection?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026withContentArea={withContentArea}"},{"Name":"getPage","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetPage?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026withContentArea={withContentArea}"}],"Version":"6.9.0.22"}
+        '401':
+          description: Unauthorized
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '179'
+            Content-Type:
+              schema:
+                type: string
+                example: text/html; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:14:37 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=98
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: Accept-Encoding
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                <html><meta http-equiv="refresh"
+                content="0;url=/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon"><body>You
+                are redirected to enter your <a
+                href="/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon">credentials</a></body></html>
+  /{Platform}/Organization/LoginToken:
+    post:
+      tags:
+        - Authentication
+      summary: Get Token
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                TargetProducts:
+                  - PlatformService
+                Usage: Multi
+                Lifetime: 1.00:00:00
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '1467'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:13:46 GMT
+            Expires:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:13:45 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=98
+            Last-Modified:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:13:45 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*,Accept-Encoding'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"Links":[{"rel":"organizations","href":"/DocuWare/Platform/Organizations"},{"rel":"uriTemplates","href":"/DocuWare/Platform/Home/Templates"},{"rel":"loginCookie","href":"/DocuWare/Platform/Home/Token"},{"rel":"login","href":"/DocuWare/Platform/Account/Logon"},{"rel":"guestLogin","href":"/DocuWare/Platform/Account/LogOnGuest"},{"rel":"trustedLogin","href":"/DocuWare/Platform/Account/TrustedLogOn"},{"rel":"windowsLogin","href":"/DocuWare/Platform/Account/LogonNTLM"},{"rel":"changePassword","href":"/DocuWare/Platform/Account/ChangePassword"},{"rel":"resetPassword","href":"/DocuWare/Platform/Account/ResetPassword"},{"rel":"tokenLogin","href":"/DocuWare/Platform/Account/TokenLogOn"},{"rel":"logout","href":"/DocuWare/Platform/Account/Logoff"},{"rel":"disconnect","href":"/DocuWare/Platform/Account/Disconnect"},{"rel":"rootSchema","href":"/DocuWare/Platform/Schema/File/schema-0.xsd"},{"rel":"log","href":"/DocuWare/Platform/Home/LogMessages"},{"rel":"adhocRendering","href":"/DocuWare/Platform/AdhocRendering"},{"rel":"permanentUrl","href":"/DocuWare/Platform/Account/PermanentUrl"},{"rel":"-webClientDirectAccessTemplate","href":"/DocuWare/Platform/WebClient/Viewer/DocumentData?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}"}],"Tests":{"Links":[{"rel":"htmlTestClient","href":"/DocuWare/Platform/HtmlClient/Html"}]},"Documentation":{"Links":[{"rel":"schemaSearch","href":"/DocuWare/Platform/Schema/Search"},{"rel":"uriTemplatesDocumentation","href":"/DocuWare/Platform/Home/UriTemplatesDocumentation"},{"rel":"schemas","href":"/DocuWare/Platform/Schema"},{"rel":"linkModelOverview","href":"/DocuWare/Platform/Content/PlatformLinkModel.pdf"},{"rel":"documentation","href":"/DocuWare/Platform/Documentation","type":"text/html"}]},"Resources":[{"Name":"workflowDocumentHistory","UriPattern":"/DocuWare/Platform/Bpw/Workflows/DocumentHistory?orgID={orgID}\u0026fileCabinetID={fileCabinetID}\u0026dwVerID={dwVerID}"},{"Name":"processDocumentAction","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Operations/ProcessDocumentAction?docId={docId}"},{"Name":"createPermanentUrl","UriPattern":"/DocuWare/Platform/Account/PermanentUrl?clientSideChecksum={clientSideChecksum}"},{"Name":"dialog","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Dialogs/{id}?dialogType={dialogType}"},{"Name":"batchDialogUpdateFields","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Dialogs/{id}/BatchUpdateFields?fields={fields}\u0026sortOrder={sortOrder}"},{"Name":"documentDelete","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"document","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"documentAppendFiles","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"documents","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents?q={q}\u0026fields={fields}\u0026sortOrder={sortOrder}\u0026start={start}\u0026msStart={msStart}\u0026count={count}\u0026format={format}"},{"Name":"uploadDocument","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents?processTextshot={processTextshot}\u0026imageProcessing={imageProcessing}\u0026redirect={redirect}\u0026storeDialogId={storeDialogId}\u0026checkFileNameForCheckinInfo={checkFileNameForCheckinInfo}"},{"Name":"documentIndexFields","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Fields"},{"Name":"intellixSuggestions","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Suggestions?normalizeCoordinates={normalizeCoordinates}"},{"Name":"documentsFileDownload","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/FileDownload?targetFileType={targetFileType}\u0026keepAnnotations={keepAnnotations}\u0026downloadFile={downloadFile}\u0026autoPrint={autoPrint}\u0026layers={layers}\u0026append={append}"},{"Name":"documentRights","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Rights"},{"Name":"documentDocumentLinks","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/DocumentLinks"},{"Name":"checkout","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckOutToFileSystem"},{"Name":"checkoutDocument","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckoutDocument"},{"Name":"checkin","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckInFromFileSystem"},{"Name":"documentAnnotations","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Annotation"},{"Name":"fileCabinet","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}"},{"Name":"pagesBlock","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Sections/{id}/PagesBlock?start={start}\u0026count={count}\u0026embedThumbnailData={embedThumbnailData}\u0026thumbnailSize={thumbnailSize}\u0026thumbnailsOnly={thumbnailsOnly}"},{"Name":"annotation","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Sections/{id}/Annotation?page={page}"},{"Name":"clientSetupData","UriPattern":"/DocuWare/Platform/Home/ClientSetupInfo?orgId={orgId}\u0026baseAddress={baseAddress}"},{"Name":"validateUser","UriPattern":"/DocuWare/Platform/Organizations/{id}/ValidateUser"},{"Name":"webSettings","UriPattern":"/DocuWare/Platform/Organizations/{id}/WebSettings"},{"Name":"storeIntegration","UriPattern":"/DocuWare/Platform/WebClient/Client/Store?dlgID={dlgID}\u0026fc={fc}\u0026culture={culture}\u0026orgId={orgId}\u0026validateMandatoryFields={validateMandatoryFields}"},{"Name":"indexesIntegration","UriPattern":"/DocuWare/Platform/WebClient/Client/Indexes?rl={rl}\u0026fc={fc}\u0026did={did}\u0026culture={culture}\u0026orgId={orgId}"},{"Name":"stamps","UriPattern":"/DocuWare/Platform/WebClient/Viewer/Stamps?fileCabinetId={fileCabinetId}\u0026stampType={stampType}"},{"Name":"documentData","UriPattern":"/DocuWare/Platform/WebClient/Viewer/DocumentData?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026includeDocument={includeDocument}\u0026includeSection={includeSection}\u0026includePage={includePage}\u0026checksum={checksum}\u0026latestVersion={latestVersion}\u0026withContentArea={withContentArea}"},{"Name":"getDocument","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetDocument?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026checksum={checksum}\u0026latestVersion={latestVersion}\u0026withContentArea={withContentArea}"},{"Name":"getSection","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetSection?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026withContentArea={withContentArea}"},{"Name":"getPage","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetPage?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026withContentArea={withContentArea}"}],"Version":"6.9.0.22"}
+        '401':
+          description: Unauthorized
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '179'
+            Content-Type:
+              schema:
+                type: string
+                example: text/html; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:14:37 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=98
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: Accept-Encoding
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                <html><meta http-equiv="refresh"
+                content="0;url=/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon"><body>You
+                are redirected to enter your <a
+                href="/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon">credentials</a></body></html>
+  /{Platform}/Account/TokenLogOn:
+    post:
+      tags:
+        - Authentication
+      summary: Forms Authentication with Token include HostID
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                Token:
+                  type: string
+                  example: >-
+                    24750358-8e9c-4e5c-be1d-3d781846c471_7a6e76ca-e9d1-43ac-bfa4-5af986219f14
+                HostID:
+                  type: string
+                  example: This_Is_A_Test
+                LicenseType:
+                  type: string
+                  example: PlatformService
+                RememberMe:
+                  type: boolean
+                  example: 'false'
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/x-www-form-urlencoded
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '1467'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:13:46 GMT
+            Expires:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:13:45 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=98
+            Last-Modified:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:13:45 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*,Accept-Encoding'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"Links":[{"rel":"organizations","href":"/DocuWare/Platform/Organizations"},{"rel":"uriTemplates","href":"/DocuWare/Platform/Home/Templates"},{"rel":"loginCookie","href":"/DocuWare/Platform/Home/Token"},{"rel":"login","href":"/DocuWare/Platform/Account/Logon"},{"rel":"guestLogin","href":"/DocuWare/Platform/Account/LogOnGuest"},{"rel":"trustedLogin","href":"/DocuWare/Platform/Account/TrustedLogOn"},{"rel":"windowsLogin","href":"/DocuWare/Platform/Account/LogonNTLM"},{"rel":"changePassword","href":"/DocuWare/Platform/Account/ChangePassword"},{"rel":"resetPassword","href":"/DocuWare/Platform/Account/ResetPassword"},{"rel":"tokenLogin","href":"/DocuWare/Platform/Account/TokenLogOn"},{"rel":"logout","href":"/DocuWare/Platform/Account/Logoff"},{"rel":"disconnect","href":"/DocuWare/Platform/Account/Disconnect"},{"rel":"rootSchema","href":"/DocuWare/Platform/Schema/File/schema-0.xsd"},{"rel":"log","href":"/DocuWare/Platform/Home/LogMessages"},{"rel":"adhocRendering","href":"/DocuWare/Platform/AdhocRendering"},{"rel":"permanentUrl","href":"/DocuWare/Platform/Account/PermanentUrl"},{"rel":"-webClientDirectAccessTemplate","href":"/DocuWare/Platform/WebClient/Viewer/DocumentData?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}"}],"Tests":{"Links":[{"rel":"htmlTestClient","href":"/DocuWare/Platform/HtmlClient/Html"}]},"Documentation":{"Links":[{"rel":"schemaSearch","href":"/DocuWare/Platform/Schema/Search"},{"rel":"uriTemplatesDocumentation","href":"/DocuWare/Platform/Home/UriTemplatesDocumentation"},{"rel":"schemas","href":"/DocuWare/Platform/Schema"},{"rel":"linkModelOverview","href":"/DocuWare/Platform/Content/PlatformLinkModel.pdf"},{"rel":"documentation","href":"/DocuWare/Platform/Documentation","type":"text/html"}]},"Resources":[{"Name":"workflowDocumentHistory","UriPattern":"/DocuWare/Platform/Bpw/Workflows/DocumentHistory?orgID={orgID}\u0026fileCabinetID={fileCabinetID}\u0026dwVerID={dwVerID}"},{"Name":"processDocumentAction","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Operations/ProcessDocumentAction?docId={docId}"},{"Name":"createPermanentUrl","UriPattern":"/DocuWare/Platform/Account/PermanentUrl?clientSideChecksum={clientSideChecksum}"},{"Name":"dialog","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Dialogs/{id}?dialogType={dialogType}"},{"Name":"batchDialogUpdateFields","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Dialogs/{id}/BatchUpdateFields?fields={fields}\u0026sortOrder={sortOrder}"},{"Name":"documentDelete","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"document","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"documentAppendFiles","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"documents","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents?q={q}\u0026fields={fields}\u0026sortOrder={sortOrder}\u0026start={start}\u0026msStart={msStart}\u0026count={count}\u0026format={format}"},{"Name":"uploadDocument","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents?processTextshot={processTextshot}\u0026imageProcessing={imageProcessing}\u0026redirect={redirect}\u0026storeDialogId={storeDialogId}\u0026checkFileNameForCheckinInfo={checkFileNameForCheckinInfo}"},{"Name":"documentIndexFields","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Fields"},{"Name":"intellixSuggestions","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Suggestions?normalizeCoordinates={normalizeCoordinates}"},{"Name":"documentsFileDownload","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/FileDownload?targetFileType={targetFileType}\u0026keepAnnotations={keepAnnotations}\u0026downloadFile={downloadFile}\u0026autoPrint={autoPrint}\u0026layers={layers}\u0026append={append}"},{"Name":"documentRights","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Rights"},{"Name":"documentDocumentLinks","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/DocumentLinks"},{"Name":"checkout","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckOutToFileSystem"},{"Name":"checkoutDocument","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckoutDocument"},{"Name":"checkin","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckInFromFileSystem"},{"Name":"documentAnnotations","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Annotation"},{"Name":"fileCabinet","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}"},{"Name":"pagesBlock","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Sections/{id}/PagesBlock?start={start}\u0026count={count}\u0026embedThumbnailData={embedThumbnailData}\u0026thumbnailSize={thumbnailSize}\u0026thumbnailsOnly={thumbnailsOnly}"},{"Name":"annotation","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Sections/{id}/Annotation?page={page}"},{"Name":"clientSetupData","UriPattern":"/DocuWare/Platform/Home/ClientSetupInfo?orgId={orgId}\u0026baseAddress={baseAddress}"},{"Name":"validateUser","UriPattern":"/DocuWare/Platform/Organizations/{id}/ValidateUser"},{"Name":"webSettings","UriPattern":"/DocuWare/Platform/Organizations/{id}/WebSettings"},{"Name":"storeIntegration","UriPattern":"/DocuWare/Platform/WebClient/Client/Store?dlgID={dlgID}\u0026fc={fc}\u0026culture={culture}\u0026orgId={orgId}\u0026validateMandatoryFields={validateMandatoryFields}"},{"Name":"indexesIntegration","UriPattern":"/DocuWare/Platform/WebClient/Client/Indexes?rl={rl}\u0026fc={fc}\u0026did={did}\u0026culture={culture}\u0026orgId={orgId}"},{"Name":"stamps","UriPattern":"/DocuWare/Platform/WebClient/Viewer/Stamps?fileCabinetId={fileCabinetId}\u0026stampType={stampType}"},{"Name":"documentData","UriPattern":"/DocuWare/Platform/WebClient/Viewer/DocumentData?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026includeDocument={includeDocument}\u0026includeSection={includeSection}\u0026includePage={includePage}\u0026checksum={checksum}\u0026latestVersion={latestVersion}\u0026withContentArea={withContentArea}"},{"Name":"getDocument","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetDocument?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026checksum={checksum}\u0026latestVersion={latestVersion}\u0026withContentArea={withContentArea}"},{"Name":"getSection","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetSection?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026withContentArea={withContentArea}"},{"Name":"getPage","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetPage?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026withContentArea={withContentArea}"}],"Version":"6.9.0.22"}
+        '401':
+          description: Unauthorized
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '179'
+            Content-Type:
+              schema:
+                type: string
+                example: text/html; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:14:37 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=98
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: Accept-Encoding
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                <html><meta http-equiv="refresh"
+                content="0;url=/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon"><body>You
+                are redirected to enter your <a
+                href="/DocuWare/Platform/LoginRedirect?returnUrl=%2fDocuWare%2fPlatform%2fAccount%2fLogon">credentials</a></body></html>
+  /{Platform}/Account/TrustedLogOn:
+    post:
+      tags:
+        - Authentication
+      summary: Trusted user
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              properties:
+                ImpersonateName:
+                  type: string
+                  example: '{{Username}}'
+                UserName:
+                  type: string
+                  example: '{{TrustedUserName}}'
+                Password:
+                  type: string
+                  example: '{{TrustedUserPassword}}'
+                Organization:
+                  type: string
+                  example: '{{Organization}}'
+                LicenseType:
+                  type: string
+                  example: PlatformService
+                RememberMe:
+                  type: boolean
+                  example: 'false'
+                RedirectToMyselfInCaseOfError:
+                  type: string
+                  example: 'True'
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: number
+          example: >-
+            text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/x-www-form-urlencoded
+        - name: Upgrade-Insecure-Requests
+          in: header
+          schema:
+            type: integer
+          example: '1'
+        - name: returnUrl
+          in: query
+          schema:
+            type: string
+          example: /DocuWare/Platform/Home/XSL
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /DocuWare/Platform/Account/Logoff:
+    get:
+      tags:
+        - Authentication
+      summary: Logoff
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/Organizations:
+    get:
+      tags:
+        - Basics
+      summary: Get organization
+      description: The response contains the organization the user is currently logged in.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0, s-maxage=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '248'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Tue, 23 Jun 2015 07:25:13 GMT
+            Expires:
+              schema:
+                type: string
+                example: Tue, 23 Jun 2015 07:25:13 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=100
+            Last-Modified:
+              schema:
+                type: string
+                example: Tue, 23 Jun 2015 07:25:13 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*,Accept-Encoding'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"Organization":[{"Links":[{"rel":"filecabinets","href":"/DocuWare/Platform/FileCabinets?orgid=1"},{"rel":"self","href":"/DocuWare/Platform/Organizations/1"},{"rel":"users","href":"/DocuWare/Platform/Organizations/1/Users"},{"rel":"dialogs","href":"/DocuWare/Platform/Organizations/1/Dialogs"},{"rel":"roles","href":"/DocuWare/Platform/Organizations/1/Roles"},{"rel":"webSettings","href":"/DocuWare/Platform/Organizations/1/WebSettings"},{"rel":"loginToken","href":"/DocuWare/Platform/Organizations/1/LoginToken"},{"rel":"userInfo","href":"/DocuWare/Platform/Organizations/1/UserInfo"},{"rel":"bpwService","href":"/DocuWare/Platform/Bpw?orgID=1"}],"Name":"Peters
+                Engineering","Id":"1"}]}
+  /{Platform}/FileCabinets:
+    get:
+      tags:
+        - Basics
+      summary: Get all file cabinets and document trays
+      description: >-
+        The response contains all file cabinets AND baskets the current user has
+        access to.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: orgid
+          in: query
+          schema:
+            type: string
+          example: '{{OrgId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0, s-maxage=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '850'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Tue, 23 Jun 2015 07:30:18 GMT
+            Expires:
+              schema:
+                type: string
+                example: Tue, 23 Jun 2015 07:30:18 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=100
+            Last-Modified:
+              schema:
+                type: string
+                example: Tue, 23 Jun 2015 07:30:18 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"FileCabinet":[{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/FieldValueStatistics"}],"Color":"Black","Name":"Document
+                Pool","Id":"8581a8cf-99e5-432f-9193-b2d908e9b2b5","IsBasket":false,"Usable":true,"Default":false,"VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false},{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/FieldValueStatistics"}],"Color":"Green","Name":"Inbox","Id":"b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f","IsBasket":true,"Usable":true,"Default":true,"AssignedCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false},{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/FieldValueStatistics"}],"Color":"Green","Name":"Platform
+                Workshop","Id":"41537414-0df0-4d08-adb5-fa40564b80f9","IsBasket":false,"Usable":true,"Default":false,"VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false}]}
+  /{Platform}/FileCabinets/{FileCabinetId}:
+    get:
+      tags:
+        - Basics
+      summary: Get all data for a file cabinet (e.g fields)
+      description: >-
+        You can use "self" relation for each resource in order to get all data
+        related to it.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/xml
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckoutToFileSystem:
+    post:
+      tags:
+        - Check-in check-out a document.
+      summary: Check-out a particular document and download it
+      description: >-
+        **IMPORTANT:** Version management has to be activated for the file
+        cabinet you are using.
+
+
+        The response contains the generated file name in the header
+        "*Content-Disposition*"
+
+
+        E.g.: Content-Disposition → attachment;
+        filename=18+41537414-0df0-4d08-adb5-fa40564b80f9+EmploymentContractWithBarcodeOnBothP.pdf
+
+
+        **IMPORTANT:** You have to use this file name if stored the document to
+        the file system!
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example: ''
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: '*/*'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0, s-maxage=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '160'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:36:10 GMT
+            Expires:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:36:10 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=100
+            Last-Modified:
+              schema:
+                type: string
+                example: Thu, 25 Jun 2015 06:36:10 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*,Accept-Encoding'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"Links":[{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/18-0/Data?documentInfoInFileName=True"}]}
+  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckInFromFileSystem:
+    post:
+      tags:
+        - Check-in check-out a document.
+      summary: Check-in a particular document from file system
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                checkin:
+                  type: string
+                  format: binary
+                file[]:
+                  type: string
+                  format: binary
+      parameters:
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0, s-maxage=0
+            Content-Type:
+              schema:
+                type: string
+                example: application/xml; charset=utf-8
+            Expires:
+              schema:
+                type: string
+                example: Wed, 15 Jul 2020 18:04:48 GMT
+            Last-Modified:
+              schema:
+                type: string
+                example: Wed, 15 Jul 2020 18:04:48 GMT
+            Vary:
+              schema:
+                type: string
+                example: '*'
+            Server:
+              schema:
+                type: number
+                example: Microsoft-IIS/10.0
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+            Date:
+              schema:
+                type: string
+                example: Wed, 15 Jul 2020 18:04:49 GMT
+            Content-Length:
+              schema:
+                type: integer
+                example: '5250'
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                <?xml version="1.0" encoding="utf-8"?>
+
+                <?xml-stylesheet type="text/xsl"
+                href="/DocuWare/Platform/Content/standard.xslt"?>
+
+                <Document
+                xmlns:s="http://dev.docuware.com/schema/public/services"
+                TotalPages="1" Id="6" Title="INV000002"
+                LastModified="2020-07-15T18:04:01Z"
+                CreatedAt="2020-06-24T10:32:35Z" FileSize="57367"
+                SectionCount="1" VersionStatus="Manual"
+                xmlns="http://dev.docuware.com/schema/public/services/platform">
+                    <Fields>
+                        <Field FieldName="DWDOCID" FieldLabel="Doc ID" ReadOnly="true">
+                            <Int>6</Int>
+                        </Field>
+                        <Field FieldName="DWDOCSIZE" FieldLabel="Document Size" ReadOnly="true">
+                            <Int>57367</Int>
+                        </Field>
+                        <Field FieldName="DWSTOREUSER" FieldLabel="Store User" ReadOnly="true">
+                            <String>dwadmin</String>
+                        </Field>
+                        <Field FieldName="DWSTOREDATETIME" FieldLabel="Store Date" ReadOnly="true">
+                            <DateTime>2020-06-24T10:32:35Z</DateTime>
+                        </Field>
+                        <Field FieldName="DWEXTENSION" FieldLabel="Extension" ReadOnly="true">
+                            <String>.pdf</String>
+                        </Field>
+                        <Field FieldName="DWMODUSER" FieldLabel="Modification User" ReadOnly="true">
+                            <String>dwadmin</String>
+                        </Field>
+                        <Field FieldName="DWMODDATETIME" FieldLabel="Modification Date" ReadOnly="true">
+                            <DateTime>2020-07-15T18:04:01Z</DateTime>
+                        </Field>
+                        <Field FieldName="DWSECTIONCOUNT" FieldLabel="File count" ReadOnly="true">
+                            <Int>1</Int>
+                        </Field>
+                        <Field FieldName="DWPAGECOUNT" FieldLabel="File count" ReadOnly="true">
+                            <Int>1</Int>
+                        </Field>
+                        <Field FieldName="DOCUMENT_TYPE" FieldLabel="Art des Dokumentes" IsNull="true" />
+                        <Field FieldName="COMPANY" FieldLabel="Firma">
+                            <String>PowerShell Company</String>
+                        </Field>
+                        <Field FieldName="CONTACT" FieldLabel="Kontaktperson" IsNull="true" />
+                        <Field FieldName="CUSTOMER_ID" FieldLabel="Kundennummer" IsNull="true" />
+                        <Field FieldName="EMAIL" FieldLabel="E-Mail" IsNull="true" />
+                        <Field FieldName="SUBJECT" FieldLabel="Betreff" IsNull="true" />
+                        <Field FieldName="STATUS" FieldLabel="Status" IsNull="true" />
+                        <Field FieldName="DOCUMENT_NUMBER" FieldLabel="Dokumentennummer" IsNull="true" />
+                        <Field FieldName="PROJECT" FieldLabel="Projekt" IsNull="true" />
+                        <Field FieldName="VAT_ID" FieldLabel="Steuernummer" IsNull="true" />
+                        <Field FieldName="IBAN" FieldLabel="IBAN" IsNull="true" />
+                        <Field FieldName="DATE" FieldLabel="Datum">
+                            <Date>2020-06-19</Date>
+                        </Field>
+                        <Field FieldName="PENDING_DATE" FieldLabel="Fälligkeitsdatum" IsNull="true" />
+                        <Field FieldName="AMOUNT" FieldLabel="Betrag" IsNull="true" />
+                        <Field FieldName="TEST" FieldLabel="Test">
+                            <Table />
+                        </Field>
+                        <Field FieldName="DWDISK" FieldLabel="Disk Number" ReadOnly="true">
+                            <Int>1</Int>
+                        </Field>
+                        <Field FieldName="DWDISKNO" FieldLabel="Disk Number" ReadOnly="true">
+                            <Int>1</Int>
+                        </Field>
+                        <Field FieldName="DWVERSIONCOMMENT" FieldLabel="Change comment" ReadOnly="true">
+                            <String>test comment</String>
+                        </Field>
+                        <Field FieldName="DWVERSTATUS" FieldLabel="Versionsstatus" ReadOnly="true">
+                            <String>Current version</String>
+                        </Field>
+                        <Field FieldName="DWUSRVERSION" FieldLabel="Versionsnummer" ReadOnly="true">
+                            <String>2.2</String>
+                        </Field>
+                    </Fields>
+                    <Flags />
+                    <Version Major="2" Minor="2" />
+                    <s:Links>
+                        <s:Link rel="self" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6" />
+                        <s:Link rel="fields" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Fields" />
+                        <s:Link rel="clippedDocuments" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Operations/ClippedDocuments?docId=6" />
+                        <s:Link rel="sections" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Sections?docId=6" />
+                        <s:Link rel="thumbnail" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=248353229&amp;annotations=True" />
+                        <s:Link rel="thumbnailWithoutAnnotation" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=248353229&amp;annotations=False" />
+                        <s:Link rel="lowQualityImage" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Image?v=248353229" />
+                        <s:Link rel="annotationAsSvg" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/AnnotationAsImage?format=Svg&amp;v=248353229" />
+                        <s:Link rel="lock" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Lock" />
+                        <s:Link rel="rights" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Rights" />
+                    </s:Links>
+                    <Sections>
+                        <Section Id="6-6" ContentType="application/pdf" PageCount="1" FileSize="57367" OriginalFileName="6+2063b42c-416c-46f5-a529-f2fdaa2836c4+INV000002(3).pdf" ContentModified="2020-07-15T18:04:48.9842877Z">
+                            <SignatureStatus>Allow_Signature_Stamps</SignatureStatus>
+                            <SignatureStatus>Allow_Annotations</SignatureStatus>
+                            <SignatureStatus>Allow_Stamps</SignatureStatus>
+                            <Pages />
+                            <Thumbnails />
+                            <s:Links>
+                                <s:Link rel="self" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Sections/6-6" />
+                                <s:Link rel="thumbnail" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=248353229&amp;annotations=False" />
+                                <s:Link rel="annotationAsSvg" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/AnnotationAsImage?format=Svg&amp;v=248353229" />
+                            </s:Links>
+                        </Section>
+                    </Sections>
+                    <ContentType>application/pdf</ContentType>
+                </Document>
+  /{Platform}/FileCabinets/{FileCabinetId}/Operations/ProcessDocumentAction:
+    put:
+      tags:
+        - Check-in check-out a document.
+      summary: Undo Check-out
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              example: "<?xml version=\"1.0\"?>\r\n<DocumentActionInfo xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" DocumentAction=\"UndoCheckOut\" xmlns=\"http://dev.docuware.com/schema/public/services/platform\" />"
+      parameters:
+        - name: User-Agent
+          in: header
+          schema:
+            type: number
+          example: >-
+            Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101
+            Firefox/79.0
+        - name: Accept
+          in: header
+          schema:
+            type: number
+          example: application/json, text/javascript, */*; q=0.01
+        - name: Accept-Language
+          in: header
+          schema:
+            type: number
+          example: en-US,en;q=0.5
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/xml
+        - name: X-Requested-With
+          in: header
+          schema:
+            type: string
+          example: XMLHttpRequest
+        - name: Origin
+          in: header
+          schema:
+            type: number
+          example: http://172.18.39.40
+        - name: Connection
+          in: header
+          schema:
+            type: string
+          example: keep-alive
+        - name: Referer
+          in: header
+          schema:
+            type: number
+          example: http://172.18.39.40/DocuWare/Platform/WebClient
+        - name: Cookie
+          in: header
+          schema:
+            type: string
+          example: >-
+            openInNewWindow=False;
+            .DWPLATFORMAUTH=6290610778B8BCCE6FB48DFE8BF550A69396B63EA6305E62BAFC95A36097E3E79A2152F4199D4AC94CB4741750C930F31F5FD452E6FBC8F20F9FAB606D9EB4B6CF2DC53E8EEAB1746D79A60642F6B372F539A8FCAE6241D02B69BE5500DD60EEA68001E32ECE62355D4B4ADF90DCEDEC6146651D0E06B11A0DAE8BDCB5E88E8BA9A68E77201E62939930F1199FA912DFADD073CCE5792EDAD0A3DA70E8F8900E509712BFE3ADE4B3950D66C1CB2942022DBC76C0E0908E279D943E4E4E41AAB384E8E2442921B76F133D1A17CFF357B08887DFAEC8CD28D8AECEAB56EAF0E4DF23F2D2A867BD67916464B24E4DE8648D9E9514F1B4C4E6EB36F2D1448DF74E511700E575C0044AF389F38731E1D84AEED4B13C7EFC4480D5D1E6947E4862358E63E4F6C0FA96D43B17C6C237215D582C05DF8674B54683093E161DA87C5CCB7F3049DD7E90DA8398A84A7B8255AE2BFC43870A23BDEA2918CE159C5AF5BEF0BE53162AE4ED87E3371771F39A096BB70EDAF5FD0FCFD55D4FE675B36E1F9D619E;
+            DWPLATFORMBROWSERID=2F12764054CCB3A6CA28A6746378714C1997FE999B3DD8308DB8991B1D329F3DC5E3CADA73107031C8A13F1815D5B9DBB265009743D066BF62F9A2D510613F49C06D5C0099675F6049C8E444F4EC00379FB72A8578665849D74FEBB80C72F5B2BDA5E9BFAA95B62B3BE10065EC7F3903D24D631218202941E59BD03EF67EFAA97AFE2698E5AA3E37E1F35F96912595BC7369657B4447DC3352C57237989F2061D087E621A2D627E8A5895E7ACF19B7A4EF35170441F50B0370809DDE5F4EE305B6A95B2263FCF9BE8CE63DD06F1FB8BD;
+            DWLanguage=en; DWFormatCulture=en; DWFormatCalendar=;
+            clienttimezone=Europe%2FBerlin
+        - name: docId
+          in: query
+          schema:
+            type: string
+          example: '{{DocumentId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0, s-maxage=0
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Expires:
+              schema:
+                type: string
+                example: Wed, 15 Jul 2020 18:19:59 GMT
+            Last-Modified:
+              schema:
+                type: string
+                example: Wed, 15 Jul 2020 18:19:59 GMT
+            Vary:
+              schema:
+                type: string
+                example: '*'
+            Server:
+              schema:
+                type: number
+                example: Microsoft-IIS/10.0
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+            Date:
+              schema:
+                type: string
+                example: Wed, 15 Jul 2020 18:20:00 GMT
+            Content-Length:
+              schema:
+                type: integer
+                example: '9802'
+          content:
+            application/json:
+              schema:
+                type: object
+              example:
+                Fields:
+                  - FieldName: DWDOCID
+                    FieldLabel: Doc ID
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: 6
+                    ItemElementName: Int
+                  - FieldName: DWDOCSIZE
+                    FieldLabel: Document Size
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: 57367
+                    ItemElementName: Int
+                  - FieldName: DWSTOREUSER
+                    FieldLabel: Store User
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: dwadmin
+                    ItemElementName: String
+                  - FieldName: DWSTOREDATETIME
+                    FieldLabel: Store Date
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: /Date(1592994755000)/
+                    ItemElementName: DateTime
+                  - FieldName: DWEXTENSION
+                    FieldLabel: Extension
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: .pdf
+                    ItemElementName: String
+                  - FieldName: DWMODUSER
+                    FieldLabel: Modification User
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: dwadmin
+                    ItemElementName: String
+                  - FieldName: DWMODDATETIME
+                    FieldLabel: Modification Date
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: /Date(1594837199000)/
+                    ItemElementName: DateTime
+                  - FieldName: DWSECTIONCOUNT
+                    FieldLabel: File count
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: 1
+                    ItemElementName: Int
+                  - FieldName: DWPAGECOUNT
+                    FieldLabel: File count
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: 1
+                    ItemElementName: Int
+                  - FieldName: DOCUMENT_TYPE
+                    FieldLabel: Art des Dokumentes
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: COMPANY
+                    FieldLabel: Firma
+                    IsNull: false
+                    ReadOnly: false
+                    SystemField: false
+                    Item: PowerShell Company
+                    ItemElementName: String
+                  - FieldName: CONTACT
+                    FieldLabel: Kontaktperson
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: CUSTOMER_ID
+                    FieldLabel: Kundennummer
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: EMAIL
+                    FieldLabel: E-Mail
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: SUBJECT
+                    FieldLabel: Betreff
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: STATUS
+                    FieldLabel: Status
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: DOCUMENT_NUMBER
+                    FieldLabel: Dokumentennummer
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: PROJECT
+                    FieldLabel: Projekt
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: VAT_ID
+                    FieldLabel: Steuernummer
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: IBAN
+                    FieldLabel: IBAN
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: String
+                  - FieldName: DATE
+                    FieldLabel: Datum
+                    IsNull: false
+                    ReadOnly: false
+                    SystemField: false
+                    Item: /Date(1592524800000)/
+                    ItemElementName: Date
+                  - FieldName: PENDING_DATE
+                    FieldLabel: Fälligkeitsdatum
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: Date
+                  - FieldName: AMOUNT
+                    FieldLabel: Betrag
+                    IsNull: true
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: Decimal
+                  - FieldName: TEST
+                    FieldLabel: Test
+                    IsNull: false
+                    ReadOnly: false
+                    SystemField: false
+                    Item:
+                      $type: DocumentIndexFieldTable
+                      Row: []
+                    ItemElementName: Table
+                  - FieldName: DWDISK
+                    FieldLabel: Disk Number
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: 1
+                    ItemElementName: Int
+                  - FieldName: DWDISKNO
+                    FieldLabel: Disk Number
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: 1
+                    ItemElementName: Int
+                  - FieldName: DWVERSIONCOMMENT
+                    FieldLabel: Change comment
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: test comment
+                    ItemElementName: String
+                  - FieldName: DWVERSTATUS
+                    FieldLabel: Versionsstatus
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: Current version
+                    ItemElementName: String
+                  - FieldName: DWUSRVERSION
+                    FieldLabel: Versionsnummer
+                    IsNull: false
+                    ReadOnly: true
+                    SystemField: true
+                    Item: '2.2'
+                    ItemElementName: String
+                Flags:
+                  IsCold: false
+                  IsDBRecord: false
+                  IsCheckedOut: false
+                  IsCopyRightProtected: false
+                  IsVoiceAvailable: false
+                  HasAppendedDocuments: false
+                  IsProtected: false
+                  IsDeleted: false
+                  IsEmail: false
+                Version:
+                  Major: 2
+                  Minor: 2
+                Links:
+                  - rel: self
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6
+                  - rel: fields
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Fields
+                  - rel: clippedDocuments
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Operations/ClippedDocuments?docId=6
+                  - rel: sections
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Sections?docId=6
+                  - rel: thumbnail
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=1102060944&annotations=True
+                  - rel: thumbnailWithoutAnnotation
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=1102060944&annotations=False
+                  - rel: lowQualityImage
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Image?v=1102060944
+                  - rel: annotationAsSvg
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/AnnotationAsImage?format=Svg&v=1102060944
+                  - rel: deepZoomImage
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Rendering/6-6/Pages/0/woa/dz.dzi
+                  - rel: deepZoomImageWithAnnotation
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Rendering/6-6/Pages/0/wa/dz.dzi
+                  - rel: fileDownload
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/FileDownload
+                  - rel: content
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Data
+                  - rel: lock
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Lock
+                  - rel: rights
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Rights
+                  - rel: processDocumentAction
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Operations/ProcessDocumentAction?docId=6
+                  - rel: positions
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Positions
+                  - rel: contentDivideOperation
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Operations/ContentDivide?docId=6
+                  - rel: textAnnotation
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/TextAnnotation
+                  - rel: checksumStatus
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/ChecksumStatus
+                  - rel: xmlDSigContent
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/XmlDSigContent
+                  - rel: appProperties
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/DocumentApplicationProperties
+                  - rel: documentLinks
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/DocumentLinks
+                  - rel: latestVersion
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/LatestVersion
+                  - rel: annotation
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Annotation
+                  - rel: versionHistory
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Query/Documents?q=dmVyc2lvbjs2
+                  - rel: checkoutDocument
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/CheckoutDocument
+                  - rel: checkoutToFileSystem
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/CheckoutToFileSystem
+                  - rel: checkInFromFileSystem
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/CheckInFromFileSystem
+                  - rel: workflowHistory
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/WorkflowHistory
+                  - rel: downloadAsArchive
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Archiving/ArchiveDocument?Id=6
+                  - rel: auditInformation
+                    href: >-
+                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/DocumentAuditInformation
+                Sections:
+                  - SignatureStatus:
+                      - Allow_Signature_Stamps
+                      - Allow_Annotations
+                      - Allow_Stamps
+                    Pages:
+                      Page: []
+                    Thumbnails:
+                      Page: []
+                    Links:
+                      - rel: self
+                        href: >-
+                          /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Sections/6-6
+                      - rel: thumbnail
+                        href: >-
+                          /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=1102060944&annotations=False
+                      - rel: annotationAsSvg
+                        href: >-
+                          /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/AnnotationAsImage?format=Svg&v=1102060944
+                    Id: 6-6
+                    ContentType: application/pdf
+                    HaveMorePages: false
+                    PageCount: 1
+                    FileSize: 57367
+                    OriginalFileName: 6+2063b42c-416c-46f5-a529-f2fdaa2836c4+INV000002(3).pdf
+                    ContentModified: /Date(1594836288984)/
+                    HasTextAnnotation: false
+                    AnnotationsPreview: false
+                ContentType: application/pdf
+                HaveMoreTotalPages: false
+                HasTextAnnotation: false
+                HasXmlDigitalSignatures: false
+                AnnotationsPreview: false
+                TotalPages: 1
+                Id: 6
+                Title: INV000002
+                LastModified: /Date(1594837199000)/
+                LastModifiedSpecified: true
+                CreatedAt: /Date(1592994755000)/
+                CreatedAtSpecified: true
+                FileSize: 57367
+                SectionCount: 1
+                IntellixTrust: None
+                VersionStatus: Manual
+                FileCabinetId: 2063b42c-416c-46f5-a529-f2fdaa2836c4
+  /{Platform}/FileCabinets/{FileCabinetId}/Rendering/{DocumentId}-{Section}/Thumbnail:
+    get:
+      tags:
+        - Download
+      summary: Download thumbnail
+      description: >-
+        The response contains the thumbnail that represents the first page of
+        the document.   
+
+        The document is specified in request using it's doc id.  
+
+        Additionally you can specify section and page number (see request
+        parameters).
+      parameters:
+        - name: page
+          in: query
+          schema:
+            type: string
+          example: '{{Page}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: Section
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/FileDownload:
+    get:
+      tags:
+        - Download
+      summary: Download document
+      description: Download document that is specified using it's doc id in the request.
+      parameters:
+        - name: targetFileType
+          in: query
+          schema:
+            type: string
+          example: Auto
+        - name: keepAnnotations
+          in: query
+          schema:
+            type: boolean
+          example: 'false'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Sections/{Section}/Data:
+    get:
+      tags:
+        - Download
+      summary: Download partial section
+      parameters:
+        - name: Range
+          in: header
+          schema:
+            type: string
+          example: bytes=1000-1500
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: Section
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Documents:
+    get:
+      tags:
+        - Search in FileCabinets > Search in single FileCabinet
+      summary: '2. step: Search with URL'
+      description: >-
+        The response will contain documents you are searching for.  
+
+        The documents are sorted by the order that was specified in the previous
+        POST request.
+      parameters:
+        - name: Assept
+          in: header
+          schema:
+            type: string
+          example: application/xml
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: q
+          in: query
+          schema:
+            type: string
+          description: Contains the q query parameter from the response of the 1. step.
+          example: >-
+            dialog;76301253-0b28-469d-9388-4e8eef51193a;;Or;;COMPANY:US-Steel;DATE:>=2010-03-01
+            AND <=2010-03-30
+        - name: fields
+          in: query
+          schema:
+            type: string
+          example: COMPANY,CONTACT,SUBJECT,DOCTYPE,DATE,STATUS
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+          example: COMPANY Asc
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - How to create data record and upload files
+      summary: Create data record and upload file with store dialog
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                document:
+                  type: string
+                  description: >-
+                    index.xml file with all index values. The format is
+                    described in Create a new document in a file cabinet.
+                  format: binary
+                file[]:
+                  type: string
+                  description: files you want to attach
+                  format: binary
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: multipart/form-data
+        - name: X-File-ModifiedDate
+          in: header
+          schema:
+            type: number
+          description: File creation time
+          example: '2020-08-26T00:00:00.000Z'
+        - name: StoreDialogId
+          in: query
+          schema:
+            type: string
+          example: '{{StoreDialogId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, must-revalidate, max-age=0, s-maxage=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '574'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 21:00:56 GMT
+            ETag:
+              schema:
+                type: string
+                example: '"_3d4dae4d-635707764250000000"'
+            Expires:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 21:00:56 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=100
+            Last-Modified:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 21:00:56 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"SignatureStatus":["Allow_Annotations","Allow_Stamps","Allow_Signature_Stamps"],"Pages":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=False"}]},"Thumbnails":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=True"}]},"Links":[{"rel":"document","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/20"},{"rel":"deepZoomImage","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/woa/dz.dzi"},{"rel":"deepZoomImageWithAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/level%3dall/dz.dzi"},{"rel":"fileDownload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/FileDownload"},{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Data"},{"rel":"textshot","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Textshot"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0"},{"rel":"textAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/TextAnnotation"},{"rel":"pagesBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlockResult"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Thumbnail?v=635707763771210165\u0026page=0"},{"rel":"positions","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Positions"}],"Id":"20-0","ContentType":"application/pdf","HaveMorePages":false,"PageCount":1,"FileSize":96674,"OriginalFileName":"365bc42b-9503-4552-bf17-1a28ba0c51cd.pdf","ContentModified":"\/Date(1435179624609)\/","HasTextAnnotation":false}
+  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}:
+    get:
+      tags:
+        - Update index values
+      summary: Get a particular data record or document
+      description: >
+        The response contains a particular document specified in request using
+        it's doc id.  
+
+
+        The next step is to use "fields" link for a PUT request containing a
+        JSON object specifying new index values.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/xml
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, must-revalidate, max-age=0, s-maxage=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '1653'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 11:57:55 GMT
+            ETag:
+              schema:
+                type: string
+                example: '"_3d4dae4d-RHonbGRNKB3qgKAhVl8rXnCtAQ0=-gzip"'
+            Expires:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 11:57:55 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=100
+            Last-Modified:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 11:57:55 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*,Accept-Encoding'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"Fields":[{"FieldName":"COMPANY","FieldLabel":"Company","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"Widgetmakers
+                Inc.","ItemElementName":"String"},{"FieldName":"CONTACT","FieldLabel":"Contact","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"Walther
+                Ochotzky","ItemElementName":"String"},{"FieldName":"SUBJECT","FieldLabel":"Subject/Number","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"1234567","ItemElementName":"String"},{"FieldName":"DOCTYPE","FieldLabel":"Doc.-Type","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"Employment
+                Contract","ItemElementName":"String"},{"FieldName":"DATE","FieldLabel":"Date","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"\/Date(1435017600000)\/","ItemElementName":"Date"},{"FieldName":"STATUS","FieldLabel":"Status","IsNull":true,"ReadOnly":false,"SystemField":false,"ItemElementName":"String"},{"FieldName":"DWVERID","FieldLabel":"Version
+                ID","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":18,"ItemElementName":"Int"},{"FieldName":"DWSYSVERSION","FieldLabel":"Version","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":1,"ItemElementName":"Int"},{"FieldName":"DWFLAGSEX","FieldLabel":"Extended
+                Flags","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":0,"ItemElementName":"Int"},{"FieldName":"DWSTORAGEACCESS","FieldLabel":"Storage
+                Access","IsNull":true,"ReadOnly":false,"SystemField":true,"ItemElementName":"String"},{"FieldName":"DWEXTENSION","FieldLabel":"Extension","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":".pdf","ItemElementName":"String"},{"FieldName":"DWHEADERSIZE","FieldLabel":"Header
+                Size","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":1971,"ItemElementName":"Int"},{"FieldName":"DWDOCSIZE","FieldLabel":"Document
+                Size","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":335664,"ItemElementName":"Int"},{"FieldName":"DWOFFSET","FieldLabel":"Offset","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":0,"ItemElementName":"Int"},{"FieldName":"DWFLAGS","FieldLabel":"Flags","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":2,"ItemElementName":"Int"},{"FieldName":"DWINTELLIXHINTS","FieldLabel":"Intellix
+                hints","IsNull":true,"ReadOnly":false,"SystemField":true,"ItemElementName":"String"},{"FieldName":"DWCONTENTETAG","FieldLabel":"DWCONTENTETAG","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":635706519376096154,"ItemElementName":"Int"},{"FieldName":"DWANNOETAG","FieldLabel":"DWANNOETAG","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":635706519376096154,"ItemElementName":"Int"},{"FieldName":"DWDOCID","FieldLabel":"Doc
+                ID","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":18,"ItemElementName":"Int"},{"FieldName":"DWPAGECOUNT","FieldLabel":"File
+                Count","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":1,"ItemElementName":"Int"},{"FieldName":"DWDISKNO","FieldLabel":"Disk
+                Number","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":1,"ItemElementName":"Int"},{"FieldName":"DWSTOREDATETIME","FieldLabel":"Store
+                Date","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"\/Date(1435055137000)\/","ItemElementName":"DateTime"},{"FieldName":"DWSTOREUSER","FieldLabel":"Store
+                User","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"USER","ItemElementName":"String"},{"FieldName":"DWMODDATETIME","FieldLabel":"Modification
+                Date","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"\/Date(1435055137000)\/","ItemElementName":"DateTime"},{"FieldName":"DWMODUSER","FieldLabel":"Modification
+                User","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"USER","ItemElementName":"String"},{"FieldName":"DWLASTACCESSDATETIME","FieldLabel":"Last
+                Access
+                Date","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"\/Date(1435147031000)\/","ItemElementName":"DateTime"},{"FieldName":"DWLASTACCESSUSER","FieldLabel":"Last
+                Access
+                User","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"USER","ItemElementName":"String"},{"FieldName":"DocuWareFulltext","FieldLabel":"Fulltext","IsNull":true,"ReadOnly":false,"SystemField":true,"ItemElementName":"String"}],"Flags":{"IsCold":false,"IsDBRecord":false,"IsCheckedOut":false,"IsCopyRightProtected":false,"IsVoiceAvailable":false,"HasAppendedDocuments":false,"IsProtected":false,"IsDeleted":false,"IsEmail":false},"Links":[{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18"},{"rel":"fields","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Fields"},{"rel":"clippedDocuments","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ClippedDocuments?docId=18"},{"rel":"sections","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections?docId=18"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/18-0/Thumbnail?v=635706519376096154\u0026page=0"},{"rel":"deepZoomImage","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/18-0/Pages/0/woa/dz.dzi"},{"rel":"deepZoomImageWithAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/18-0/Pages/0/wa/dz.dzi"},{"rel":"fileDownload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/FileDownload"},{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Data"},{"rel":"unclip","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/Unclip?docId=18"},{"rel":"lock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Lock"},{"rel":"rights","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Rights"},{"rel":"processDocumentAction","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ProcessDocumentAction?docId=18"},{"rel":"positions","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Positions"},{"rel":"contentDivideOperation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ContentDivide?docId=18"},{"rel":"textAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/TextAnnotation"},{"rel":"checksumStatus","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/ChecksumStatus"},{"rel":"xmlDSigContent","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/XmlDSigContent"},{"rel":"appProperties","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/DocumentApplicationProperties"},{"rel":"documentLinks","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/DocumentLinks"},{"rel":"latestVersion","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/LatestVersion"},{"rel":"annotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Annotation"},{"rel":"checkoutDocument","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/CheckoutDocument"},{"rel":"checkoutToFileSystem","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/CheckoutToFileSystem"},{"rel":"checkInFromFileSystem","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/CheckInFromFileSystem"},{"rel":"workflowHistory","href":"/DocuWare/Platform/Bpw/Workflows/DocumentHistory?orgID=1\u0026fileCabinetID=41537414-0df0-4d08-adb5-fa40564b80f9\u0026dwVerID=18"}],"Sections":[{"SignatureStatus":["Allow_Annotations","Allow_Stamps","Allow_Signature_Stamps"],"Links":[{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/18-0"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/18-0/Thumbnail?v=635706519376096154\u0026page=0"}],"Id":"18-0","ContentType":"application/pdf","HaveMorePages":false,"PageCount":8,"FileSize":335664,"OriginalFileName":"EmploymentContractWithBarcodeOnBothPagesAndSeparatorPageWithBarcode.pdf","ContentModified":"\/Date(1427126469446)\/","HasTextAnnotation":false}],"ContentType":"application/pdf","HaveMoreTotalPages":false,"HasTextAnnotation":false,"HasXmlDigitalSignatures":false,"TotalPages":8,"Id":18,"Title":"Unnamed
+                Document with id 18 from 23.06.2015
+                12:25:37","LastModified":"\/Date(1435047937000+0200)\/","LastModifiedSpecified":true,"CreatedAt":"\/Date(1435047937000+0200)\/","CreatedAtSpecified":true,"FileSize":335664,"SectionCount":1,"IntellixTrust":"None","VersionStatus":"Disable","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9"}
+    delete:
+      tags:
+        - Documents
+      summary: Delete document
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: number
+          example: application/json, text/javascript, */*; q=0.01
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: X-Requested-With
+          in: header
+          schema:
+            type: string
+          example: XMLHttpRequest
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{DestinationFileCabinetId}/Task/Transfer:
+    post:
+      tags:
+        - Documents
+      summary: Transfer document
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                SourceFileCabinetId: '{{SourceFileCabinetId}}'
+                Documents:
+                  - Id: 18
+                    Fields: null
+                KeepSource: false
+                FillIntellix: false
+                UseDefaultDialog: false
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: number
+          example: application/json, text/javascript, */*; q=0.01
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/vnd.docuware.platform.documentstransferinfo+json
+        - name: X-Requested-With
+          in: header
+          schema:
+            type: string
+          example: XMLHttpRequest
+        - name: Connection
+          in: header
+          schema:
+            type: string
+          example: keep-alive
+        - name: storeDialogId
+          in: query
+          schema:
+            type: string
+          example: b8d7dccb-1dc3-44b1-b059-673f9d82d201
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DestinationFileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Sections:
+    get:
+      tags:
+        - Sections
+      summary: Get sections from a document
+      parameters:
+        - name: docid
+          in: query
+          schema:
+            type: string
+          example: '{{DocumentId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    post:
+      tags:
+        - How to create data record and upload files
+      summary: Upload  a single pdf file for a data entry
+      requestBody:
+        content:
+          text/plain: {}
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/pdf
+        - name: Content-Disposition
+          in: header
+          schema:
+            type: string
+          example: file; filename="filename.pdf"
+        - name: X-File-ModifiedDate
+          in: header
+          schema:
+            type: number
+          description: File creation time
+          example: '2020-08-26T00:00:00.000Z'
+        - name: DocId
+          in: query
+          schema:
+            type: string
+          example: '{{DocumentId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, must-revalidate, max-age=0, s-maxage=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '574'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 21:00:56 GMT
+            ETag:
+              schema:
+                type: string
+                example: '"_3d4dae4d-635707764250000000"'
+            Expires:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 21:00:56 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=100
+            Last-Modified:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 21:00:56 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"SignatureStatus":["Allow_Annotations","Allow_Stamps","Allow_Signature_Stamps"],"Pages":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=False"}]},"Thumbnails":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=True"}]},"Links":[{"rel":"document","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/20"},{"rel":"deepZoomImage","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/woa/dz.dzi"},{"rel":"deepZoomImageWithAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/level%3dall/dz.dzi"},{"rel":"fileDownload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/FileDownload"},{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Data"},{"rel":"textshot","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Textshot"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0"},{"rel":"textAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/TextAnnotation"},{"rel":"pagesBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlockResult"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Thumbnail?v=635707763771210165\u0026page=0"},{"rel":"positions","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Positions"}],"Id":"20-0","ContentType":"application/pdf","HaveMorePages":false,"PageCount":1,"FileSize":96674,"OriginalFileName":"365bc42b-9503-4552-bf17-1a28ba0c51cd.pdf","ContentModified":"\/Date(1435179624609)\/","HasTextAnnotation":false}
+  /{Platform}/FileCabinets/{FileCabinetId}/Sections/{Section}:
+    get:
+      tags:
+        - Sections
+      summary: Get a particular section
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: Section
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    delete:
+      tags:
+        - Sections
+      summary: Delete section
+      parameters:
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: Section
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Dialogs:
+    get:
+      tags:
+        - Search in FileCabinets > Get search dialog
+      summary: Get all search dialogs
+      description: >
+        The response contains all dialogs that belong to the file cabinet
+        specified in the request.  
+
+
+        The next step is to follow "self" link of search dialog you want to use
+        for building search query.  
+
+        ("Type": "Search")
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/xml
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: dialogType
+          in: query
+          schema:
+            type: string
+          example: Search
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0, s-maxage=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '615'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 10:33:03 GMT
+            Expires:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 10:33:03 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=100
+            Last-Modified:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 10:33:03 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*,Accept-Encoding'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"Dialog":[{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=i_41d3c3ad-3393-4767-9422-2c13d5259b3b"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/i_41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=InfoDialog"}],"Id":"i_41d3c3ad-3393-4767-9422-2c13d5259b3b","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
+                Workshop","DisplayName":"Standard List View Result
+                Dialog","IsForMobile":false,"Color":"Green","IsDefault":true,"Type":"InfoDialog"},{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=ec9a8272-d37f-4670-8942-75cb9397021d"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/ec9a8272-d37f-4670-8942-75cb9397021d?dialogType=Store"},{"rel":"storeDocument","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?StoreDialogId=ec9a8272-d37f-4670-8942-75cb9397021d"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Task/Transfer?storeDialogId=ec9a8272-d37f-4670-8942-75cb9397021d"}],"Id":"ec9a8272-d37f-4670-8942-75cb9397021d","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
+                Workshop","DisplayName":"Standard Store
+                Dialog","IsForMobile":false,"Color":"Green","IsDefault":true,"Type":"Store"},{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/76301253-0b28-469d-9388-4e8eef51193a?dialogType=Search"},{"rel":"assignedDialog","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=ResultList"}],"Id":"76301253-0b28-469d-9388-4e8eef51193a","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
+                Workshop","DisplayName":"Standard Search
+                Dialog","IsForMobile":false,"AssignedDialogId":"41d3c3ad-3393-4767-9422-2c13d5259b3b","Color":"Green","IsDefault":true,"Type":"Search"},{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=41d3c3ad-3393-4767-9422-2c13d5259b3b"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=ResultList"},{"rel":"assignedDialog","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/i_41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=InfoDialog"},{"rel":"createUserDefinedSearch","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/41d3c3ad-3393-4767-9422-2c13d5259b3b/CreateUserDefinedSearch"}],"Id":"41d3c3ad-3393-4767-9422-2c13d5259b3b","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
+                Workshop","DisplayName":"Standard List View Result
+                Dialog","IsForMobile":false,"AssignedDialogId":"i_41d3c3ad-3393-4767-9422-2c13d5259b3b","Color":"Green","IsDefault":true,"Type":"ResultList"},{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=00000000-0000-0000-0000-000000000000"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/00000000-0000-0000-0000-000000000000?dialogType=Search"}],"Id":"00000000-0000-0000-0000-000000000000","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
+                Workshop","DisplayName":"custom","IsForMobile":false,"Color":"Green","IsDefault":false,"Type":"Search"}]}
+  /{Platform}/FileCabinets/{FileCabinetId}/Dialogs/{SearchDialogId}:
+    get:
+      tags:
+        - Search in FileCabinets > Get search dialog
+      summary: Get a specific search dialog
+      description: >
+        The response contains data related to the search dialog specified in the
+        request.
+
+
+        The next step is to use "dialogExpression" link for a POST request in
+        order to build the search query.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/xml
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: dialogType
+          in: query
+          schema:
+            type: string
+          example: Search
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: SearchDialogId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, max-age=0, s-maxage=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '937'
+            Content-Type:
+              schema:
+                type: string
+                example: application/json; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 10:36:00 GMT
+            Expires:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 10:36:00 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=100
+            Last-Modified:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 10:36:00 GMT
+            Server:
+              schema:
+                type: string
+                example: Apache
+            Vary:
+              schema:
+                type: string
+                example: '*,Accept-Encoding'
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                {"Fields":[{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=COMPANY"}],"DBFieldName":"COMPANY","DlgLabel":"Company","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":80,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=CONTACT"}],"DBFieldName":"CONTACT","DlgLabel":"Contact","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":80,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=SUBJECT"}],"DBFieldName":"SUBJECT","DlgLabel":"Subject/Number","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":120,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=DOCTYPE"}],"DBFieldName":"DOCTYPE","DlgLabel":"Doc.-Type","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":80,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=DATE"}],"DBFieldName":"DATE","DlgLabel":"Date","DWFieldType":"Date","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":-1,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=STATUS"}],"DBFieldName":"STATUS","DlgLabel":"Status","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":80,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=DocuWareFulltext"}],"DBFieldName":"DocuWareFulltext","DlgLabel":"Fulltext","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":-1,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=DWSTOREDATETIME"}],"DBFieldName":"DWSTOREDATETIME","DlgLabel":"Store
+                Date","DWFieldType":"Date","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":false,"Length":-1,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false}],"Query":{"ForceRefresh":false,"Expression":"dialog;76301253-0b28-469d-9388-4e8eef51193a","Fields":["COMPANY","CONTACT","SUBJECT","DOCTYPE","DATE","STATUS"],"SortOrder":[{"Field":"DWSTOREDATETIME","Direction":"Desc"}],"Links":[{"rel":"result","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?q=dialog%3B76301253-0b28-469d-9388-4e8eef51193a\u0026sortOrder=DWSTOREDATETIME%20Desc\u0026fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS"},{"rel":"dialogExpression","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/DialogExpression?sortOrder=DWSTOREDATETIME%20Desc\u0026fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS\u0026dialogId=76301253-0b28-469d-9388-4e8eef51193a"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/76301253-0b28-469d-9388-4e8eef51193a/BatchUpdateFields?sortOrder=DWSTOREDATETIME%20Desc\u0026fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS"}]},"Properties":{"$type":"DialogPropertiesSearch","LogicalOperator":{"DefaultOperator":"And","Show":false}},"Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/76301253-0b28-469d-9388-4e8eef51193a?dialogType=Search"},{"rel":"assignedDialog","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=ResultList"},{"rel":"selectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a"}],"Id":"76301253-0b28-469d-9388-4e8eef51193a","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
+                Workshop","DisplayName":"Standard Search
+                Dialog","IsForMobile":false,"AssignedDialogId":"41d3c3ad-3393-4767-9422-2c13d5259b3b","Color":"Green","IsDefault":true,"Type":"Search"}
+  /{Platform}/FileCabinets/{FileCabinetId}/Query/CountExpression:
+    get:
+      tags:
+        - Get total amount of documents
+      summary: Get total amount of documents
+      description: Follows the "count" link.
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/xml
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: dialogId
+          in: query
+          schema:
+            type: string
+          example: '{{SearchDialogId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Query/DialogExpressionLink:
+    post:
+      tags:
+        - Search in FileCabinets > Search in single FileCabinet
+      summary: '1. step: Build search URL'
+      description: >-
+        This request contains a body with JSON object that specify your search
+        criteria.  
+
+        The response will contain the URL you can use for a GET request which
+        will perform the serach according to criteria you've specified by the
+        JSON object.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                Condition:
+                  - DBName: COMPANY
+                    Value:
+                      - Company
+                  - DBName: DATE
+                    Value:
+                      - '2010-03-01'
+                      - '2010-03-30'
+                Operation: Or
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: text/html
+        - name: sortOrder
+          in: query
+          schema:
+            type: string
+          example: COMPANY Asc
+        - name: fields
+          in: query
+          schema:
+            type: string
+          example: COMPANY,CONTACT,SUBJECT,DOCTYPE,DATE,STATUS
+        - name: dialogId
+          in: query
+          schema:
+            type: string
+          example: '{{SearchDialogId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: OK
+          headers:
+            Cache-Control:
+              schema:
+                type: string
+                example: private, s-maxage=0
+            Connection:
+              schema:
+                type: string
+                example: Keep-Alive
+            Content-Encoding:
+              schema:
+                type: string
+                example: gzip
+            Content-Length:
+              schema:
+                type: integer
+                example: '237'
+            Content-Type:
+              schema:
+                type: string
+                example: text/html; charset=utf-8
+            Date:
+              schema:
+                type: string
+                example: Wed, 24 Jun 2015 10:42:19 GMT
+            Keep-Alive:
+              schema:
+                type: string
+                example: timeout=15, max=100
+            Server:
+              schema:
+                type: string
+                example: Apache
+            X-Powered-By:
+              schema:
+                type: string
+                example: ASP.NET
+          content:
+            text/plain:
+              schema:
+                type: string
+              example: >-
+                /DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?q=dialog%3B76301253-0b28-469d-9388-4e8eef51193a%3B%3BOr%3B%3BCOMPANY%3AUS-Steel%3BDATE%3A%3E%3D2010-03-01%20AND%20%3C%3D2010-03-30&fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS&sortOrder=COMPANY%20Asc
+  /{Platform}/FileCabinets/{FileCabinetId}/Query/DialogExpression:
+    post:
+      tags:
+        - Search in FileCabinets
+      summary: Search for documents in multiple FileCabinets
+      description: "The search dialog must be in every file cabiinet zou want to search for documents.\r\nIn the body the additional cabinets are responsible for the file cabinets where you want to search."
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: string
+              example: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DialogExpression xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Count=\"100\" Operation=\"And\" CompleteConditionInInvariantCulture=\"false\" xmlns=\"http://dev.docuware.com/schema/public/services/platform\">\r\n    <SortOrder>\r\n        <OrderBy Field=\"DWSTOREDATETIME\" Direction=\"Desc\" />\r\n    </SortOrder>\r\n    <Condition DBName=\"DWDOCID\">\r\n        <Value>1</Value>\r\n    </Condition>\r\n    <AdditionalCabinets>00000000-0000-0000-0000-000000000000</AdditionalCabinets>\r\n    <AdditionalCabinets>00000000-0000-0000-0000-000000000000</AdditionalCabinets>\r\n</DialogExpression>"
+      parameters:
+        - name: dialogId
+          in: query
+          schema:
+            type: string
+          description: The dialog guid with zeros filled represents the default dialog.
+          example: 00000000-0000-0000-0000-000000000000
+        - name: format
+          in: query
+          schema:
+            type: number
+          example: table HTTP/1.1
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/Fields:
+    put:
+      tags:
+        - Update index values
+      summary: Update index values table fields (JSON)
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                Field:
+                  - FieldName: TEST
+                    ReadOnly: false
+                    SystemField: false
+                    ItemElementName: Table
+                    PointAndShootInfo: null
+                    IsAutoNumber: false
+                    IsNull: false
+                    Item:
+                      $type: DocumentIndexFieldTable
+                      Row:
+                        - ColumnValue:
+                            - FieldName: FELD__NAME
+                              ReadOnly: false
+                              SystemField: false
+                              ItemElementName: string
+                              PointAndShootInfo: null
+                              IsAutoNumber: false
+                              IsNull: false
+                              Item: test
+                              FieldValue: test
+                            - FieldName: TEST_TEST
+                              ReadOnly: false
+                              SystemField: false
+                              ItemElementName: string
+                              PointAndShootInfo: null
+                              IsAutoNumber: false
+                              IsNull: false
+                              Item: '123'
+                              FieldValue: '123'
+                        - ColumnValue:
+                            - FieldName: FELD__NAME
+                              ReadOnly: false
+                              SystemField: false
+                              ItemElementName: string
+                              PointAndShootInfo: null
+                              IsAutoNumber: false
+                              IsNull: false
+                              Item: test2
+                              FieldValue: test2
+                            - FieldName: TEST_TEST
+                              ReadOnly: false
+                              SystemField: false
+                              ItemElementName: string
+                              PointAndShootInfo: null
+                              IsAutoNumber: false
+                              IsNull: false
+                              Item: '456'
+                              FieldValue: '456'
+                    FieldValue:
+                      Row:
+                        - ColumnValue:
+                            - FieldName: FELD__NAME
+                              ReadOnly: false
+                              SystemField: false
+                              ItemElementName: string
+                              PointAndShootInfo: null
+                              IsAutoNumber: false
+                              IsNull: false
+                              Item: test
+                              FieldValue: test
+                            - FieldName: TEST_TEST
+                              ReadOnly: false
+                              SystemField: false
+                              ItemElementName: string
+                              PointAndShootInfo: null
+                              IsAutoNumber: false
+                              IsNull: false
+                              Item: '123'
+                              FieldValue: '123'
+                        - ColumnValue:
+                            - FieldName: FELD__NAME
+                              ReadOnly: false
+                              SystemField: false
+                              ItemElementName: string
+                              PointAndShootInfo: null
+                              IsAutoNumber: false
+                              IsNull: false
+                              Item: test2
+                              FieldValue: test2
+                            - FieldName: TEST_TEST
+                              ReadOnly: false
+                              SystemField: false
+                              ItemElementName: string
+                              PointAndShootInfo: null
+                              IsAutoNumber: false
+                              IsNull: false
+                              Item: '456'
+                              FieldValue: '456'
+                DialogId: i_5c8c5139-9bb7-417e-864f-967a861fac21
+                NormalizeCoordinates: true
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: number
+          example: application/json, text/javascript, */*; q=0.01
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/vnd.docuware.platform.documentfieldsinfo+json
+        - name: X-Requested-With
+          in: header
+          schema:
+            type: string
+          example: XMLHttpRequest
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /DocuWare/Platform/WebClient/336/Integration:
+    get:
+      tags:
+        - IFrame
+      summary: View document
+      parameters:
+        - name: fc
+          in: query
+          schema:
+            type: string
+          description: FileCabinet ID
+          example: e1390171-c231-4a8b-8f01-1ca78dee5dbf
+        - name: did
+          in: query
+          schema:
+            type: integer
+          description: Document ID
+          example: '1'
+        - name: p
+          in: query
+          schema:
+            type: string
+          description: View
+          example: V
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/DocumentApplicationProperties:
+    post:
+      tags:
+        - ApplicationProperties
+      summary: UpdateApplicationProperty
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                DocumentApplicationProperty:
+                  - Name: Key1
+                    Value: Value Key1 update
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/xml
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/Annotation:
+    post:
+      tags:
+        - Annotations/Stamps
+      summary: UpdateTextAnnotation
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                Annotations:
+                  - PageNumber: 0
+                    SectionNumber: 0
+                    AnnotationsPlacement:
+                      Items:
+                        - $type: Annotation
+                          Layer:
+                            - Id: '1'
+                              Items:
+                                - $type: TextEntry
+                                  Font:
+                                    FontName: Lucida Console
+                                    Bold: true
+                                    Italic: true
+                                    Underlined: false
+                                    StrikeThrough: false
+                                    FontSize: 200
+                                    Spacing: 0
+                                  Value: Test update
+                                  Location:
+                                    Left: 100
+                                    Top: 100
+                                    Width: 1500
+                                    Height: 500
+                                  Color: Black
+                                  Rotation: 0
+                                  Transparent: false
+                                  StrokeWidth: 50
+                                  id: 8e57e1f9-612d-4bc4-98b2-b1bb4b4526e6
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/xml
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/WorkflowHistory:
+    get:
+      tags:
+        - History
+      summary: WorkflowDocumentHistory
+      parameters:
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: DocumentId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/Workflows/0c135ffb-1616-4607-9d9f-f3ea7789de12/Instances/be39345c-af7e-521e-81ca-12fc4b8c7d02/History:
+    get:
+      tags:
+        - History
+      summary: WorkflowDocumentHistorySteps
+      parameters:
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{FileCabinetId}/Query/SelectListExpression:
+    post:
+      tags:
+        - SelectLists
+      summary: GetFilteredSelectList
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                ValuePrefix: ''
+                Limit: 100
+                Typed: true
+                ExcludeExternal: true
+                DialogExpression:
+                  Operation: And
+                  Condition:
+                    - DBName: DOCUMENTTYPE
+                      Value:
+                        - '"Photo"'
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: dialogId
+          in: query
+          schema:
+            type: string
+          example: '{{SearchDialogId}}'
+        - name: fieldName
+          in: query
+          schema:
+            type: string
+          example: COMPANY
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{BasketId}/Operations/ContentMerge:
+    post:
+      tags:
+        - Document Clip/Unclip Stack/Unstack
+      summary: Staple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                Documents:
+                  - 15
+                  - 16
+                Operation: Staple
+                Force: false
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: number
+          example: application/json, text/javascript, */*; q=0.01
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: X-Requested-With
+          in: header
+          schema:
+            type: string
+          example: XMLHttpRequest
+        - name: Connection
+          in: header
+          schema:
+            type: string
+          example: keep-alive
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: BasketId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/FileCabinets/{BasketId}/Operations/ContentDivide:
+    post:
+      tags:
+        - Document Clip/Unclip Stack/Unstack
+      summary: Unstaple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                Operation: Unstaple
+                Force: false
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: number
+          example: application/json, text/javascript, */*; q=0.01
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: X-Requested-With
+          in: header
+          schema:
+            type: string
+          example: XMLHttpRequest
+        - name: Connection
+          in: header
+          schema:
+            type: string
+          example: keep-alive
+        - name: docId
+          in: query
+          schema:
+            type: string
+          example: '{{DocumentId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: BasketId
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/Organization/Users:
+    get:
+      tags:
+        - User/Group/Role handling
+      summary: Get Users
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/Organization/UserByID:
+    get:
+      tags:
+        - User/Group/Role handling
+      summary: Get User
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: userId
+          in: query
+          schema:
+            type: string
+          example: '{{UserId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/Organization/UserInfo:
+    post:
+      tags:
+        - User/Group/Role handling
+      summary: Update User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                Id: 00000000-0000-0000-0000-000000000000
+                Name: Peter Engineering Update
+                Email: peter@peters-engineering.com
+                LastName: Engineering
+                FirstName: Peter
+                OutOfOffice:
+                  IsOutOfOffice: 'true'
+                  StartDateTime: '2022-01-01T13:00:00.0000000Z'
+                  EndDateTime: '2022-12-31T13:00:00.0000000Z'
+      parameters:
+        - name: Content-Type
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/Organization/Roles:
+    get:
+      tags:
+        - User/Group/Role handling
+      summary: Get Roles
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/Organization/UserRoles:
+    get:
+      tags:
+        - User/Group/Role handling
+      summary: Get all Roles from User
+      parameters:
+        - name: UserId
+          in: query
+          schema:
+            type: string
+          example: '{{UserId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - User/Group/Role handling
+      summary: Remove Role from User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                Ids:
+                  - 2d89fc45-a3c4-49c6-971b-ebc696a67d78
+                  - d1713dfa-9d33-4663-8dc8-ab1c3c432551
+                OperationType: Remove
+      parameters:
+        - name: UserId
+          in: query
+          schema:
+            type: string
+          example: '{{UserId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/Organization/Groups:
+    get:
+      tags:
+        - User/Group/Role handling
+      summary: Get Groups
+      parameters:
+        - name: Accept
+          in: header
+          schema:
+            type: string
+          example: application/json
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+  /{Platform}/Organization/UserGroups:
+    get:
+      tags:
+        - User/Group/Role handling
+      summary: Get all Groups from User
+      parameters:
+        - name: UserId
+          in: query
+          schema:
+            type: string
+          example: '{{UserId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}
+    put:
+      tags:
+        - User/Group/Role handling
+      summary: Remove Group from User
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              example:
+                Ids:
+                  - 2d89fc45-a3c4-49c6-971b-ebc696a67d78
+                  - d1713dfa-9d33-4663-8dc8-ab1c3c432551
+                OperationType: Remove
+      parameters:
+        - name: UserId
+          in: query
+          schema:
+            type: string
+          example: '{{UserId}}'
+        - name: Platform
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            application/json: {}

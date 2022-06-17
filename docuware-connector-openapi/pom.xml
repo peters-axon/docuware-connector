@@ -21,6 +21,10 @@
       <resource>
         <directory>${basedir}/src/generated</directory>
       </resource>
+      <!-- openapi.yaml -->
+      <resource>
+        <directory>${basedir}/src/main/resources</directory>
+      </resource>
     </resources>
     <plugins>
       <plugin>
