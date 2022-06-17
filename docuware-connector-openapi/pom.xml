@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>com.docuware.connector.openapi</groupId>
+  <groupId>com.docuware.connector.docuware</groupId>
   <artifactId>docuware-openapi</artifactId>
   <version>9.3.7-SNAPSHOT</version>
   <properties>
@@ -49,6 +49,19 @@
             <argument>-XautoNameResolution</argument>
           </arguments>
           <outputDirectory>src/generated</outputDirectory>
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.2.2</version>
+        <configuration>
+          <archive>
+            <index>true</index>
+            <manifestEntries><!-- main namespace to find docuware pojos, references in the openapi -->
+              <NAMESPACE>com.docuware.dev.schema._public.services.platform</NAMESPACE>
+            </manifestEntries>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
