@@ -68,102 +68,12 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '1467'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:13:46 GMT
-            Expires:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:13:45 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=98
-            Last-Modified:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:13:45 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*,Accept-Encoding'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             application/xml:
               schema:
                 $ref: "#/components/schemas/Organizations"
         '401':
           description: Unauthorized
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '179'
-            Content-Type:
-              schema:
-                type: string
-                example: text/html; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:14:37 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=98
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: Accept-Encoding
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             text/plain:
               schema:
@@ -191,55 +101,6 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '1467'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:13:46 GMT
-            Expires:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:13:45 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=98
-            Last-Modified:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:13:45 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*,Accept-Encoding'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             text/plain:
               schema:
@@ -248,47 +109,6 @@ paths:
                 {"Links":[{"rel":"organizations","href":"/DocuWare/Platform/Organizations"},{"rel":"uriTemplates","href":"/DocuWare/Platform/Home/Templates"},{"rel":"loginCookie","href":"/DocuWare/Platform/Home/Token"},{"rel":"login","href":"/DocuWare/Platform/Account/Logon"},{"rel":"guestLogin","href":"/DocuWare/Platform/Account/LogOnGuest"},{"rel":"trustedLogin","href":"/DocuWare/Platform/Account/TrustedLogOn"},{"rel":"windowsLogin","href":"/DocuWare/Platform/Account/LogonNTLM"},{"rel":"changePassword","href":"/DocuWare/Platform/Account/ChangePassword"},{"rel":"resetPassword","href":"/DocuWare/Platform/Account/ResetPassword"},{"rel":"tokenLogin","href":"/DocuWare/Platform/Account/TokenLogOn"},{"rel":"logout","href":"/DocuWare/Platform/Account/Logoff"},{"rel":"disconnect","href":"/DocuWare/Platform/Account/Disconnect"},{"rel":"rootSchema","href":"/DocuWare/Platform/Schema/File/schema-0.xsd"},{"rel":"log","href":"/DocuWare/Platform/Home/LogMessages"},{"rel":"adhocRendering","href":"/DocuWare/Platform/AdhocRendering"},{"rel":"permanentUrl","href":"/DocuWare/Platform/Account/PermanentUrl"},{"rel":"-webClientDirectAccessTemplate","href":"/DocuWare/Platform/WebClient/Viewer/DocumentData?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}"}],"Tests":{"Links":[{"rel":"htmlTestClient","href":"/DocuWare/Platform/HtmlClient/Html"}]},"Documentation":{"Links":[{"rel":"schemaSearch","href":"/DocuWare/Platform/Schema/Search"},{"rel":"uriTemplatesDocumentation","href":"/DocuWare/Platform/Home/UriTemplatesDocumentation"},{"rel":"schemas","href":"/DocuWare/Platform/Schema"},{"rel":"linkModelOverview","href":"/DocuWare/Platform/Content/PlatformLinkModel.pdf"},{"rel":"documentation","href":"/DocuWare/Platform/Documentation","type":"text/html"}]},"Resources":[{"Name":"workflowDocumentHistory","UriPattern":"/DocuWare/Platform/Bpw/Workflows/DocumentHistory?orgID={orgID}\u0026fileCabinetID={fileCabinetID}\u0026dwVerID={dwVerID}"},{"Name":"processDocumentAction","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Operations/ProcessDocumentAction?docId={docId}"},{"Name":"createPermanentUrl","UriPattern":"/DocuWare/Platform/Account/PermanentUrl?clientSideChecksum={clientSideChecksum}"},{"Name":"dialog","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Dialogs/{id}?dialogType={dialogType}"},{"Name":"batchDialogUpdateFields","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Dialogs/{id}/BatchUpdateFields?fields={fields}\u0026sortOrder={sortOrder}"},{"Name":"documentDelete","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"document","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"documentAppendFiles","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}"},{"Name":"documents","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents?q={q}\u0026fields={fields}\u0026sortOrder={sortOrder}\u0026start={start}\u0026msStart={msStart}\u0026count={count}\u0026format={format}"},{"Name":"uploadDocument","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents?processTextshot={processTextshot}\u0026imageProcessing={imageProcessing}\u0026redirect={redirect}\u0026storeDialogId={storeDialogId}\u0026checkFileNameForCheckinInfo={checkFileNameForCheckinInfo}"},{"Name":"documentIndexFields","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Fields"},{"Name":"intellixSuggestions","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Suggestions?normalizeCoordinates={normalizeCoordinates}"},{"Name":"documentsFileDownload","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/FileDownload?targetFileType={targetFileType}\u0026keepAnnotations={keepAnnotations}\u0026downloadFile={downloadFile}\u0026autoPrint={autoPrint}\u0026layers={layers}\u0026append={append}"},{"Name":"documentRights","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Rights"},{"Name":"documentDocumentLinks","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/DocumentLinks"},{"Name":"checkout","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckOutToFileSystem"},{"Name":"checkoutDocument","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckoutDocument"},{"Name":"checkin","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/CheckInFromFileSystem"},{"Name":"documentAnnotations","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Documents/{id}/Annotation"},{"Name":"fileCabinet","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}"},{"Name":"pagesBlock","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Sections/{id}/PagesBlock?start={start}\u0026count={count}\u0026embedThumbnailData={embedThumbnailData}\u0026thumbnailSize={thumbnailSize}\u0026thumbnailsOnly={thumbnailsOnly}"},{"Name":"annotation","UriPattern":"/DocuWare/Platform/FileCabinets/{fileCabinetId}/Sections/{id}/Annotation?page={page}"},{"Name":"clientSetupData","UriPattern":"/DocuWare/Platform/Home/ClientSetupInfo?orgId={orgId}\u0026baseAddress={baseAddress}"},{"Name":"validateUser","UriPattern":"/DocuWare/Platform/Organizations/{id}/ValidateUser"},{"Name":"webSettings","UriPattern":"/DocuWare/Platform/Organizations/{id}/WebSettings"},{"Name":"storeIntegration","UriPattern":"/DocuWare/Platform/WebClient/Client/Store?dlgID={dlgID}\u0026fc={fc}\u0026culture={culture}\u0026orgId={orgId}\u0026validateMandatoryFields={validateMandatoryFields}"},{"Name":"indexesIntegration","UriPattern":"/DocuWare/Platform/WebClient/Client/Indexes?rl={rl}\u0026fc={fc}\u0026did={did}\u0026culture={culture}\u0026orgId={orgId}"},{"Name":"stamps","UriPattern":"/DocuWare/Platform/WebClient/Viewer/Stamps?fileCabinetId={fileCabinetId}\u0026stampType={stampType}"},{"Name":"documentData","UriPattern":"/DocuWare/Platform/WebClient/Viewer/DocumentData?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026includeDocument={includeDocument}\u0026includeSection={includeSection}\u0026includePage={includePage}\u0026checksum={checksum}\u0026latestVersion={latestVersion}\u0026withContentArea={withContentArea}"},{"Name":"getDocument","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetDocument?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026checksum={checksum}\u0026latestVersion={latestVersion}\u0026withContentArea={withContentArea}"},{"Name":"getSection","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetSection?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026withContentArea={withContentArea}"},{"Name":"getPage","UriPattern":"/DocuWare/Platform/WebClient/Viewer/GetPage?fileCabinetId={fileCabinetId}\u0026docId={docId}\u0026sectionId={sectionId}\u0026page={page}\u0026withContentArea={withContentArea}"}],"Version":"6.9.0.22"}
         '401':
           description: Unauthorized
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '179'
-            Content-Type:
-              schema:
-                type: string
-                example: text/html; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:14:37 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=98
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: Accept-Encoding
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             text/plain:
               schema:
@@ -321,111 +141,15 @@ paths:
                 RememberMe:
                   type: boolean
                   example: 'false'
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '1467'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:13:46 GMT
-            Expires:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:13:45 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=98
-            Last-Modified:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:13:45 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*,Accept-Encoding'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             application/xml:
               schema:
                 $ref: "#/components/schemas/Organizations"
         '401':
           description: Unauthorized
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '179'
-            Content-Type:
-              schema:
-                type: string
-                example: text/html; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Thu, 25 Jun 2015 06:14:37 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=98
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: Accept-Encoding
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             text/plain:
               schema:
@@ -507,55 +231,6 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0, s-maxage=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '248'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Tue, 23 Jun 2015 07:25:13 GMT
-            Expires:
-              schema:
-                type: string
-                example: Tue, 23 Jun 2015 07:25:13 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=100
-            Last-Modified:
-              schema:
-                type: string
-                example: Tue, 23 Jun 2015 07:25:13 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*,Accept-Encoding'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             application/xml:
               schema:
