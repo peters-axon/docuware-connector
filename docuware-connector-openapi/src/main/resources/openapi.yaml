@@ -65,22 +65,6 @@ paths:
                 HostID:
                   type: string
                   example: This_Is_A_Test
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
       responses:
         '200':
           description: OK
@@ -206,22 +190,6 @@ paths:
                   - PlatformService
                 Usage: Multi
                 Lifetime: 1.00:00:00
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
       responses:
         '200':
           description: OK
@@ -361,16 +329,6 @@ paths:
           schema:
             type: string
           example: application/x-www-form-urlencoded
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
       responses:
         '200':
           description: OK
@@ -519,11 +477,6 @@ paths:
             type: number
           example: >-
             text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/x-www-form-urlencoded
         - name: Upgrade-Insecure-Requests
           in: header
           schema:
@@ -534,11 +487,6 @@ paths:
           schema:
             type: string
           example: /DocuWare/Platform/Home/XSL
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
       responses:
         '200':
           description: Successful response
@@ -560,17 +508,6 @@ paths:
         - Basics
       summary: Get organization
       description: The response contains the organization the user is currently logged in.
-      parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
       responses:
         '200':
           description: OK
@@ -639,21 +576,11 @@ paths:
         The response contains all file cabinets AND baskets the current user has
         access to.
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
         - name: orgid
           in: query
           schema:
             type: string
           example: '{{OrgId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
       responses:
         '200':
           description: OK
@@ -723,16 +650,6 @@ paths:
         You can use "self" relation for each resource in order to get all data
         related to it.
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/xml
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -775,11 +692,6 @@ paths:
           schema:
             type: string
           example: '*/*'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -866,11 +778,7 @@ paths:
                   type: string
                   format: binary
       parameters:
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -1102,11 +1010,6 @@ paths:
           schema:
             type: string
           example: '{{DocumentId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -1522,11 +1425,7 @@ paths:
           schema:
             type: string
           example: '{{Page}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -1564,11 +1463,7 @@ paths:
           schema:
             type: boolean
           example: 'false'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -1595,11 +1490,7 @@ paths:
           schema:
             type: string
           example: bytes=1000-1500
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -1631,11 +1522,7 @@ paths:
           schema:
             type: string
           example: application/xml
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
+
         - name: q
           in: query
           schema:
@@ -1654,11 +1541,7 @@ paths:
           schema:
             type: string
           example: COMPANY Asc
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -1706,11 +1589,7 @@ paths:
           schema:
             type: string
           example: '{{StoreDialogId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -1791,21 +1670,9 @@ paths:
         The next step is to use "fields" link for a PUT request containing a
         JSON object specifying new index values.
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/xml
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
+
+
         - name: FileCabinetId
           in: path
           schema:
@@ -1910,21 +1777,13 @@ paths:
           schema:
             type: number
           example: application/json, text/javascript, */*; q=0.01
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+
         - name: X-Requested-With
           in: header
           schema:
             type: string
           example: XMLHttpRequest
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -1984,11 +1843,7 @@ paths:
           schema:
             type: string
           example: b8d7dccb-1dc3-44b1-b059-673f9d82d201
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: DestinationFileCabinetId
           in: path
           schema:
@@ -2010,11 +1865,7 @@ paths:
           schema:
             type: string
           example: '{{DocumentId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -2054,11 +1905,7 @@ paths:
           schema:
             type: string
           example: '{{DocumentId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -2132,16 +1979,6 @@ paths:
         - Sections
       summary: Get a particular section
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2162,11 +1999,6 @@ paths:
         - Sections
       summary: Delete section
       parameters:
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2197,26 +2029,11 @@ paths:
 
         ("Type": "Search")
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/xml
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
         - name: dialogType
           in: query
           schema:
             type: string
           example: Search
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2302,26 +2119,11 @@ paths:
         The next step is to use "dialogExpression" link for a POST request in
         order to build the search query.
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/xml
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
         - name: dialogType
           in: query
           schema:
             type: string
           example: Search
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2400,26 +2202,11 @@ paths:
       summary: Get total amount of documents
       description: Follows the "count" link.
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/xml
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
         - name: dialogId
           in: query
           schema:
             type: string
           example: '{{SearchDialogId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2458,16 +2245,6 @@ paths:
                       - '2010-03-30'
                 Operation: Or
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: text/html
         - name: sortOrder
           in: query
           schema:
@@ -2483,11 +2260,6 @@ paths:
           schema:
             type: string
           example: '{{SearchDialogId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2563,11 +2335,7 @@ paths:
           schema:
             type: number
           example: table HTTP/1.1
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: FileCabinetId
           in: path
           schema:
@@ -2696,11 +2464,6 @@ paths:
           schema:
             type: string
           example: XMLHttpRequest
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2760,21 +2523,6 @@ paths:
                   - Name: Key1
                     Value: Value Key1 update
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/xml
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2831,21 +2579,6 @@ paths:
                                   StrokeWidth: 50
                                   id: 8e57e1f9-612d-4bc4-98b2-b1bb4b4526e6
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/xml
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2867,11 +2600,6 @@ paths:
         - History
       summary: WorkflowDocumentHistory
       parameters:
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2892,12 +2620,6 @@ paths:
       tags:
         - History
       summary: WorkflowDocumentHistorySteps
-      parameters:
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
       responses:
         '200':
           description: Successful response
@@ -2925,11 +2647,6 @@ paths:
                       Value:
                         - '"Photo"'
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
         - name: dialogId
           in: query
           schema:
@@ -2940,11 +2657,6 @@ paths:
           schema:
             type: string
           example: COMPANY
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
         - name: FileCabinetId
           in: path
           schema:
@@ -2977,11 +2689,7 @@ paths:
           schema:
             type: number
           example: application/json, text/javascript, */*; q=0.01
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+
         - name: X-Requested-With
           in: header
           schema:
@@ -2992,11 +2700,7 @@ paths:
           schema:
             type: string
           example: keep-alive
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: BasketId
           in: path
           schema:
@@ -3026,11 +2730,7 @@ paths:
           schema:
             type: number
           example: application/json, text/javascript, */*; q=0.01
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
+
         - name: X-Requested-With
           in: header
           schema:
@@ -3046,11 +2746,7 @@ paths:
           schema:
             type: string
           example: '{{DocumentId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
         - name: BasketId
           in: path
           schema:
@@ -3067,16 +2763,8 @@ paths:
         - User/Group/Role handling
       summary: Get Users
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
+
       responses:
         '200':
           description: Successful response
@@ -3088,21 +2776,13 @@ paths:
         - User/Group/Role handling
       summary: Get User
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
+
         - name: userId
           in: query
           schema:
             type: string
           example: '{{UserId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
       responses:
         '200':
           description: Successful response
@@ -3128,17 +2808,8 @@ paths:
                   IsOutOfOffice: 'true'
                   StartDateTime: '2022-01-01T13:00:00.0000000Z'
                   EndDateTime: '2022-12-31T13:00:00.0000000Z'
-      parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
+
       responses:
         '200':
           description: Successful response
@@ -3150,16 +2821,8 @@ paths:
         - User/Group/Role handling
       summary: Get Roles
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
+
       responses:
         '200':
           description: Successful response
@@ -3176,11 +2839,7 @@ paths:
           schema:
             type: string
           example: '{{UserId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
       responses:
         '200':
           description: Successful response
@@ -3206,11 +2865,7 @@ paths:
           schema:
             type: string
           example: '{{UserId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
       responses:
         '200':
           description: Successful response
@@ -3222,16 +2877,8 @@ paths:
         - User/Group/Role handling
       summary: Get Groups
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: application/json
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
+
       responses:
         '200':
           description: Successful response
@@ -3248,11 +2895,7 @@ paths:
           schema:
             type: string
           example: '{{UserId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
       responses:
         '200':
           description: Successful response
@@ -3278,11 +2921,7 @@ paths:
           schema:
             type: string
           example: '{{UserId}}'
-        - name: Platform
-          in: path
-          schema:
-            type: string
-          required: true
+
       responses:
         '200':
           description: Successful response
