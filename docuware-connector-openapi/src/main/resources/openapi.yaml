@@ -252,59 +252,10 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0, s-maxage=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '850'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Tue, 23 Jun 2015 07:30:18 GMT
-            Expires:
-              schema:
-                type: string
-                example: Tue, 23 Jun 2015 07:30:18 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=100
-            Last-Modified:
-              schema:
-                type: string
-                example: Tue, 23 Jun 2015 07:30:18 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
-            text/plain:
+            application/xml:
               schema:
-                type: string
+                $ref: "#/components/schemas/FileCabinets"
               example: >-
                 {"FileCabinet":[{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/FieldValueStatistics"}],"Color":"Black","Name":"Document
                 Pool","Id":"8581a8cf-99e5-432f-9193-b2d908e9b2b5","IsBasket":false,"Usable":true,"Default":false,"VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false},{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/FieldValueStatistics"}],"Color":"Green","Name":"Inbox","Id":"b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f","IsBasket":true,"Usable":true,"Default":true,"AssignedCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false},{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/FieldValueStatistics"}],"Color":"Green","Name":"Platform
@@ -2599,3 +2550,6 @@ components:
   schemas:
     Organizations:
       type: object
+    FileCabinets:
+      type: object
+

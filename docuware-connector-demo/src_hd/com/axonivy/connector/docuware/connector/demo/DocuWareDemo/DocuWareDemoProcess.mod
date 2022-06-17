@@ -148,8 +148,8 @@ Ds0 f19 bodyMediaType multipart/form-data #txt
 Ds0 f19 bodyForm 'file=in.file.getJavaFile();
 ' #txt
 Ds0 f19 bodyObjectType com.axonivy.connector.docuware.connector.model.FileCabinetIdDocumentsBody #txt
-Ds0 f19 resultType com.axonivy.connector.docuware.connector.model.Document #txt
-Ds0 f19 responseMapping 'out.documentId=result.id;
+Ds0 f19 resultType com.docuware.dev.schema._public.services.platform.Document #txt
+Ds0 f19 responseMapping 'out.documentId=result.id.toString();
 ' #txt
 Ds0 f19 responseCode 'import com.axonivy.connector.docuware.connector.demo.DocuWareDemoService;
 
