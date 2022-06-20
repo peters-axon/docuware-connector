@@ -23,7 +23,6 @@ Do0 @PushWFArc f9 '' #zField
 Do0 @PushWFArc f14 '' #zField
 Do0 @StartRequest f7 '' #zField
 Do0 @RestClientCall f12 '' #zField
-Do0 @EndTask f15 '' #zField
 Do0 @RestClientCall f17 '' #zField
 Do0 @PushWFArc f18 '' #zField
 Do0 @PushWFArc f13 '' #zField
@@ -31,7 +30,16 @@ Do0 @GridStep f19 '' #zField
 Do0 @PushWFArc f20 '' #zField
 Do0 @RestClientCall f21 '' #zField
 Do0 @PushWFArc f22 '' #zField
+Do0 @RestClientCall f28 '' #zField
+Do0 @PushWFArc f29 '' #zField
+Do0 @RestClientCall f23 '' #zField
+Do0 @PushWFArc f24 '' #zField
+Do0 @RestClientCall f25 '' #zField
+Do0 @PushWFArc f26 '' #zField
+Do0 @StartRequest f27 '' #zField
 Do0 @PushWFArc f16 '' #zField
+Do0 @EndTask f15 '' #zField
+Do0 @PushWFArc f30 '' #zField
 >Proto Do0 Do0 DocuWareDemo #zField
 Do0 f0 outLink start.ivp #txt
 Do0 f0 inParamDecl '<> param;' #txt
@@ -167,7 +175,6 @@ Do0 f12 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 </elementInfo>
 ' #txt
 Do0 f12 328 330 112 44 -14 -7 #rect
-Do0 f15 817 337 30 30 0 15 #rect
 Do0 f17 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
 Do0 f17 path /Organizations #txt
 Do0 f17 headers 'Accept=application/xml;
@@ -210,12 +217,116 @@ Do0 f21 templateParams 'FileCabinetId=in.fileCabinets.getFileCabinet().get(0).id
 Do0 f21 headers 'Accept=application/xml;
 ' #txt
 Do0 f21 resultType com.docuware.dev.schema._public.services.platform.FileCabinet #txt
+Do0 f21 responseMapping 'out.cabinet=result;
+' #txt
 Do0 f21 responseCode 'ivy.log.info("first cabinet: "+result.name);' #txt
 Do0 f21 clientErrorCode ivy:error:rest:client #txt
 Do0 f21 statusErrorCode ivy:error:rest:client #txt
-Do0 f21 648 330 112 44 0 -7 #rect
-Do0 f22 600 352 648 352 #arcP
-Do0 f16 760 352 817 352 #arcP
+Do0 f21 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>Read 
+Cabinet</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f21 488 418 112 44 -24 -15 #rect
+Do0 f22 544 374 544 418 #arcP
+Do0 f28 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
+Do0 f28 path /FileCabinets/{FileCabinetId}/Documents #txt
+Do0 f28 queryParams 'q=;
+fields=;
+sortOrder=;
+' #txt
+Do0 f28 templateParams 'FileCabinetId=in.cabinet.getId();
+' #txt
+Do0 f28 method GET #txt
+Do0 f28 bodyInputType ENTITY #txt
+Do0 f28 resultType com.docuware.dev.schema._public.services.platform.DocumentsQueryResult #txt
+Do0 f28 responseMapping 'out.document=result.items.getItem().get(0);
+' #txt
+Do0 f28 clientErrorCode ivy:error:rest:client #txt
+Do0 f28 statusErrorCode ivy:error:rest:client #txt
+Do0 f28 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>Query 
+Documents</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f28 664 330 112 44 -35 -15 #rect
+Do0 f29 600 440 664 352 #arcP
+Do0 f29 1 640 440 #addKink
+Do0 f29 2 640 352 #addKink
+Do0 f29 1 0.4724494028904856 0 0 #arcLabel
+Do0 f23 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
+Do0 f23 path /FileCabinets/{FileCabinetId}/Documents/{DocumentId} #txt
+Do0 f23 templateParams 'DocumentId=in.document.getId().toString();
+FileCabinetId=in.cabinet.getId();
+' #txt
+Do0 f23 resultType com.docuware.dev.schema._public.services.platform.Document #txt
+Do0 f23 responseMapping 'out.document=result;
+' #txt
+Do0 f23 responseCode 'ivy.log.info("found document: " + result.title);' #txt
+Do0 f23 clientErrorCode ivy:error:rest:client #txt
+Do0 f23 statusErrorCode ivy:error:rest:client #txt
+Do0 f23 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>Read 
+Document</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f23 664 418 112 44 -32 -15 #rect
+Do0 f24 720 374 720 418 #arcP
+Do0 f25 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
+Do0 f25 path /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/FileDownload #txt
+Do0 f25 queryParams 'targetFileType=;
+keepAnnotations=;
+' #txt
+Do0 f25 templateParams 'DocumentId=in.document.id.toString();
+FileCabinetId=in.cabinet.id;
+' #txt
+Do0 f25 method GET #txt
+Do0 f25 resultType '[B' #txt
+Do0 f25 responseCode 'in.file = new File(in.document.title, true);
+in.file.createNewFile();
+in.file.writeBinary(result);' #txt
+Do0 f25 clientErrorCode ivy:error:rest:client #txt
+Do0 f25 statusErrorCode ivy:error:rest:client #txt
+Do0 f25 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>Download
+File</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f25 848 418 112 44 -30 -15 #rect
+Do0 f26 776 440 848 440 #arcP
+Do0 f27 outLink downloadFile.ivp #txt
+Do0 f27 inParamDecl '<> param;' #txt
+Do0 f27 inParamTable 'out.cabinet.id="c1436a27-9e35-4856-b27e-826327a4f96b";
+out.document.id=165;
+' #txt
+Do0 f27 requestEnabled true #txt
+Do0 f27 triggerEnabled false #txt
+Do0 f27 callSignature downloadFile() #txt
+Do0 f27 caseData businessCase.attach=true #txt
+Do0 f27 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>downloadFile.ivp</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f27 @C|.responsibility Everybody #txt
+Do0 f27 705 521 30 30 -48 28 #rect
+Do0 f16 720 521 720 462 #arcP
+Do0 f15 1041 425 30 30 0 15 #rect
+Do0 f30 960 440 1041 440 #arcP
 >Proto Do0 .type com.axonivy.market.docuware.connector.demo.Data #txt
 >Proto Do0 .processKind NORMAL #txt
 >Proto Do0 0 0 32 24 18 0 #rect
@@ -238,5 +349,13 @@ Do0 f12 mainOut f20 tail #connect
 Do0 f20 head f19 mainIn #connect
 Do0 f19 mainOut f22 tail #connect
 Do0 f22 head f21 mainIn #connect
-Do0 f21 mainOut f16 tail #connect
-Do0 f16 head f15 mainIn #connect
+Do0 f21 mainOut f29 tail #connect
+Do0 f29 head f28 mainIn #connect
+Do0 f28 mainOut f24 tail #connect
+Do0 f24 head f23 mainIn #connect
+Do0 f23 mainOut f26 tail #connect
+Do0 f26 head f25 mainIn #connect
+Do0 f27 mainOut f16 tail #connect
+Do0 f16 head f23 mainIn #connect
+Do0 f25 mainOut f30 tail #connect
+Do0 f30 head f15 mainIn #connect

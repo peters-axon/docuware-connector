@@ -2,3 +2,6 @@ Data #class
 com.axonivy.market.docuware.connector.demo #namespace
 organizations com.docuware.dev.schema._public.services.platform.Organizations #field
 fileCabinets com.docuware.dev.schema._public.services.platform.FileCabinets #field
+cabinet com.docuware.dev.schema._public.services.platform.FileCabinet #field
+document com.docuware.dev.schema._public.services.platform.Document #field
+file File #field

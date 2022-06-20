@@ -450,7 +450,10 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            "application/octet-stream":
+              schema:
+                type: string
+                format: binary
             
   /FileCabinets/{FileCabinetId}/Sections/{Section}/Data:
     get:
@@ -519,7 +522,9 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/DocumentsQueryResult"
     post:
       tags:
         - How to create data record and upload files
@@ -585,33 +590,9 @@ paths:
         '200':
           description: OK
           content:
-            text/plain:
+            application/xml:
               schema:
-                type: string
-              example: >-
-                {"Fields":[{"FieldName":"COMPANY","FieldLabel":"Company","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"Widgetmakers
-                Inc.","ItemElementName":"String"},{"FieldName":"CONTACT","FieldLabel":"Contact","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"Walther
-                Ochotzky","ItemElementName":"String"},{"FieldName":"SUBJECT","FieldLabel":"Subject/Number","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"1234567","ItemElementName":"String"},{"FieldName":"DOCTYPE","FieldLabel":"Doc.-Type","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"Employment
-                Contract","ItemElementName":"String"},{"FieldName":"DATE","FieldLabel":"Date","IsNull":false,"ReadOnly":false,"SystemField":false,"Item":"\/Date(1435017600000)\/","ItemElementName":"Date"},{"FieldName":"STATUS","FieldLabel":"Status","IsNull":true,"ReadOnly":false,"SystemField":false,"ItemElementName":"String"},{"FieldName":"DWVERID","FieldLabel":"Version
-                ID","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":18,"ItemElementName":"Int"},{"FieldName":"DWSYSVERSION","FieldLabel":"Version","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":1,"ItemElementName":"Int"},{"FieldName":"DWFLAGSEX","FieldLabel":"Extended
-                Flags","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":0,"ItemElementName":"Int"},{"FieldName":"DWSTORAGEACCESS","FieldLabel":"Storage
-                Access","IsNull":true,"ReadOnly":false,"SystemField":true,"ItemElementName":"String"},{"FieldName":"DWEXTENSION","FieldLabel":"Extension","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":".pdf","ItemElementName":"String"},{"FieldName":"DWHEADERSIZE","FieldLabel":"Header
-                Size","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":1971,"ItemElementName":"Int"},{"FieldName":"DWDOCSIZE","FieldLabel":"Document
-                Size","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":335664,"ItemElementName":"Int"},{"FieldName":"DWOFFSET","FieldLabel":"Offset","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":0,"ItemElementName":"Int"},{"FieldName":"DWFLAGS","FieldLabel":"Flags","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":2,"ItemElementName":"Int"},{"FieldName":"DWINTELLIXHINTS","FieldLabel":"Intellix
-                hints","IsNull":true,"ReadOnly":false,"SystemField":true,"ItemElementName":"String"},{"FieldName":"DWCONTENTETAG","FieldLabel":"DWCONTENTETAG","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":635706519376096154,"ItemElementName":"Int"},{"FieldName":"DWANNOETAG","FieldLabel":"DWANNOETAG","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":635706519376096154,"ItemElementName":"Int"},{"FieldName":"DWDOCID","FieldLabel":"Doc
-                ID","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":18,"ItemElementName":"Int"},{"FieldName":"DWPAGECOUNT","FieldLabel":"File
-                Count","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":1,"ItemElementName":"Int"},{"FieldName":"DWDISKNO","FieldLabel":"Disk
-                Number","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":1,"ItemElementName":"Int"},{"FieldName":"DWSTOREDATETIME","FieldLabel":"Store
-                Date","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"\/Date(1435055137000)\/","ItemElementName":"DateTime"},{"FieldName":"DWSTOREUSER","FieldLabel":"Store
-                User","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"USER","ItemElementName":"String"},{"FieldName":"DWMODDATETIME","FieldLabel":"Modification
-                Date","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"\/Date(1435055137000)\/","ItemElementName":"DateTime"},{"FieldName":"DWMODUSER","FieldLabel":"Modification
-                User","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"USER","ItemElementName":"String"},{"FieldName":"DWLASTACCESSDATETIME","FieldLabel":"Last
-                Access
-                Date","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"\/Date(1435147031000)\/","ItemElementName":"DateTime"},{"FieldName":"DWLASTACCESSUSER","FieldLabel":"Last
-                Access
-                User","IsNull":false,"ReadOnly":false,"SystemField":true,"Item":"USER","ItemElementName":"String"},{"FieldName":"DocuWareFulltext","FieldLabel":"Fulltext","IsNull":true,"ReadOnly":false,"SystemField":true,"ItemElementName":"String"}],"Flags":{"IsCold":false,"IsDBRecord":false,"IsCheckedOut":false,"IsCopyRightProtected":false,"IsVoiceAvailable":false,"HasAppendedDocuments":false,"IsProtected":false,"IsDeleted":false,"IsEmail":false},"Links":[{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18"},{"rel":"fields","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Fields"},{"rel":"clippedDocuments","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ClippedDocuments?docId=18"},{"rel":"sections","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections?docId=18"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/18-0/Thumbnail?v=635706519376096154\u0026page=0"},{"rel":"deepZoomImage","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/18-0/Pages/0/woa/dz.dzi"},{"rel":"deepZoomImageWithAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/18-0/Pages/0/wa/dz.dzi"},{"rel":"fileDownload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/FileDownload"},{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Data"},{"rel":"unclip","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/Unclip?docId=18"},{"rel":"lock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Lock"},{"rel":"rights","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Rights"},{"rel":"processDocumentAction","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ProcessDocumentAction?docId=18"},{"rel":"positions","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Positions"},{"rel":"contentDivideOperation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ContentDivide?docId=18"},{"rel":"textAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/TextAnnotation"},{"rel":"checksumStatus","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/ChecksumStatus"},{"rel":"xmlDSigContent","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/XmlDSigContent"},{"rel":"appProperties","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/DocumentApplicationProperties"},{"rel":"documentLinks","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/DocumentLinks"},{"rel":"latestVersion","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/LatestVersion"},{"rel":"annotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/Annotation"},{"rel":"checkoutDocument","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/CheckoutDocument"},{"rel":"checkoutToFileSystem","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/CheckoutToFileSystem"},{"rel":"checkInFromFileSystem","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/18/CheckInFromFileSystem"},{"rel":"workflowHistory","href":"/DocuWare/Platform/Bpw/Workflows/DocumentHistory?orgID=1\u0026fileCabinetID=41537414-0df0-4d08-adb5-fa40564b80f9\u0026dwVerID=18"}],"Sections":[{"SignatureStatus":["Allow_Annotations","Allow_Stamps","Allow_Signature_Stamps"],"Links":[{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/18-0"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/18-0/Thumbnail?v=635706519376096154\u0026page=0"}],"Id":"18-0","ContentType":"application/pdf","HaveMorePages":false,"PageCount":8,"FileSize":335664,"OriginalFileName":"EmploymentContractWithBarcodeOnBothPagesAndSeparatorPageWithBarcode.pdf","ContentModified":"\/Date(1427126469446)\/","HasTextAnnotation":false}],"ContentType":"application/pdf","HaveMoreTotalPages":false,"HasTextAnnotation":false,"HasXmlDigitalSignatures":false,"TotalPages":8,"Id":18,"Title":"Unnamed
-                Document with id 18 from 23.06.2015
-                12:25:37","LastModified":"\/Date(1435047937000+0200)\/","LastModifiedSpecified":true,"CreatedAt":"\/Date(1435047937000+0200)\/","CreatedAtSpecified":true,"FileSize":335664,"SectionCount":1,"IntellixTrust":"None","VersionStatus":"Disable","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9"}
+                $ref: "#/components/schemas/Document"
     delete:
       tags:
         - Documents
@@ -632,6 +613,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+  
   /FileCabinets/{DestinationFileCabinetId}/Task/Transfer:
     post:
       tags:
@@ -1247,7 +1229,9 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/WorkflowDocumentHistory"
             
   /Workflows/0c135ffb-1616-4607-9d9f-f3ea7789de12/Instances/be39345c-af7e-521e-81ca-12fc4b8c7d02/History:
     get:
@@ -1555,6 +1539,10 @@ components:
     DocumentActionInfo:
       type: object
     DocumentApplicationProperty:
+      type: object
+    DocumentsQueryResult:
+      type: object
+    WorkflowDocumentHistory:
       type: object
     Annotations:
       type: object
