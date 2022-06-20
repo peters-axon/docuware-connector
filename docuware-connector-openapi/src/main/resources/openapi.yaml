@@ -307,11 +307,6 @@ paths:
               type: object
               example: ''
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: string
-          example: '*/*'
         - name: FileCabinetId
           in: path
           schema:
@@ -350,7 +345,6 @@ paths:
                   type: string
                   format: binary
       parameters:
-
         - name: FileCabinetId
           in: path
           schema:
@@ -364,219 +358,20 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0, s-maxage=0
-            Content-Type:
-              schema:
-                type: string
-                example: application/xml; charset=utf-8
-            Expires:
-              schema:
-                type: string
-                example: Wed, 15 Jul 2020 18:04:48 GMT
-            Last-Modified:
-              schema:
-                type: string
-                example: Wed, 15 Jul 2020 18:04:48 GMT
-            Vary:
-              schema:
-                type: string
-                example: '*'
-            Server:
-              schema:
-                type: number
-                example: Microsoft-IIS/10.0
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
-            Date:
-              schema:
-                type: string
-                example: Wed, 15 Jul 2020 18:04:49 GMT
-            Content-Length:
-              schema:
-                type: integer
-                example: '5250'
           content:
-            text/plain:
+            application/xml:
               schema:
-                type: string
-              example: >-
-                <?xml version="1.0" encoding="utf-8"?>
-
-                <?xml-stylesheet type="text/xsl"
-                href="/DocuWare/Platform/Content/standard.xslt"?>
-
-                <Document
-                xmlns:s="http://dev.docuware.com/schema/public/services"
-                TotalPages="1" Id="6" Title="INV000002"
-                LastModified="2020-07-15T18:04:01Z"
-                CreatedAt="2020-06-24T10:32:35Z" FileSize="57367"
-                SectionCount="1" VersionStatus="Manual"
-                xmlns="http://dev.docuware.com/schema/public/services/platform">
-                    <Fields>
-                        <Field FieldName="DWDOCID" FieldLabel="Doc ID" ReadOnly="true">
-                            <Int>6</Int>
-                        </Field>
-                        <Field FieldName="DWDOCSIZE" FieldLabel="Document Size" ReadOnly="true">
-                            <Int>57367</Int>
-                        </Field>
-                        <Field FieldName="DWSTOREUSER" FieldLabel="Store User" ReadOnly="true">
-                            <String>dwadmin</String>
-                        </Field>
-                        <Field FieldName="DWSTOREDATETIME" FieldLabel="Store Date" ReadOnly="true">
-                            <DateTime>2020-06-24T10:32:35Z</DateTime>
-                        </Field>
-                        <Field FieldName="DWEXTENSION" FieldLabel="Extension" ReadOnly="true">
-                            <String>.pdf</String>
-                        </Field>
-                        <Field FieldName="DWMODUSER" FieldLabel="Modification User" ReadOnly="true">
-                            <String>dwadmin</String>
-                        </Field>
-                        <Field FieldName="DWMODDATETIME" FieldLabel="Modification Date" ReadOnly="true">
-                            <DateTime>2020-07-15T18:04:01Z</DateTime>
-                        </Field>
-                        <Field FieldName="DWSECTIONCOUNT" FieldLabel="File count" ReadOnly="true">
-                            <Int>1</Int>
-                        </Field>
-                        <Field FieldName="DWPAGECOUNT" FieldLabel="File count" ReadOnly="true">
-                            <Int>1</Int>
-                        </Field>
-                        <Field FieldName="DOCUMENT_TYPE" FieldLabel="Art des Dokumentes" IsNull="true" />
-                        <Field FieldName="COMPANY" FieldLabel="Firma">
-                            <String>PowerShell Company</String>
-                        </Field>
-                        <Field FieldName="CONTACT" FieldLabel="Kontaktperson" IsNull="true" />
-                        <Field FieldName="CUSTOMER_ID" FieldLabel="Kundennummer" IsNull="true" />
-                        <Field FieldName="EMAIL" FieldLabel="E-Mail" IsNull="true" />
-                        <Field FieldName="SUBJECT" FieldLabel="Betreff" IsNull="true" />
-                        <Field FieldName="STATUS" FieldLabel="Status" IsNull="true" />
-                        <Field FieldName="DOCUMENT_NUMBER" FieldLabel="Dokumentennummer" IsNull="true" />
-                        <Field FieldName="PROJECT" FieldLabel="Projekt" IsNull="true" />
-                        <Field FieldName="VAT_ID" FieldLabel="Steuernummer" IsNull="true" />
-                        <Field FieldName="IBAN" FieldLabel="IBAN" IsNull="true" />
-                        <Field FieldName="DATE" FieldLabel="Datum">
-                            <Date>2020-06-19</Date>
-                        </Field>
-                        <Field FieldName="PENDING_DATE" FieldLabel="Fälligkeitsdatum" IsNull="true" />
-                        <Field FieldName="AMOUNT" FieldLabel="Betrag" IsNull="true" />
-                        <Field FieldName="TEST" FieldLabel="Test">
-                            <Table />
-                        </Field>
-                        <Field FieldName="DWDISK" FieldLabel="Disk Number" ReadOnly="true">
-                            <Int>1</Int>
-                        </Field>
-                        <Field FieldName="DWDISKNO" FieldLabel="Disk Number" ReadOnly="true">
-                            <Int>1</Int>
-                        </Field>
-                        <Field FieldName="DWVERSIONCOMMENT" FieldLabel="Change comment" ReadOnly="true">
-                            <String>test comment</String>
-                        </Field>
-                        <Field FieldName="DWVERSTATUS" FieldLabel="Versionsstatus" ReadOnly="true">
-                            <String>Current version</String>
-                        </Field>
-                        <Field FieldName="DWUSRVERSION" FieldLabel="Versionsnummer" ReadOnly="true">
-                            <String>2.2</String>
-                        </Field>
-                    </Fields>
-                    <Flags />
-                    <Version Major="2" Minor="2" />
-                    <s:Links>
-                        <s:Link rel="self" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6" />
-                        <s:Link rel="fields" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Fields" />
-                        <s:Link rel="clippedDocuments" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Operations/ClippedDocuments?docId=6" />
-                        <s:Link rel="sections" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Sections?docId=6" />
-                        <s:Link rel="thumbnail" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=248353229&amp;annotations=True" />
-                        <s:Link rel="thumbnailWithoutAnnotation" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=248353229&amp;annotations=False" />
-                        <s:Link rel="lowQualityImage" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Image?v=248353229" />
-                        <s:Link rel="annotationAsSvg" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/AnnotationAsImage?format=Svg&amp;v=248353229" />
-                        <s:Link rel="lock" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Lock" />
-                        <s:Link rel="rights" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Rights" />
-                    </s:Links>
-                    <Sections>
-                        <Section Id="6-6" ContentType="application/pdf" PageCount="1" FileSize="57367" OriginalFileName="6+2063b42c-416c-46f5-a529-f2fdaa2836c4+INV000002(3).pdf" ContentModified="2020-07-15T18:04:48.9842877Z">
-                            <SignatureStatus>Allow_Signature_Stamps</SignatureStatus>
-                            <SignatureStatus>Allow_Annotations</SignatureStatus>
-                            <SignatureStatus>Allow_Stamps</SignatureStatus>
-                            <Pages />
-                            <Thumbnails />
-                            <s:Links>
-                                <s:Link rel="self" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Sections/6-6" />
-                                <s:Link rel="thumbnail" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=248353229&amp;annotations=False" />
-                                <s:Link rel="annotationAsSvg" href="/DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/AnnotationAsImage?format=Svg&amp;v=248353229" />
-                            </s:Links>
-                        </Section>
-                    </Sections>
-                    <ContentType>application/pdf</ContentType>
-                </Document>
-  /FileCabinets/{FileCabinetId}/Operations/ProcessDocumentAction:
+                $ref: "#/components/schemas/Document"
     put:
       tags:
         - Check-in check-out a document.
       summary: Undo Check-out
       requestBody:
         content:
-          application/json:
-            schema:
-              type: string
-              example: "<?xml version=\"1.0\"?>\r\n<DocumentActionInfo xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" DocumentAction=\"UndoCheckOut\" xmlns=\"http://dev.docuware.com/schema/public/services/platform\" />"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/DocumentActionInfo"
       parameters:
-        - name: User-Agent
-          in: header
-          schema:
-            type: number
-          example: >-
-            Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:79.0) Gecko/20100101
-            Firefox/79.0
-        - name: Accept
-          in: header
-          schema:
-            type: number
-          example: application/json, text/javascript, */*; q=0.01
-        - name: Accept-Language
-          in: header
-          schema:
-            type: number
-          example: en-US,en;q=0.5
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/xml
-        - name: X-Requested-With
-          in: header
-          schema:
-            type: string
-          example: XMLHttpRequest
-        - name: Origin
-          in: header
-          schema:
-            type: number
-          example: http://172.18.39.40
-        - name: Connection
-          in: header
-          schema:
-            type: string
-          example: keep-alive
-        - name: Referer
-          in: header
-          schema:
-            type: number
-          example: http://172.18.39.40/DocuWare/Platform/WebClient
-        - name: Cookie
-          in: header
-          schema:
-            type: string
-          example: >-
-            openInNewWindow=False;
-            .DWPLATFORMAUTH=6290610778B8BCCE6FB48DFE8BF550A69396B63EA6305E62BAFC95A36097E3E79A2152F4199D4AC94CB4741750C930F31F5FD452E6FBC8F20F9FAB606D9EB4B6CF2DC53E8EEAB1746D79A60642F6B372F539A8FCAE6241D02B69BE5500DD60EEA68001E32ECE62355D4B4ADF90DCEDEC6146651D0E06B11A0DAE8BDCB5E88E8BA9A68E77201E62939930F1199FA912DFADD073CCE5792EDAD0A3DA70E8F8900E509712BFE3ADE4B3950D66C1CB2942022DBC76C0E0908E279D943E4E4E41AAB384E8E2442921B76F133D1A17CFF357B08887DFAEC8CD28D8AECEAB56EAF0E4DF23F2D2A867BD67916464B24E4DE8648D9E9514F1B4C4E6EB36F2D1448DF74E511700E575C0044AF389F38731E1D84AEED4B13C7EFC4480D5D1E6947E4862358E63E4F6C0FA96D43B17C6C237215D582C05DF8674B54683093E161DA87C5CCB7F3049DD7E90DA8398A84A7B8255AE2BFC43870A23BDEA2918CE159C5AF5BEF0BE53162AE4ED87E3371771F39A096BB70EDAF5FD0FCFD55D4FE675B36E1F9D619E;
-            DWPLATFORMBROWSERID=2F12764054CCB3A6CA28A6746378714C1997FE999B3DD8308DB8991B1D329F3DC5E3CADA73107031C8A13F1815D5B9DBB265009743D066BF62F9A2D510613F49C06D5C0099675F6049C8E444F4EC00379FB72A8578665849D74FEBB80C72F5B2BDA5E9BFAA95B62B3BE10065EC7F3903D24D631218202941E59BD03EF67EFAA97AFE2698E5AA3E37E1F35F96912595BC7369657B4447DC3352C57237989F2061D087E621A2D627E8A5895E7ACF19B7A4EF35170441F50B0370809DDE5F4EE305B6A95B2263FCF9BE8CE63DD06F1FB8BD;
-            DWLanguage=en; DWFormatCulture=en; DWFormatCalendar=;
-            clienttimezone=Europe%2FBerlin
         - name: docId
           in: query
           schema:
@@ -590,395 +385,10 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0, s-maxage=0
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Expires:
-              schema:
-                type: string
-                example: Wed, 15 Jul 2020 18:19:59 GMT
-            Last-Modified:
-              schema:
-                type: string
-                example: Wed, 15 Jul 2020 18:19:59 GMT
-            Vary:
-              schema:
-                type: string
-                example: '*'
-            Server:
-              schema:
-                type: number
-                example: Microsoft-IIS/10.0
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
-            Date:
-              schema:
-                type: string
-                example: Wed, 15 Jul 2020 18:20:00 GMT
-            Content-Length:
-              schema:
-                type: integer
-                example: '9802'
           content:
-            application/json:
+            application/xml:
               schema:
-                type: object
-              example:
-                Fields:
-                  - FieldName: DWDOCID
-                    FieldLabel: Doc ID
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: 6
-                    ItemElementName: Int
-                  - FieldName: DWDOCSIZE
-                    FieldLabel: Document Size
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: 57367
-                    ItemElementName: Int
-                  - FieldName: DWSTOREUSER
-                    FieldLabel: Store User
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: dwadmin
-                    ItemElementName: String
-                  - FieldName: DWSTOREDATETIME
-                    FieldLabel: Store Date
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: /Date(1592994755000)/
-                    ItemElementName: DateTime
-                  - FieldName: DWEXTENSION
-                    FieldLabel: Extension
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: .pdf
-                    ItemElementName: String
-                  - FieldName: DWMODUSER
-                    FieldLabel: Modification User
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: dwadmin
-                    ItemElementName: String
-                  - FieldName: DWMODDATETIME
-                    FieldLabel: Modification Date
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: /Date(1594837199000)/
-                    ItemElementName: DateTime
-                  - FieldName: DWSECTIONCOUNT
-                    FieldLabel: File count
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: 1
-                    ItemElementName: Int
-                  - FieldName: DWPAGECOUNT
-                    FieldLabel: File count
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: 1
-                    ItemElementName: Int
-                  - FieldName: DOCUMENT_TYPE
-                    FieldLabel: Art des Dokumentes
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: COMPANY
-                    FieldLabel: Firma
-                    IsNull: false
-                    ReadOnly: false
-                    SystemField: false
-                    Item: PowerShell Company
-                    ItemElementName: String
-                  - FieldName: CONTACT
-                    FieldLabel: Kontaktperson
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: CUSTOMER_ID
-                    FieldLabel: Kundennummer
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: EMAIL
-                    FieldLabel: E-Mail
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: SUBJECT
-                    FieldLabel: Betreff
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: STATUS
-                    FieldLabel: Status
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: DOCUMENT_NUMBER
-                    FieldLabel: Dokumentennummer
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: PROJECT
-                    FieldLabel: Projekt
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: VAT_ID
-                    FieldLabel: Steuernummer
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: IBAN
-                    FieldLabel: IBAN
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: String
-                  - FieldName: DATE
-                    FieldLabel: Datum
-                    IsNull: false
-                    ReadOnly: false
-                    SystemField: false
-                    Item: /Date(1592524800000)/
-                    ItemElementName: Date
-                  - FieldName: PENDING_DATE
-                    FieldLabel: Fälligkeitsdatum
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: Date
-                  - FieldName: AMOUNT
-                    FieldLabel: Betrag
-                    IsNull: true
-                    ReadOnly: false
-                    SystemField: false
-                    ItemElementName: Decimal
-                  - FieldName: TEST
-                    FieldLabel: Test
-                    IsNull: false
-                    ReadOnly: false
-                    SystemField: false
-                    Item:
-                      $type: DocumentIndexFieldTable
-                      Row: []
-                    ItemElementName: Table
-                  - FieldName: DWDISK
-                    FieldLabel: Disk Number
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: 1
-                    ItemElementName: Int
-                  - FieldName: DWDISKNO
-                    FieldLabel: Disk Number
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: 1
-                    ItemElementName: Int
-                  - FieldName: DWVERSIONCOMMENT
-                    FieldLabel: Change comment
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: test comment
-                    ItemElementName: String
-                  - FieldName: DWVERSTATUS
-                    FieldLabel: Versionsstatus
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: Current version
-                    ItemElementName: String
-                  - FieldName: DWUSRVERSION
-                    FieldLabel: Versionsnummer
-                    IsNull: false
-                    ReadOnly: true
-                    SystemField: true
-                    Item: '2.2'
-                    ItemElementName: String
-                Flags:
-                  IsCold: false
-                  IsDBRecord: false
-                  IsCheckedOut: false
-                  IsCopyRightProtected: false
-                  IsVoiceAvailable: false
-                  HasAppendedDocuments: false
-                  IsProtected: false
-                  IsDeleted: false
-                  IsEmail: false
-                Version:
-                  Major: 2
-                  Minor: 2
-                Links:
-                  - rel: self
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6
-                  - rel: fields
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Fields
-                  - rel: clippedDocuments
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Operations/ClippedDocuments?docId=6
-                  - rel: sections
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Sections?docId=6
-                  - rel: thumbnail
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=1102060944&annotations=True
-                  - rel: thumbnailWithoutAnnotation
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=1102060944&annotations=False
-                  - rel: lowQualityImage
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Image?v=1102060944
-                  - rel: annotationAsSvg
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/AnnotationAsImage?format=Svg&v=1102060944
-                  - rel: deepZoomImage
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Rendering/6-6/Pages/0/woa/dz.dzi
-                  - rel: deepZoomImageWithAnnotation
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Rendering/6-6/Pages/0/wa/dz.dzi
-                  - rel: fileDownload
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/FileDownload
-                  - rel: content
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Data
-                  - rel: lock
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Lock
-                  - rel: rights
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Rights
-                  - rel: processDocumentAction
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Operations/ProcessDocumentAction?docId=6
-                  - rel: positions
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Positions
-                  - rel: contentDivideOperation
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Operations/ContentDivide?docId=6
-                  - rel: textAnnotation
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/TextAnnotation
-                  - rel: checksumStatus
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/ChecksumStatus
-                  - rel: xmlDSigContent
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/XmlDSigContent
-                  - rel: appProperties
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/DocumentApplicationProperties
-                  - rel: documentLinks
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/DocumentLinks
-                  - rel: latestVersion
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/LatestVersion
-                  - rel: annotation
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Annotation
-                  - rel: versionHistory
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Query/Documents?q=dmVyc2lvbjs2
-                  - rel: checkoutDocument
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/CheckoutDocument
-                  - rel: checkoutToFileSystem
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/CheckoutToFileSystem
-                  - rel: checkInFromFileSystem
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/CheckInFromFileSystem
-                  - rel: workflowHistory
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/WorkflowHistory
-                  - rel: downloadAsArchive
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Archiving/ArchiveDocument?Id=6
-                  - rel: auditInformation
-                    href: >-
-                      /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/DocumentAuditInformation
-                Sections:
-                  - SignatureStatus:
-                      - Allow_Signature_Stamps
-                      - Allow_Annotations
-                      - Allow_Stamps
-                    Pages:
-                      Page: []
-                    Thumbnails:
-                      Page: []
-                    Links:
-                      - rel: self
-                        href: >-
-                          /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Sections/6-6
-                      - rel: thumbnail
-                        href: >-
-                          /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/Thumbnail?v=1102060944&annotations=False
-                      - rel: annotationAsSvg
-                        href: >-
-                          /DocuWare/Platform/FileCabinets/2063b42c-416c-46f5-a529-f2fdaa2836c4/Documents/6/AnnotationAsImage?format=Svg&v=1102060944
-                    Id: 6-6
-                    ContentType: application/pdf
-                    HaveMorePages: false
-                    PageCount: 1
-                    FileSize: 57367
-                    OriginalFileName: 6+2063b42c-416c-46f5-a529-f2fdaa2836c4+INV000002(3).pdf
-                    ContentModified: /Date(1594836288984)/
-                    HasTextAnnotation: false
-                    AnnotationsPreview: false
-                ContentType: application/pdf
-                HaveMoreTotalPages: false
-                HasTextAnnotation: false
-                HasXmlDigitalSignatures: false
-                AnnotationsPreview: false
-                TotalPages: 1
-                Id: 6
-                Title: INV000002
-                LastModified: /Date(1594837199000)/
-                LastModifiedSpecified: true
-                CreatedAt: /Date(1592994755000)/
-                CreatedAtSpecified: true
-                FileSize: 57367
-                SectionCount: 1
-                IntellixTrust: None
-                VersionStatus: Manual
-                FileCabinetId: 2063b42c-416c-46f5-a529-f2fdaa2836c4
-  /FileCabinets/{FileCabinetId}/Rendering/{DocumentId}-{Section}/Thumbnail:
+                $ref: "#/components/schemas/Document"
     get:
       tags:
         - Download
@@ -997,7 +407,6 @@ paths:
           schema:
             type: string
           example: '{{Page}}'
-
         - name: FileCabinetId
           in: path
           schema:
@@ -1062,7 +471,6 @@ paths:
           schema:
             type: string
           example: bytes=1000-1500
-
         - name: FileCabinetId
           in: path
           schema:
@@ -1090,12 +498,6 @@ paths:
         The documents are sorted by the order that was specified in the previous
         POST request.
       parameters:
-        - name: Assept
-          in: header
-          schema:
-            type: string
-          example: application/xml
-
         - name: q
           in: query
           schema:
@@ -1146,23 +548,11 @@ paths:
                   description: files you want to attach
                   format: binary
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: multipart/form-data
-        - name: X-File-ModifiedDate
-          in: header
-          schema:
-            type: number
-          description: File creation time
-          example: '2020-08-26T00:00:00.000Z'
         - name: StoreDialogId
           in: query
           schema:
             type: string
           example: '{{StoreDialogId}}'
-
         - name: FileCabinetId
           in: path
           schema:
@@ -1183,13 +573,9 @@ paths:
         The response contains a particular document specified in request using
         it's doc id.  
 
-
         The next step is to use "fields" link for a PUT request containing a
         JSON object specifying new index values.
       parameters:
-
-
-
         - name: FileCabinetId
           in: path
           schema:
@@ -1203,59 +589,6 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, must-revalidate, max-age=0, s-maxage=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '1653'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 11:57:55 GMT
-            ETag:
-              schema:
-                type: string
-                example: '"_3d4dae4d-RHonbGRNKB3qgKAhVl8rXnCtAQ0=-gzip"'
-            Expires:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 11:57:55 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=100
-            Last-Modified:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 11:57:55 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*,Accept-Encoding'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             text/plain:
               schema:
@@ -1289,18 +622,6 @@ paths:
         - Documents
       summary: Delete document
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: number
-          example: application/json, text/javascript, */*; q=0.01
-
-        - name: X-Requested-With
-          in: header
-          schema:
-            type: string
-          example: XMLHttpRequest
-
         - name: FileCabinetId
           in: path
           schema:
@@ -1335,32 +656,16 @@ paths:
                 FillIntellix: false
                 UseDefaultDialog: false
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: number
-          example: application/json, text/javascript, */*; q=0.01
         - name: Content-Type
           in: header
           schema:
             type: string
           example: application/vnd.docuware.platform.documentstransferinfo+json
-        - name: X-Requested-With
-          in: header
-          schema:
-            type: string
-          example: XMLHttpRequest
-        - name: Connection
-          in: header
-          schema:
-            type: string
-          example: keep-alive
         - name: storeDialogId
           in: query
           schema:
             type: string
           example: b8d7dccb-1dc3-44b1-b059-673f9d82d201
-
         - name: DestinationFileCabinetId
           in: path
           schema:
@@ -1431,59 +736,6 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, must-revalidate, max-age=0, s-maxage=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '574'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 21:00:56 GMT
-            ETag:
-              schema:
-                type: string
-                example: '"_3d4dae4d-635707764250000000"'
-            Expires:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 21:00:56 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=100
-            Last-Modified:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 21:00:56 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             text/plain:
               schema:
@@ -1559,55 +811,6 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0, s-maxage=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '615'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 10:33:03 GMT
-            Expires:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 10:33:03 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=100
-            Last-Modified:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 10:33:03 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*,Accept-Encoding'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             text/plain:
               schema:
@@ -1654,55 +857,6 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, max-age=0, s-maxage=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '937'
-            Content-Type:
-              schema:
-                type: string
-                example: application/json; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 10:36:00 GMT
-            Expires:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 10:36:00 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=100
-            Last-Modified:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 10:36:00 GMT
-            Server:
-              schema:
-                type: string
-                example: Apache
-            Vary:
-              schema:
-                type: string
-                example: '*,Accept-Encoding'
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             text/plain:
               schema:
@@ -1785,43 +939,6 @@ paths:
       responses:
         '200':
           description: OK
-          headers:
-            Cache-Control:
-              schema:
-                type: string
-                example: private, s-maxage=0
-            Connection:
-              schema:
-                type: string
-                example: Keep-Alive
-            Content-Encoding:
-              schema:
-                type: string
-                example: gzip
-            Content-Length:
-              schema:
-                type: integer
-                example: '237'
-            Content-Type:
-              schema:
-                type: string
-                example: text/html; charset=utf-8
-            Date:
-              schema:
-                type: string
-                example: Wed, 24 Jun 2015 10:42:19 GMT
-            Keep-Alive:
-              schema:
-                type: string
-                example: timeout=15, max=100
-            Server:
-              schema:
-                type: string
-                example: Apache
-            X-Powered-By:
-              schema:
-                type: string
-                example: ASP.NET
           content:
             text/plain:
               schema:
@@ -2325,8 +1442,6 @@ paths:
                   IsOutOfOffice: 'true'
                   StartDateTime: '2022-01-01T13:00:00.0000000Z'
                   EndDateTime: '2022-12-31T13:00:00.0000000Z'
-
-
       responses:
         '200':
           description: Successful response
@@ -2393,9 +1508,6 @@ paths:
       tags:
         - User/Group/Role handling
       summary: Get Groups
-      parameters:
-
-
       responses:
         '200':
           description: Successful response
@@ -2412,7 +1524,6 @@ paths:
           schema:
             type: string
           example: '{{UserId}}'
-
       responses:
         '200':
           description: Successful response
@@ -2438,7 +1549,6 @@ paths:
           schema:
             type: string
           example: '{{UserId}}'
-
       responses:
         '200':
           description: Successful response
@@ -2455,5 +1565,7 @@ components:
     Documents:
       type: object
     Document:
+      type: object
+    DocumentActionInfo:
       type: object
 
