@@ -222,19 +222,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
-  /Organizations:
-    get:
-      tags:
-        - Basics
-      summary: Get organization
-      description: The response contains the organization the user is currently logged in.
-      responses:
-        '200':
-          description: OK
-          content:
-            application/xml:
-              schema:
-                $ref: "#/components/schemas/Organizations"
+            
   /FileCabinets:
     get:
       tags:
@@ -260,6 +248,7 @@ paths:
                 {"FileCabinet":[{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/8581a8cf-99e5-432f-9193-b2d908e9b2b5/Query/FieldValueStatistics"}],"Color":"Black","Name":"Document
                 Pool","Id":"8581a8cf-99e5-432f-9193-b2d908e9b2b5","IsBasket":false,"Usable":true,"Default":false,"VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false},{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f/Query/FieldValueStatistics"}],"Color":"Green","Name":"Inbox","Id":"b_64483ab5-61e2-4ab5-9a5b-8270c93eb50f","IsBasket":true,"Usable":true,"Default":true,"AssignedCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false},{"Links":[{"rel":"documents","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents"},{"rel":"advancedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents"},{"rel":"unprocessedDocumentUpload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?processTextshot=False"},{"rel":"query","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/FunctionExpression"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9"},{"rel":"dialogs","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs"},{"rel":"searches","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=Search"},{"rel":"customSearch","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/00000000-0000-0000-0000-000000000000"},{"rel":"resultTrees","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=ResultTree"},{"rel":"stores","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=Store"},{"rel":"taskLists","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs?dialogType=TaskList"},{"rel":"stamps","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Stamps"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Task/Transfer"},{"rel":"notifications","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/Notifications?notification=newDocuments\u0026timeout=500"},{"rel":"contentMergeOperation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/ContentMerge"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Operations/BatchDocumentsUpdateFields"},{"rel":"fieldValueStatistics","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/FieldValueStatistics"}],"Color":"Green","Name":"Platform
                 Workshop","Id":"41537414-0df0-4d08-adb5-fa40564b80f9","IsBasket":false,"Usable":true,"Default":false,"VersionManagement":"Disable","WindowsExplorerClientAccess":false,"AddIndexEntriesInUpperCase":false}]}
+  
   /FileCabinets/{FileCabinetId}:
     get:
       tags:
@@ -327,6 +316,7 @@ paths:
                 type: string
               example: >-
                 {"Links":[{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/18-0/Data?documentInfoInFileName=True"}]}
+  
   /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckInFromFileSystem:
     post:
       tags:
@@ -427,6 +417,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/FileDownload:
     get:
       tags:
@@ -460,6 +451,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{FileCabinetId}/Sections/{Section}/Data:
     get:
       tags:
@@ -888,6 +880,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{FileCabinetId}/Query/DialogExpressionLink:
     post:
       tags:
@@ -1142,6 +1135,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/DocumentApplicationProperties:
     post:
       tags:
@@ -1149,9 +1143,9 @@ paths:
       summary: UpdateApplicationProperty
       requestBody:
         content:
-          application/json:
+          application/xml:
             schema:
-              type: object
+              $ref: "#/components/schemas/DocumentApplicationProperty"
               example:
                 DocumentApplicationProperty:
                   - Name: Key1
@@ -1172,6 +1166,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/Annotation:
     post:
       tags:
@@ -1179,9 +1174,9 @@ paths:
       summary: UpdateTextAnnotation
       requestBody:
         content:
-          application/json:
+          application/xml:
             schema:
-              type: object
+              $ref: "#/components/schemas/Annotations"
               example:
                 Annotations:
                   - PageNumber: 0
@@ -1228,6 +1223,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/WorkflowHistory:
     get:
       tags:
@@ -1249,6 +1245,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /Workflows/0c135ffb-1616-4607-9d9f-f3ea7789de12/Instances/be39345c-af7e-521e-81ca-12fc4b8c7d02/History:
     get:
       tags:
@@ -1259,6 +1256,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{FileCabinetId}/Query/SelectListExpression:
     post:
       tags:
@@ -1301,6 +1299,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{BasketId}/Operations/ContentMerge:
     post:
       tags:
@@ -1323,18 +1322,6 @@ paths:
           schema:
             type: number
           example: application/json, text/javascript, */*; q=0.01
-
-        - name: X-Requested-With
-          in: header
-          schema:
-            type: string
-          example: XMLHttpRequest
-        - name: Connection
-          in: header
-          schema:
-            type: string
-          example: keep-alive
-
         - name: BasketId
           in: path
           schema:
@@ -1345,6 +1332,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{BasketId}/Operations/ContentDivide:
     post:
       tags:
@@ -1359,27 +1347,11 @@ paths:
                 Operation: Unstaple
                 Force: false
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: number
-          example: application/json, text/javascript, */*; q=0.01
-        - name: X-Requested-With
-          in: header
-          schema:
-            type: string
-          example: XMLHttpRequest
-        - name: Connection
-          in: header
-          schema:
-            type: string
-          example: keep-alive
         - name: docId
           in: query
           schema:
             type: string
           example: '{{DocumentId}}'
-
         - name: BasketId
           in: path
           schema:
@@ -1390,6 +1362,20 @@ paths:
           description: Successful response
           content:
             application/json: {}
+           
+  /Organizations:
+    get:
+      tags:
+        - Basics
+      summary: Get organization
+      description: The response contains the organization the user is currently logged in.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Organizations"         
             
   /Organization/Users:
     get:
@@ -1506,6 +1492,7 @@ paths:
             application/xml:
               schema:
                 $ref: "#/components/schemas/Groups"
+                
   /Organization/UserGroups:
     get:
       tags:
@@ -1563,6 +1550,10 @@ components:
     Document:
       type: object
     DocumentActionInfo:
+      type: object
+    DocumentApplicationProperty:
+      type: object
+    Annotations:
       type: object
     Groups:
       type: object
