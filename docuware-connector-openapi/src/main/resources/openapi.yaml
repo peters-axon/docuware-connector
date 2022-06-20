@@ -355,35 +355,6 @@ paths:
                 type: string
                 format: binary
             
-  /FileCabinets/{FileCabinetId}/Sections/{Section}/Data:
-    get:
-      tags:
-        - Download
-      summary: Download partial section
-      parameters:
-        - name: Range
-          in: header
-          schema:
-            type: string
-          example: bytes=1000-1500
-        - name: FileCabinetId
-          in: path
-          schema:
-            type: string
-          required: true
-        - name: Section
-          in: path
-          schema:
-            type: string
-          required: true
-      responses:
-        '200':
-          description: Successful response
-          content:
-            application/xml:
-              schema:
-                $ref: "#/components/schemas/Documents"
-
   /FileCabinets/{FileCabinetId}/Documents:
     get:
       tags:
@@ -553,6 +524,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /FileCabinets/{FileCabinetId}/Sections:
     get:
       tags:
@@ -563,8 +535,8 @@ paths:
           in: query
           schema:
             type: string
+          required: true
           example: '{{DocumentId}}'
-
         - name: FileCabinetId
           in: path
           schema:
@@ -574,37 +546,30 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Sections"
     post:
       tags:
         - How to create data record and upload files
       summary: Upload  a single pdf file for a data entry
       requestBody:
         content:
-          text/plain: {}
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  description: the file you want to attach
+                  format: binary
       parameters:
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/pdf
-        - name: Content-Disposition
-          in: header
-          schema:
-            type: string
-          example: file; filename="filename.pdf"
-        - name: X-File-ModifiedDate
-          in: header
-          schema:
-            type: number
-          description: File creation time
-          example: '2020-08-26T00:00:00.000Z'
         - name: DocId
           in: query
           schema:
             type: string
+          required: true
           example: '{{DocumentId}}'
-
         - name: FileCabinetId
           in: path
           schema:
@@ -614,11 +579,10 @@ paths:
         '200':
           description: OK
           content:
-            text/plain:
+            application/xml:
               schema:
-                type: string
-              example: >-
-                {"SignatureStatus":["Allow_Annotations","Allow_Stamps","Allow_Signature_Stamps"],"Pages":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=False"}]},"Thumbnails":{"Page":[],"Links":[{"rel":"nextBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlock?start=0\u0026count=5\u0026thumbnailsOnly=True"}]},"Links":[{"rel":"document","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents/20"},{"rel":"deepZoomImage","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/woa/dz.dzi"},{"rel":"deepZoomImageWithAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Pages/0/level%3dall/dz.dzi"},{"rel":"fileDownload","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/FileDownload"},{"rel":"content","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Data"},{"rel":"textshot","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Textshot"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0"},{"rel":"textAnnotation","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/TextAnnotation"},{"rel":"pagesBlock","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/PagesBlockResult"},{"rel":"thumbnail","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Rendering/20-0/Thumbnail?v=635707763771210165\u0026page=0"},{"rel":"positions","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Sections/20-0/Positions"}],"Id":"20-0","ContentType":"application/pdf","HaveMorePages":false,"PageCount":1,"FileSize":96674,"OriginalFileName":"365bc42b-9503-4552-bf17-1a28ba0c51cd.pdf","ContentModified":"\/Date(1435179624609)\/","HasTextAnnotation":false}
+                $ref: "#/components/schemas/Section"
+                
   /FileCabinets/{FileCabinetId}/Sections/{Section}:
     get:
       tags:
@@ -639,7 +603,10 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/Section"
+            
     delete:
       tags:
         - Sections
@@ -660,6 +627,37 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
+  /FileCabinets/{FileCabinetId}/Sections/{Section}/Data:
+    get:
+      tags:
+        - Download
+      summary: Download partial section
+      parameters:
+        - name: Range
+          in: header
+          schema:
+            type: string
+          example: bytes=1000-1500
+        - name: FileCabinetId
+          in: path
+          schema:
+            type: string
+          required: true
+        - name: Section
+          in: path
+          schema:
+            type: string
+          required: true
+      responses:
+        '200':
+          description: Successful response
+          content:
+            "application/octet-stream":
+              schema:
+                type: string
+                format: binary      
+            
   /FileCabinets/{FileCabinetId}/Dialogs:
     get:
       tags:
@@ -1435,6 +1433,10 @@ components:
     Documents:
       type: object
     Document:
+      type: object
+    Sections:
+      type: object
+    Section:
       type: object
     DocumentActionInfo:
       type: object

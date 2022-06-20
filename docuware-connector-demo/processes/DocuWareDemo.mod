@@ -39,6 +39,18 @@ Do0 @PushWFArc f26 '' #zField
 Do0 @StartRequest f27 '' #zField
 Do0 @PushWFArc f16 '' #zField
 Do0 @EndTask f15 '' #zField
+Do0 @RestClientCall f31 '' #zField
+Do0 @PushWFArc f32 '' #zField
+Do0 @RestClientCall f33 '' #zField
+Do0 @PushWFArc f34 '' #zField
+Do0 @RestClientCall f35 '' #zField
+Do0 @PushWFArc f36 '' #zField
+Do0 @RestClientCall f37 '' #zField
+Do0 @StartRequest f38 '' #zField
+Do0 @PushWFArc f39 '' #zField
+Do0 @PushWFArc f40 '' #zField
+Do0 @RestClientCall f41 '' #zField
+Do0 @PushWFArc f42 '' #zField
 Do0 @PushWFArc f30 '' #zField
 >Proto Do0 Do0 DocuWareDemo #zField
 Do0 f0 outLink start.ivp #txt
@@ -325,8 +337,142 @@ Do0 f27 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 Do0 f27 @C|.responsibility Everybody #txt
 Do0 f27 705 521 30 30 -48 28 #rect
 Do0 f16 720 521 720 462 #arcP
-Do0 f15 1041 425 30 30 0 15 #rect
-Do0 f30 960 440 1041 440 #arcP
+Do0 f15 1337 425 30 30 0 15 #rect
+Do0 f31 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
+Do0 f31 path /FileCabinets/{FileCabinetId}/Sections #txt
+Do0 f31 queryParams 'docid=in.document.id.toString();
+' #txt
+Do0 f31 templateParams 'FileCabinetId=in.cabinet.id;
+' #txt
+Do0 f31 method GET #txt
+Do0 f31 resultType com.docuware.dev.schema._public.services.platform.Sections #txt
+Do0 f31 responseMapping 'out.section=result.getSection().get(0);
+' #txt
+Do0 f31 clientErrorCode ivy:error:rest:client #txt
+Do0 f31 statusErrorCode ivy:error:rest:client #txt
+Do0 f31 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>List
+Sections</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f31 848 506 112 44 -27 -15 #rect
+Do0 f32 904 462 904 506 #arcP
+Do0 f33 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
+Do0 f33 path /FileCabinets/{FileCabinetId}/Sections/{Section} #txt
+Do0 f33 queryParams 'docid=in.document.id.toString();
+' #txt
+Do0 f33 templateParams 'FileCabinetId=in.cabinet.id;
+Section=in.section.id;
+' #txt
+Do0 f33 method GET #txt
+Do0 f33 resultType com.docuware.dev.schema._public.services.platform.Section #txt
+Do0 f33 clientErrorCode ivy:error:rest:client #txt
+Do0 f33 statusErrorCode ivy:error:rest:client #txt
+Do0 f33 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>Read
+Section</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f33 1000 506 112 44 -23 -15 #rect
+Do0 f34 960 528 1000 528 #arcP
+Do0 f35 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
+Do0 f35 path /FileCabinets/{FileCabinetId}/Sections/{Section}/Data #txt
+Do0 f35 queryParams 'docid=in.document.id.toString();
+' #txt
+Do0 f35 templateParams 'FileCabinetId=in.cabinet.id;
+Section=in.section.id;
+' #txt
+Do0 f35 method GET #txt
+Do0 f35 resultType '[B' #txt
+Do0 f35 responseCode 'in.file = new File("section-"+in.section.originalFileName, true);
+in.file.createNewFile();
+in.file.writeBinary(result);' #txt
+Do0 f35 clientErrorCode ivy:error:rest:client #txt
+Do0 f35 statusErrorCode ivy:error:rest:client #txt
+Do0 f35 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>Download
+Section</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f35 1000 418 112 44 -30 -15 #rect
+Do0 f36 1056 506 1056 462 #arcP
+Do0 f37 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
+Do0 f37 path /FileCabinets/{FileCabinetId}/Documents/{DocumentId} #txt
+Do0 f37 templateParams 'DocumentId=in.document.getId().toString();
+FileCabinetId=in.cabinet.getId();
+' #txt
+Do0 f37 resultType com.docuware.dev.schema._public.services.platform.Document #txt
+Do0 f37 responseMapping 'out.document=result;
+' #txt
+Do0 f37 responseCode 'ivy.log.info("found document: " + result.title);' #txt
+Do0 f37 clientErrorCode ivy:error:rest:client #txt
+Do0 f37 statusErrorCode ivy:error:rest:client #txt
+Do0 f37 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>Read 
+Document</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f37 848 594 112 44 -32 -15 #rect
+Do0 f38 outLink sections.ivp #txt
+Do0 f38 inParamDecl '<> param;' #txt
+Do0 f38 inParamTable 'out.cabinet.id="c1436a27-9e35-4856-b27e-826327a4f96b";
+out.document.id=165;
+' #txt
+Do0 f38 requestEnabled true #txt
+Do0 f38 triggerEnabled false #txt
+Do0 f38 callSignature sections() #txt
+Do0 f38 caseData businessCase.attach=true #txt
+Do0 f38 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>sections.ivp</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f38 @C|.responsibility Everybody #txt
+Do0 f38 889 697 30 30 -29 17 #rect
+Do0 f39 904 697 904 638 #arcP
+Do0 f40 904 594 904 550 #arcP
+Do0 f41 clientId 02d1eec1-32e9-4316-afc3-793448486203 #txt
+Do0 f41 path /FileCabinets/{FileCabinetId}/Sections #txt
+Do0 f41 queryParams 'docid=;
+DocId=in.document.id.toString();
+' #txt
+Do0 f41 templateParams 'FileCabinetId=in.cabinet.id;
+Section=in.section.id;
+' #txt
+Do0 f41 method POST #txt
+Do0 f41 bodyInputType FORM #txt
+Do0 f41 bodyMediaType multipart/form-data #txt
+Do0 f41 bodyForm 'file=in.file.getJavaFile();
+' #txt
+Do0 f41 bodyObjectType com.docuware.dev.schema._public.services.platform.FileCabinetIdSectionsBody #txt
+Do0 f41 resultType com.docuware.dev.schema._public.services.platform.Section #txt
+Do0 f41 clientErrorCode ivy:error:rest:client #txt
+Do0 f41 statusErrorCode ivy:error:rest:client #txt
+Do0 f41 @C|.xml '<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<elementInfo>
+    <language>
+        <name>Upload
+Section</name>
+    </language>
+</elementInfo>
+' #txt
+Do0 f41 1160 418 112 44 -23 -15 #rect
+Do0 f42 1112 440 1160 440 #arcP
+Do0 f30 1272 440 1337 440 #arcP
 >Proto Do0 .type com.axonivy.market.docuware.connector.demo.Data #txt
 >Proto Do0 .processKind NORMAL #txt
 >Proto Do0 0 0 32 24 18 0 #rect
@@ -357,5 +503,17 @@ Do0 f23 mainOut f26 tail #connect
 Do0 f26 head f25 mainIn #connect
 Do0 f27 mainOut f16 tail #connect
 Do0 f16 head f23 mainIn #connect
-Do0 f25 mainOut f30 tail #connect
+Do0 f25 mainOut f32 tail #connect
+Do0 f32 head f31 mainIn #connect
+Do0 f31 mainOut f34 tail #connect
+Do0 f34 head f33 mainIn #connect
+Do0 f33 mainOut f36 tail #connect
+Do0 f36 head f35 mainIn #connect
+Do0 f38 mainOut f39 tail #connect
+Do0 f39 head f37 mainIn #connect
+Do0 f37 mainOut f40 tail #connect
+Do0 f40 head f31 mainIn #connect
+Do0 f35 mainOut f42 tail #connect
+Do0 f42 head f41 mainIn #connect
+Do0 f41 mainOut f30 tail #connect
 Do0 f30 head f15 mainIn #connect
