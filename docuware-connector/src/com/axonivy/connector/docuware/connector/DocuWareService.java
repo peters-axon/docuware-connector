@@ -1,11 +1,13 @@
 package com.axonivy.connector.docuware.connector;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import com.axonivy.connector.docuware.connector.model.DocumentIndexField;
-import com.axonivy.connector.docuware.connector.model.DocumentIndexField.ItemElementNameEnum;
+import com.docuware.dev.schema._public.services.platform.DocumentIndexField;
+
 
 public class DocuWareService {
 	/*
@@ -21,16 +23,16 @@ public class DocuWareService {
 	public DocumentIndexField createDocumentIndexStringField(String fieldName, String item) {
 		DocumentIndexField field = new DocumentIndexField();
 		field.setFieldName(fieldName);
-		field.setItem(item);
-		field.setItemElementName(ItemElementNameEnum.STRING);
+		field.setString(item);
 		return field;
 	}
 
 	public DocumentIndexField createDocumentIndexDateField(String fieldName, Date date) {
 		DocumentIndexField field = new DocumentIndexField();
 		field.setFieldName(fieldName);
-		field.setItem(date);
-		field.setItemElementName(ItemElementNameEnum.DATE);
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.setTime(date);
+		// set
 		return field;
 	}
 

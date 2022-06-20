@@ -33,11 +33,11 @@ public class DocuWareServiceMock {
 
 	/**
 	 * Logon Call.
-	 * 
+	 *
 	 * Note, that this call is currently not used for the tests because calling
 	 * a REST service from a feature in the Ivy Test environment is currently
-	 * not fully supported. 
-	 * 
+	 * not fully supported.
+	 *
 	 * @param userName
 	 * @param password
 	 * @param hostId
@@ -58,7 +58,7 @@ public class DocuWareServiceMock {
 	}
 
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_XML)
 	@Path("Organizations")
 	public Response organizations(@Context HttpServletRequest req) {
 		if(!isAuthenticated(req)) {
@@ -66,7 +66,8 @@ public class DocuWareServiceMock {
 			return Response.status(401).build();
 		}
 		else {
-			return Response.ok(load("json/organizations.json")).type(MediaType.APPLICATION_JSON).build();
+			return Response.ok(load("xml/organizations.xml"))
+			        .type(MediaType.APPLICATION_XML).build();
 		}
 	}
 

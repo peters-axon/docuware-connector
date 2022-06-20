@@ -13,6 +13,25 @@
         <version>9.3.1</version>
         <extensions>true</extensions>
       </plugin>
+      <plugin>
+        <groupId>com.coderplus.maven.plugins</groupId>
+        <artifactId>copy-rename-maven-plugin</artifactId>
+        <version>1.0</version>
+        <executions>
+          <execution>
+            <id>copy-file</id>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>copy</goal>
+            </goals>
+            <configuration>
+            <sourceFile>${basedir}/../docuware-connector-openapi/target/docuware-openapi-${project.version}.jar</sourceFile>
+            <destinationFile>${basedir}/lib/generated/rest/jaxRsClient_02d1eec1-32e9-4316-afc3-793448486203.jar</destinationFile>
+            <overWrite>true</overWrite>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
     </plugins>
   </build>
 </project>
