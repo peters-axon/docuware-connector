@@ -6,3 +6,4 @@ cabinet com.docuware.dev.schema._public.services.platform.FileCabinet #field
 document com.docuware.dev.schema._public.services.platform.Document #field
 file File #field
 section com.docuware.dev.schema._public.services.platform.Section #field
+dialog com.docuware.dev.schema._public.services.platform.Dialog #field

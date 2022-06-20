@@ -687,20 +687,12 @@ paths:
         '200':
           description: OK
           content:
-            text/plain:
+            application/xml:
               schema:
-                type: string
-              example: >-
-                {"Dialog":[{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=i_41d3c3ad-3393-4767-9422-2c13d5259b3b"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/i_41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=InfoDialog"}],"Id":"i_41d3c3ad-3393-4767-9422-2c13d5259b3b","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
-                Workshop","DisplayName":"Standard List View Result
-                Dialog","IsForMobile":false,"Color":"Green","IsDefault":true,"Type":"InfoDialog"},{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=ec9a8272-d37f-4670-8942-75cb9397021d"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/ec9a8272-d37f-4670-8942-75cb9397021d?dialogType=Store"},{"rel":"storeDocument","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?StoreDialogId=ec9a8272-d37f-4670-8942-75cb9397021d"},{"rel":"transfer","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Task/Transfer?storeDialogId=ec9a8272-d37f-4670-8942-75cb9397021d"}],"Id":"ec9a8272-d37f-4670-8942-75cb9397021d","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
-                Workshop","DisplayName":"Standard Store
-                Dialog","IsForMobile":false,"Color":"Green","IsDefault":true,"Type":"Store"},{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/76301253-0b28-469d-9388-4e8eef51193a?dialogType=Search"},{"rel":"assignedDialog","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=ResultList"}],"Id":"76301253-0b28-469d-9388-4e8eef51193a","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
-                Workshop","DisplayName":"Standard Search
-                Dialog","IsForMobile":false,"AssignedDialogId":"41d3c3ad-3393-4767-9422-2c13d5259b3b","Color":"Green","IsDefault":true,"Type":"Search"},{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=41d3c3ad-3393-4767-9422-2c13d5259b3b"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=ResultList"},{"rel":"assignedDialog","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/i_41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=InfoDialog"},{"rel":"createUserDefinedSearch","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/41d3c3ad-3393-4767-9422-2c13d5259b3b/CreateUserDefinedSearch"}],"Id":"41d3c3ad-3393-4767-9422-2c13d5259b3b","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
-                Workshop","DisplayName":"Standard List View Result
-                Dialog","IsForMobile":false,"AssignedDialogId":"i_41d3c3ad-3393-4767-9422-2c13d5259b3b","Color":"Green","IsDefault":true,"Type":"ResultList"},{"$type":"DialogInfo","Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=00000000-0000-0000-0000-000000000000"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/00000000-0000-0000-0000-000000000000?dialogType=Search"}],"Id":"00000000-0000-0000-0000-000000000000","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
-                Workshop","DisplayName":"custom","IsForMobile":false,"Color":"Green","IsDefault":false,"Type":"Search"}]}
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dialog'
+                
   /FileCabinets/{FileCabinetId}/Dialogs/{SearchDialogId}:
     get:
       tags:
@@ -733,14 +725,12 @@ paths:
         '200':
           description: OK
           content:
-            text/plain:
+            application/xml:
               schema:
-                type: string
-              example: >-
-                {"Fields":[{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=COMPANY"}],"DBFieldName":"COMPANY","DlgLabel":"Company","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":80,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=CONTACT"}],"DBFieldName":"CONTACT","DlgLabel":"Contact","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":80,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=SUBJECT"}],"DBFieldName":"SUBJECT","DlgLabel":"Subject/Number","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":120,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=DOCTYPE"}],"DBFieldName":"DOCTYPE","DlgLabel":"Doc.-Type","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":80,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=DATE"}],"DBFieldName":"DATE","DlgLabel":"Date","DWFieldType":"Date","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":-1,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=STATUS"}],"DBFieldName":"STATUS","DlgLabel":"Status","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":80,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=DocuWareFulltext"}],"DBFieldName":"DocuWareFulltext","DlgLabel":"Fulltext","DWFieldType":"Text","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":true,"Length":-1,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false},{"Links":[{"rel":"simpleSelectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a\u0026fieldName=DWSTOREDATETIME"}],"DBFieldName":"DWSTOREDATETIME","DlgLabel":"Store
-                Date","DWFieldType":"Date","Locked":false,"ReadOnly":false,"NotEmpty":false,"Visible":false,"Length":-1,"Precision":0,"AllowExtendedSearch":false,"UsedAsDocumentName":false,"IsHierarchy":false}],"Query":{"ForceRefresh":false,"Expression":"dialog;76301253-0b28-469d-9388-4e8eef51193a","Fields":["COMPANY","CONTACT","SUBJECT","DOCTYPE","DATE","STATUS"],"SortOrder":[{"Field":"DWSTOREDATETIME","Direction":"Desc"}],"Links":[{"rel":"result","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?q=dialog%3B76301253-0b28-469d-9388-4e8eef51193a\u0026sortOrder=DWSTOREDATETIME%20Desc\u0026fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS"},{"rel":"dialogExpression","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/DialogExpression?sortOrder=DWSTOREDATETIME%20Desc\u0026fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS\u0026dialogId=76301253-0b28-469d-9388-4e8eef51193a"},{"rel":"batchUpdate","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/76301253-0b28-469d-9388-4e8eef51193a/BatchUpdateFields?sortOrder=DWSTOREDATETIME%20Desc\u0026fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS"}]},"Properties":{"$type":"DialogPropertiesSearch","LogicalOperator":{"DefaultOperator":"And","Show":false}},"Links":[{"rel":"count","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/CountExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a"},{"rel":"self","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/76301253-0b28-469d-9388-4e8eef51193a?dialogType=Search"},{"rel":"assignedDialog","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Dialogs/41d3c3ad-3393-4767-9422-2c13d5259b3b?dialogType=ResultList"},{"rel":"selectList","href":"/DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Query/SelectListExpression?dialogId=76301253-0b28-469d-9388-4e8eef51193a"}],"Id":"76301253-0b28-469d-9388-4e8eef51193a","FileCabinetId":"41537414-0df0-4d08-adb5-fa40564b80f9","FileCabinetName":"Platform
-                Workshop","DisplayName":"Standard Search
-                Dialog","IsForMobile":false,"AssignedDialogId":"41d3c3ad-3393-4767-9422-2c13d5259b3b","Color":"Green","IsDefault":true,"Type":"Search"}
+                type: array
+                items:
+                  $ref: '#/components/schemas/Dialog'
+  
   /FileCabinets/{FileCabinetId}/Query/CountExpression:
     get:
       tags:
@@ -762,7 +752,9 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/CountResult"
             
   /FileCabinets/{FileCabinetId}/Query/DialogExpressionLink:
     post:
@@ -778,9 +770,9 @@ paths:
         JSON object.
       requestBody:
         content:
-          application/json:
+          application/xml:
             schema:
-              type: object
+              $ref: "#/components/schemas/MultiColumnSelectListValuesQuery"
               example:
                 Condition:
                   - DBName: COMPANY
@@ -821,6 +813,7 @@ paths:
                 type: string
               example: >-
                 /DocuWare/Platform/FileCabinets/41537414-0df0-4d08-adb5-fa40564b80f9/Documents?q=dialog%3B76301253-0b28-469d-9388-4e8eef51193a%3B%3BOr%3B%3BCOMPANY%3AUS-Steel%3BDATE%3A%3E%3D2010-03-01%20AND%20%3C%3D2010-03-30&fields=COMPANY%2CCONTACT%2CSUBJECT%2CDOCTYPE%2CDATE%2CSTATUS&sortOrder=COMPANY%20Asc
+
   /FileCabinets/{FileCabinetId}/Query/DialogExpression:
     post:
       tags:
@@ -829,10 +822,9 @@ paths:
       description: "The search dialog must be in every file cabiinet zou want to search for documents.\r\nIn the body the additional cabinets are responsible for the file cabinets where you want to search."
       requestBody:
         content:
-          application/json:
-            schema:
-              type: string
-              example: "<?xml version=\"1.0\" encoding=\"utf-8\"?>\r\n<DialogExpression xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" Count=\"100\" Operation=\"And\" CompleteConditionInInvariantCulture=\"false\" xmlns=\"http://dev.docuware.com/schema/public/services/platform\">\r\n    <SortOrder>\r\n        <OrderBy Field=\"DWSTOREDATETIME\" Direction=\"Desc\" />\r\n    </SortOrder>\r\n    <Condition DBName=\"DWDOCID\">\r\n        <Value>1</Value>\r\n    </Condition>\r\n    <AdditionalCabinets>00000000-0000-0000-0000-000000000000</AdditionalCabinets>\r\n    <AdditionalCabinets>00000000-0000-0000-0000-000000000000</AdditionalCabinets>\r\n</DialogExpression>"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/DialogExpression"
       parameters:
         - name: dialogId
           in: query
@@ -855,7 +847,10 @@ paths:
         '200':
           description: Successful response
           content:
-            application/json: {}
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/DocumentsQueryResult"
+            
   /FileCabinets/{FileCabinetId}/Documents/{DocumentId}/Fields:
     put:
       tags:
@@ -863,9 +858,9 @@ paths:
       summary: Update index values table fields (JSON)
       requestBody:
         content:
-          application/json:
+          application/xml:
             schema:
-              type: object
+              $ref: "#/components/schemas/DocumentIndexFields"
               example:
                 Field:
                   - FieldName: TEST
@@ -959,21 +954,6 @@ paths:
                 DialogId: i_5c8c5139-9bb7-417e-864f-967a861fac21
                 NormalizeCoordinates: true
       parameters:
-        - name: Accept
-          in: header
-          schema:
-            type: number
-          example: application/json, text/javascript, */*; q=0.01
-        - name: Content-Type
-          in: header
-          schema:
-            type: string
-          example: application/vnd.docuware.platform.documentfieldsinfo+json
-        - name: X-Requested-With
-          in: header
-          schema:
-            type: string
-          example: XMLHttpRequest
         - name: FileCabinetId
           in: path
           schema:
@@ -989,6 +969,7 @@ paths:
           description: Successful response
           content:
             application/json: {}
+            
   /WebClient/336/Integration:
     get:
       tags:
@@ -1438,11 +1419,21 @@ components:
       type: object
     Section:
       type: object
+    Dialog:
+      type: object
+    DialogExpression:
+      type: object
+    MultiColumnSelectListValuesQuery:
+      type: object
+    CountResult:
+      type: object
     DocumentActionInfo:
       type: object
     DocumentApplicationProperty:
       type: object
     DocumentsQueryResult:
+      type: object
+    DocumentIndexFields:
       type: object
     WorkflowDocumentHistory:
       type: object
