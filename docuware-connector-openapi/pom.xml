@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.docuware.connector.docuware</groupId>
   <artifactId>docuware-openapi</artifactId>
-  <version>9.3.9-SNAPSHOT</version>
+  <version>9.4.0</version>
   <properties>
     <maven.compiler.release>11</maven.compiler.release>
   </properties>
@@ -11,7 +11,7 @@
     <dependency>
       <groupId>javax.xml.bind</groupId>
       <artifactId>jaxb-api</artifactId>
-      <version>2.3.1</version>
+      <version>2.4.0-b180830.0359</version>
     </dependency>
   </dependencies>
 
