@@ -1,8 +1,10 @@
 {
-  "format" : "9.4.20",
+  "format" : "10.0.0",
   "id" : "1811FCF74A58FA0C",
-  "data" : "com.axonivy.connector.docuware.connector.demo.DocuWareDemo.DocuWareDemoData",
   "kind" : "HTML_DIALOG",
+  "config" : {
+    "data" : "com.axonivy.connector.docuware.connector.demo.DocuWareDemo.DocuWareDemoData"
+  },
   "elements" : [ {
       "id" : "f0",
       "type" : "HtmlDialogStart",

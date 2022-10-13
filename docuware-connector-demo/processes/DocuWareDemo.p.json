@@ -1,7 +1,9 @@
 {
-  "format" : "9.4.20",
+  "format" : "10.0.0",
   "id" : "1811FD33E36CAB39",
-  "data" : "com.axonivy.market.docuware.connector.demo.Data",
+  "config" : {
+    "data" : "com.axonivy.market.docuware.connector.demo.Data"
+  },
   "elements" : [ {
       "id" : "f0",
       "type" : "RequestStart",
