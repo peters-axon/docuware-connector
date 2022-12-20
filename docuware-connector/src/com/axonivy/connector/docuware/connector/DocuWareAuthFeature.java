@@ -18,13 +18,13 @@ import javax.ws.rs.core.Form;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.NewCookie;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status.Family;
 
 import org.apache.commons.lang3.StringUtils;
 
 import ch.ivyteam.ivy.data.cache.IDataCacheEntry;
 import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.rest.client.FeatureConfig;
-import ch.ivyteam.ivy.rest.client.internal.ExternalRestWebServiceCall;
 
 /**
  * Feature to make sure, that we have the DocuWare cookies.
@@ -49,107 +49,105 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 
   @Override
   public void filter(ClientRequestContext reqContext) throws IOException {
-
     if (isLogonRequest(reqContext.getUri())) {
       Ivy.log().info("DocuWare logon request.");
-    } else {
+      return;
+    }
+
+    if (getCookies() == null) {
+      Ivy.log().info("DocuWare logon, fetching cookies.");
+      Configuration configuration = reqContext.getConfiguration();
+      FeatureConfig config = new FeatureConfig(configuration, DocuWareAuthFeature.class);
+      Form form = new Form()
+        .param("UserName", config.readMandatory(USERNAME_PROPERTY))
+        .param("Password", config.readMandatory(PASSWORD_PROPERTY))
+        .param("HostID", config.readMandatory(HOSTID_PROPERTY))
+        .param("RedirectToMyselfInCaseOfError", "false");
+
+      String logonUrl = getLogonUrl(reqContext, config);
+      Ivy.log().info("DocuWare logon via URL {0}", logonUrl);
+      Response response = logon(reqContext, form, logonUrl);
+      Ivy.log().info("DocuWare logon returned with status {0}", response.getStatusInfo());
       if (getCookies() == null) {
-        Ivy.log().info("DocuWare logon, fetching cookies.");
-
-        Configuration configuration = reqContext.getConfiguration();
-
-        FeatureConfig config = new FeatureConfig(configuration, DocuWareAuthFeature.class);
-
-        Form form = new Form()
-                .param("UserName", config.readMandatory(USERNAME_PROPERTY))
-                .param("Password", config.readMandatory(PASSWORD_PROPERTY))
-                .param("HostID", config.readMandatory(HOSTID_PROPERTY))
-                .param("RedirectToMyselfInCaseOfError", "false");
-
-        String logonUrl = config.read(LOGONURL_PROPERTY).orElse(null);
-
-        if (StringUtils.isBlank(logonUrl) || logonUrl.trim().equalsIgnoreCase("AUTO")) {
-          try {
-            // Note: this API is not public and will probably change in future
-            // Ivy versions.
-            ExternalRestWebServiceCall externalRestWebServiceCall = (ExternalRestWebServiceCall) reqContext
-                    .getProperty(ExternalRestWebServiceCall.class.getCanonicalName());
-            if (externalRestWebServiceCall != null) {
-              // String host = Ivy.var().get("docuware-connector.host");
-              String host = reqContext.getUri().getHost();
-
-              logonUrl = externalRestWebServiceCall.getWebTarget().resolveTemplate("host", host)
-                      .path(ACCOUNT_LOGON_PATH).getUri().toString();
-            }
-          } catch (Throwable t) {
-            String message = String.format(
-                    "Could not determine DocuWare target URL automatically, please set it in REST client property '%s'. Put there the same URL as used for the client.",
-                    LOGONURL_PROPERTY);
-            Ivy.log().error(message, t);
-            reqContext.abortWith(Response.status(Response.Status.PRECONDITION_FAILED)
-                    .type(MediaType.TEXT_PLAIN)
-                    .entity(message)
-                    .build());
-          }
-        }
-
-        Ivy.log().info("DocuWare logon via URL {0}", logonUrl);
-
-        Response response = logon(reqContext, form, logonUrl);
-
-        Ivy.log().info("DocuWare logon returned with status {0}", response.getStatusInfo());
-
-        if (getCookies() == null) {
-          Ivy.log().error("DocuWare logon, still missing DocuWare cookies for context {0} after logon.",
-                  reqContext);
-        }
+        Ivy.log().error("DocuWare logon, still missing DocuWare cookies for context {0} after logon.", reqContext);
       }
+    }
 
-      requestHook(reqContext);
+    requestHook(reqContext);
+  }
+
+  @SuppressWarnings("restriction")
+  private String getLogonUrl(ClientRequestContext reqContext, FeatureConfig config) {
+    String logonUrl = config.read(LOGONURL_PROPERTY).orElse(null);
+    if (StringUtils.isNotBlank(logonUrl) && !logonUrl.trim().equalsIgnoreCase("AUTO")) {
+      return logonUrl;
+    }
+
+    try {
+      // Note: this API is not public and will probably change in future Ivy versions.
+      var externalRestWebServiceCall = (ch.ivyteam.ivy.rest.client.internal.ExternalRestWebServiceCall) reqContext
+              .getProperty(ch.ivyteam.ivy.rest.client.internal.ExternalRestWebServiceCall.class.getCanonicalName());
+      if (externalRestWebServiceCall == null) {
+        return null;
+      }
+      // String host = Ivy.var().get("docuware-connector.host");
+      String host = reqContext.getUri().getHost();
+      return externalRestWebServiceCall.getWebTarget()
+        .resolveTemplate("host", host)
+        .path(ACCOUNT_LOGON_PATH)
+        .getUri()
+        .toString();
+    } catch (Throwable t) {
+      String message = String.format(
+              "Could not determine DocuWare target URL automatically, please set it in REST client property '%s'. Put there the same URL as used for the client.",
+              LOGONURL_PROPERTY);
+      Ivy.log().error(message, t);
+      reqContext.abortWith(Response.status(Response.Status.PRECONDITION_FAILED)
+              .type(MediaType.TEXT_PLAIN)
+              .entity(message)
+              .build());
     }
   }
 
   protected Response logon(ClientRequestContext reqContext, Form form, String target) {
     Response response = reqContext.getClient()
-            .target(target)
-            .request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
-            .accept(MediaType.APPLICATION_JSON)
-            .post(Entity.form(form));
+      .target(target)
+      .request(MediaType.APPLICATION_FORM_URLENCODED_TYPE)
+      .accept(MediaType.APPLICATION_JSON)
+      .post(Entity.form(form));
     return response;
   }
 
   /**
    * Manipulate request if needed (probably only useful for tests).
-   *
    * @param reqContext
    */
-  protected void requestHook(ClientRequestContext reqContext) {}
+  protected void requestHook(@SuppressWarnings("unused") ClientRequestContext reqContext) {}
 
   @Override
   public void filter(ClientRequestContext reqContext, ClientResponseContext rspContext) throws IOException {
-    if (isLogonRequest(reqContext.getUri())) {
-      int status = rspContext.getStatus();
-      if (status >= 200 && status < 300) {
-        Ivy.log().info("DocuWare logon successful: Status: {1}", status);
+    if (!isLogonRequest(reqContext.getUri())) {
+      return;
+    }
 
-        DocuWareCookies docuWareCookies = DocuWareCookies.create(rspContext.getCookies());
-        if (docuWareCookies.isValid()) {
-          setCookiesCacheEntry(docuWareCookies);
-        } else {
-          Ivy.log().error(
-                  "DocuWare logon unsuccessful, did not receive the required cookies: {0} (URI: {1} Status: {2})",
-                  docuWareCookies, reqContext.getUri(), status);
-        }
+    int status = rspContext.getStatus();
+    if (rspContext.getStatusInfo().getFamily() == Family.SUCCESSFUL) {
+      Ivy.log().info("DocuWare logon successful: Status: {1}", status);
+      DocuWareCookies docuWareCookies = DocuWareCookies.create(rspContext.getCookies());
+      if (docuWareCookies.isValid()) {
+        setCookiesCacheEntry(docuWareCookies);
       } else {
-        Ivy.log().error("DocuWare logon unsuccessful, URI: {0} Status: {1}", reqContext.getUri(), status);
+        Ivy.log().error(
+          "DocuWare logon unsuccessful, did not receive the required cookies: {0} (URI: {1} Status: {2})",
+          docuWareCookies, reqContext.getUri(), status);
       }
+    } else {
+      Ivy.log().error("DocuWare logon unsuccessful, URI: {0} Status: {1}", reqContext.getUri(), status);
     }
   }
 
   /**
    * Get the DocuWare cookies from the session.
-   *
-   * @return
    */
   public DocuWareCookies getCookies() {
     DocuWareCookies docuWareCookies = null;
@@ -168,8 +166,6 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 
   /**
    * Get the cache entry of the DocuWare cookies.
-   *
-   * @return
    */
   public IDataCacheEntry getCookiesCacheEntry() {
     return Ivy.datacache().getAppCache().getEntry(DocuWareCookies.DW_COOKIES_CACHE_GROUP_ID,
@@ -178,7 +174,6 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 
   /**
    * Cache the DocuWare cookies.
-   *
    * @param docuWareCookies
    */
   public void setCookiesCacheEntry(DocuWareCookies docuWareCookies) {
@@ -200,11 +195,9 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 
   /**
    * Is this a logon request?
-   *
    * @param uri
-   * @return
    */
-  private boolean isLogonRequest(URI uri) {
+  private static boolean isLogonRequest(URI uri) {
     return uri != null && uri.toString().endsWith(ACCOUNT_LOGON_PATH);
   }
 
@@ -241,7 +234,6 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
      * REST client response.
      *
      * @param cookies
-     * @return
      */
     public static DocuWareCookies create(Map<String, NewCookie> cookies) {
       DocuWareCookies docuWareCookies = new DocuWareCookies(cookies);
@@ -250,7 +242,6 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 
     /**
      * Get the browser id cookie.
-     * @return
      */
     public NewCookie getBrowserId() {
       return browserId;
@@ -258,17 +249,13 @@ public class DocuWareAuthFeature implements Feature, ClientRequestFilter, Client
 
     /**
      * Get the auth cookie.
-     *
-     * @return
      */
     public NewCookie getAuth() {
       return auth;
     }
 
     /**
-     * Do we have th expected cookies?
-     *
-     * @return
+     * Do we have the expected cookies?
      */
     public boolean isValid() {
       return auth != null && browserId != null;
