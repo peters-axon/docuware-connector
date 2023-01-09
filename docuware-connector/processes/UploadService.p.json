@@ -8,7 +8,7 @@
   "elements" : [ {
       "id" : "f0",
       "type" : "CallSubStart",
-      "name" : "uploadFileWithIndexFields(File, List<DocuWareProperty)",
+      "name" : "uploadFileWithIndexFields(File,List<DocuWareProperty>)",
       "config" : {
         "callSignature" : "uploadFileWithIndexFields",
         "input" : {
@@ -110,14 +110,16 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();"
+            "in.configuration = DocuWareService.initializeDefaultConfiguration();",
+            "",
+            "ivy.log.info(\"Filcab\" + in.configuration.fileCabinetId);"
           ]
         }
       },
       "visual" : {
         "at" : { "x" : 416, "y" : 64 }
       },
-      "connect" : { "id" : "f4", "to" : "f3" }
+      "connect" : { "id" : "f30", "to" : "f3" }
     }, {
       "id" : "f7",
       "type" : "CallSubStart",
@@ -148,7 +150,8 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 240 }
+        "at" : { "x" : 96, "y" : 240 },
+        "labelOffset" : { "x" : 97, "y" : 41 }
       },
       "connect" : { "id" : "f9", "to" : "f8" }
     }, {
@@ -233,10 +236,7 @@
     }, {
       "id" : "f14",
       "type" : "CallSubStart",
-      "name" : [
-        "uploadFileWithIndexFields",
-        "(File, List<DocuWareProperty, DocuwareConfiguration)"
-      ],
+      "name" : "uploadFileWithIndexFields(File, List<DocuWareProperty>, DocuwareConfiguration)",
       "config" : {
         "callSignature" : "uploadFileWithIndexFields",
         "input" : {
@@ -283,14 +283,11 @@
       "visual" : {
         "at" : { "x" : 416, "y" : 152 }
       },
-      "connect" : { "id" : "f17", "to" : "f3", "via" : [ { "x" : 520, "y" : 152 }, { "x" : 520, "y" : 64 } ] }
+      "connect" : { "id" : "f4", "to" : "f3", "via" : [ { "x" : 528, "y" : 152 }, { "x" : 528, "y" : 64 } ] }
     }, {
       "id" : "f18",
       "type" : "CallSubStart",
-      "name" : [
-        "uploadFileWithIndexFields",
-        "(List<Byte>, List<DocuWareProperty>, String, DocuWareEndpointConfiguration)"
-      ],
+      "name" : "uploadFileWithIndexFields(List<Byte>, List<DocuWareProperty>, String, DocuWareEndpointConfiguration)",
       "config" : {
         "callSignature" : "call",
         "input" : {

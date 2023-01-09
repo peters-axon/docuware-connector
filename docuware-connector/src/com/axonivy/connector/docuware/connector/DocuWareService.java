@@ -6,7 +6,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
-import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -26,6 +25,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.media.multipart.Boundary;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
@@ -49,8 +49,6 @@ public class DocuWareService {
 	private static final String PROPERTIES_FILE_NAME = "document";
 	private static final String PROPERTIES_FILE_EXTENSION = ".json";
 	private static final String PROPERTIES_FILE_CHARSET = "UTF-8";
-	private static final String AUTHORIZATION_BASIC = "Basic ";
-	private static final String CREDENTIALS_DELIMITER = ":";
 	private static final String CONTENT_DISPOSITION ="Content-Disposition";
 	private static final String RESPONSE_XML_ERROR_NODE = "Error";
 	private static final String RESPONSE_XML_MESSAGE_NODE = "Message";
@@ -99,6 +97,13 @@ public class DocuWareService {
 	public static Document uploadFile(WebTarget target, java.io.File file, DocuWareEndpointConfiguration configuration, List<DocuWareProperty> properties) throws IOException, DocuWareException {
 		byte[] bytes = Files.readAllBytes(file.toPath());
 		return uploadStream(target,bytes, file.getName(), configuration, properties);
+	}
+	
+	public static Document uploadStream(WebTarget target, ch.ivyteam.ivy.scripting.objects.List<Byte> fileBytes, String fileName, DocuWareEndpointConfiguration configuration, List<DocuWareProperty> properties) throws IOException, DocuWareException {
+		Byte[] bytes = fileBytes.toArray(new Byte[fileBytes.size()]);
+		byte[]  byteArray =  ArrayUtils.toPrimitive(bytes);
+		
+		return uploadStream(target, byteArray,  fileName,  configuration,  properties);
 	}
 	
 	public static Document uploadStream(WebTarget target, byte[] file, String fileName, DocuWareEndpointConfiguration configuration, List<DocuWareProperty> properties) throws IOException, DocuWareException {
@@ -180,7 +185,7 @@ public class DocuWareService {
 		File propertiesFile = getUniquePropertiesFile();
 		DocuWareProperties docuWareproperties = new DocuWareProperties();
 		docuWareproperties.setProperties(properties);
-		FileUtils.write(propertiesFile.getJavaFile(), JsonUtils.serializeProperties(docuWareproperties), PROPERTIES_FILE_CHARSET);
+		FileUtils.write(propertiesFile.getJavaFile(), JsonUtils.serializeProperties(docuWareproperties), PROPERTIES_FILE_CHARSET);		
 		return propertiesFile;
 	}
 	
@@ -188,8 +193,7 @@ public class DocuWareService {
 		return target.request().header("X-Requested-By", "ivy")
 				.header("MIME-Version", "1.0")
 				.header("Accept", "application/xml")
-				.header("Connection", "keep-alive")
-				.header("Authorization", AUTHORIZATION_BASIC + configuration.getCredentials());
+				.header("Connection", "keep-alive");
 	}
 	
 	private static File getUniquePropertiesFile() throws IOException {
@@ -199,10 +203,6 @@ public class DocuWareService {
 	public static DocuWareEndpointConfiguration initializeDefaultConfiguration() {
 		DocuWareEndpointConfiguration config = new DocuWareEndpointConfiguration();
 		config.setFileCabinetId(Ivy.var().get("docuware-connector_filecabinetid"));
-		config.setUsername(Ivy.var().get("docuware-connector_username"));
-		config.setPassword(Ivy.var().get("docuware-connector_passworde"));
-		config.setCredentials(encodeCredentials(config));
-
 		return config;
 	}
 	
@@ -212,22 +212,7 @@ public class DocuWareService {
 		if(StringUtils.isBlank(config.getFileCabinetId())) {
 			config.setFileCabinetId(defaultConfig.getFileCabinetId());
 		}
-		if(StringUtils.isBlank(config.getUsername())) {
-			config.setUsername(defaultConfig.getUsername());
-		}
-		if(StringUtils.isBlank(config.getPassword())) {
-			config.setPassword(defaultConfig.getPassword());
-		}
-
-		if(StringUtils.isBlank(config.getCredentials())) {
-			config.setCredentials(encodeCredentials(config));
-		}
-
 		return config;
 	}
 
-	
-	private static String encodeCredentials(DocuWareEndpointConfiguration config) {
-		return Base64.getEncoder().encodeToString((config.getUsername() + CREDENTIALS_DELIMITER + config.getPassword()).getBytes());
-	}
 }

@@ -6,3 +6,4 @@ document com.docuware.dev.schema._public.services.platform.Document #field
 error ch.ivyteam.ivy.bpm.error.BpmError #field
 propertiesJson String #field
 configuration com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration #field
+documentIndexFields com.docuware.dev.schema._public.services.platform.DocumentIndexFields #field

@@ -8,7 +8,7 @@
   "elements" : [ {
       "id" : "f0",
       "type" : "CallSubStart",
-      "name" : "updateDocument(Integer, List<DocuWareProperty>)",
+      "name" : "updateDocument",
       "config" : {
         "callSignature" : "updateDocument",
         "input" : {
@@ -23,11 +23,11 @@
         },
         "result" : {
           "params" : [
-            { "name" : "document", "type" : "com.docuware.dev.schema._public.services.platform.Document" },
+            { "name" : "documentIndexFields", "type" : "com.docuware.dev.schema._public.services.platform.DocumentIndexFields" },
             { "name" : "error", "type" : "ch.ivyteam.ivy.bpm.error.BpmError" }
           ],
           "map" : {
-            "result.document" : "in.#document",
+            "result.documentIndexFields" : "in.#documentIndexFields",
             "result.error" : "in.#error"
           }
         }
@@ -81,6 +81,7 @@
         },
         "bodyInputType" : "RAW",
         "responseCode" : [
+          "import com.docuware.dev.schema._public.services.platform.DocumentIndexFields;",
           "import com.docuware.dev.schema._public.services.platform.Document;",
           "import com.axonivy.connector.docuware.connector.DocuWareConstants;",
           "import ch.ivyteam.ivy.bpm.error.BpmError;",
@@ -94,7 +95,7 @@
           "     out.error = BpmError.create(DocuWareConstants.ERROR_BASE).withMessage(dex.getErrorMessage()).build();",
           "     out.error.setAttribute(DocuWareConstants.RESPONSE_STATUS_CODE_ATTRIBUTE, dex.getHttpCode());",
           "  }else{",
-          "    in.document = response.readEntity(Document.class) as Document ;",
+          "    in.documentIndexFields = response.readEntity(DocumentIndexFields.class) as DocumentIndexFields ;",
           "  }",
           "}"
         ]
@@ -111,7 +112,8 @@
               "map" : {
                 "out" : "in",
                 "out.error" : "error"
-              }
+              },
+              "code" : "ivy.log.error(error);"
             }
           },
           "visual" : {
@@ -140,10 +142,7 @@
     }, {
       "id" : "f9",
       "type" : "CallSubStart",
-      "name" : [
-        "updateDocument",
-        "(Integer, List<DocuWareProperty>, DocuWareEndpointConfiguration)"
-      ],
+      "name" : "updateDocument(Integer, List<DocuWareProperty>, DocuWareEndpointConfiguration)",
       "config" : {
         "callSignature" : "updateDocument",
         "input" : {
@@ -160,11 +159,11 @@
         },
         "result" : {
           "params" : [
-            { "name" : "document", "type" : "com.docuware.dev.schema._public.services.platform.Document" },
+            { "name" : "documentIndexFields", "type" : "com.docuware.dev.schema._public.services.platform.DocumentIndexFields" },
             { "name" : "error", "type" : "ch.ivyteam.ivy.bpm.error.BpmError" }
           ],
           "map" : {
-            "result.document" : "in.#document",
+            "result.documentIndexFields" : "in.#documentIndexFields",
             "result.error" : "in.#error"
           }
         }
