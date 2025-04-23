@@ -4,22 +4,28 @@ import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.InvocationTargetException;
+import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.ws.rs.client.Client;
+import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.Invocation.Builder;
 import javax.ws.rs.client.WebTarget;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
+import javax.ws.rs.core.Response.Status.Family;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -34,189 +40,318 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
-import com.axonivy.connector.docuware.connector.utils.JsonUtils;
+import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
+import com.axonivy.connector.docuware.connector.enums.GrantType;
 import com.docuware.dev.schema._public.services.platform.Document;
 import com.docuware.dev.schema._public.services.platform.DocumentIndexField;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.Module;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 
 import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.scripting.objects.File;
+import ch.ivyteam.util.StringUtil;
 
 public class DocuWareService {
+	/*
+	 * This is the format: /Date(1652285631000)/
+	 */
+	private static final Pattern DATE_PATTERN = Pattern.compile("/Date\\(([0-9]+)\\)/");
+	private static final String PROPERTIES_FILE_NAME = "document";
+	private static final String PROPERTIES_FILE_EXTENSION = ".json";
+	private static final String PROPERTIES_FILE_CHARSET = "UTF-8";
+	private static final String CONTENT_DISPOSITION = "Content-Disposition";
+	private static final String RESPONSE_XML_ERROR_NODE = "Error";
+	private static final String RESPONSE_XML_MESSAGE_NODE = "Message";
+	private static final String STORE_DIALOG_ID = "storeDialogId";
+	private static final DocuWareService INSTANCE = new DocuWareService();
+	private static ObjectMapper objectMapper;
 
-/*
-   * This is the format: /Date(1652285631000)/
-   */
-  private static final Pattern DATE_PATTERN = Pattern.compile("/Date\\(([0-9]+)\\)/");
-  private static final String PROPERTIES_FILE_NAME = "document";
-  private static final String PROPERTIES_FILE_EXTENSION = ".json";
-  private static final String PROPERTIES_FILE_CHARSET = "UTF-8";
-  private static final String CONTENT_DISPOSITION = "Content-Disposition";
-  private static final String RESPONSE_XML_ERROR_NODE = "Error";
-  private static final String RESPONSE_XML_MESSAGE_NODE = "Message";
-  private static final String STORE_DIALOG_ID = "storeDialogId";
-  private static final DocuWareService INSTANCE = new DocuWareService();
+	public static DocuWareService get() {
+		return INSTANCE;
+	}
 
-  public static DocuWareService get() {
-    return INSTANCE;
-  }
+	public String getIvyVar(DocuWareVariable variable) {
+		return Ivy.var().get(variable.getVariableName());
+	}
 
-  public DocumentIndexField createDocumentIndexStringField(String fieldName, String item) {
-    DocumentIndexField field = new DocumentIndexField();
-    field.setFieldName(fieldName);
-    field.setString(item);
-    return field;
-  }
+	public String setIvyVar(DocuWareVariable variable, String value) {
+		return Ivy.var().set(variable.getVariableName(), value);
+	}
 
-  public DocumentIndexField createDocumentIndexDateField(String fieldName, Date date) {
-    DocumentIndexField field = new DocumentIndexField();
-    field.setFieldName(fieldName);
-    Calendar calendar = GregorianCalendar.getInstance();
-    calendar.setTime(date);
-    // set
-    return field;
-  }
+	public GrantType getGrantType() {
+		var type = getIvyVar(DocuWareVariable.GRANT_TYPE);
+		return Optional.ofNullable(GrantType.of(type)).orElse(GrantType.PASSWORD);
+	}
 
-  public String dateToString(Date date) {
-    String string = null;
-    if (date != null) {
-      string = String.format("/Date(%d)/", date.getTime());
-    }
-    return string;
-  }
+	public JsonNode getWebTargetResponseAsJsonNode(URI targetURI) {
+		Client client = ClientBuilder.newClient();
+		Response response = null;
+		try {
+			WebTarget target = client.target(targetURI);
+			response = target.request(MediaType.APPLICATION_JSON).get();
+			if (Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
+				String jsonResponse = response.readEntity(String.class);
+				return parseToJsonNode(jsonResponse);
+			}
+		} catch (Exception e) {
+			Ivy.log().error("Error calling URL ''{0}'': status is {1} - {2}", e, targetURI, response != null ? response.getStatus() : null, response);
+		} finally {
+			if(response != null) {
+				response.close();
+			}
+			if(client != null) {
+				client.close();
+			}
+		}
+		return null;
+	}
 
-  public Date stringToDate(String dateString) {
-    Date date = null;
-    if (dateString != null) {
-      Matcher matcher = DATE_PATTERN.matcher(dateString);
-      if (matcher.matches()) {
-        long timestamp = Long.parseLong(matcher.group(1));
-        date = new Date(timestamp);
-      }
-    }
-    return date;
-  }
+	public DocumentIndexField createDocumentIndexStringField(String fieldName, String item) {
+		DocumentIndexField field = new DocumentIndexField();
+		field.setFieldName(fieldName);
+		field.setString(item);
+		return field;
+	}
 
-  public static Document uploadFile(WebTarget target, java.io.File file,
-          DocuWareEndpointConfiguration configuration,
-          List<DocuWareProperty> properties) throws IOException, DocuWareException {
-    byte[] bytes = Files.readAllBytes(file.toPath());
-    return uploadStream(target, bytes, file.getName(), configuration, properties);
-  }
+	public DocumentIndexField createDocumentIndexDateField(String fieldName, Date date) {
+		DocumentIndexField field = new DocumentIndexField();
+		field.setFieldName(fieldName);
+		Calendar calendar = GregorianCalendar.getInstance();
+		calendar.setTime(date);
+		// set
+		return field;
+	}
 
-  public static Document uploadStream(WebTarget target, ch.ivyteam.ivy.scripting.objects.List<Byte> fileBytes,
-          String fileName, DocuWareEndpointConfiguration configuration, List<DocuWareProperty> properties)
-          throws IOException, DocuWareException {
-    Byte[] bytes = fileBytes.toArray(new Byte[fileBytes.size()]);
-    byte[] byteArray = ArrayUtils.toPrimitive(bytes);
-    return uploadStream(target, byteArray, fileName, configuration, properties);
-  }
+	public String dateToString(Date date) {
+		String string = null;
+		if (date != null) {
+			string = String.format("/Date(%d)/", date.getTime());
+		}
+		return string;
+	}
 
-  public static Document uploadStream(WebTarget target, byte[] file, String fileName,
-          DocuWareEndpointConfiguration configuration, List<DocuWareProperty> properties)
-          throws IOException, DocuWareException {
-    FormDataMultiPart multipart;
-    File propertiesFile = createPropertiesFile(properties);
-    try (FormDataMultiPart formDataMultiPart = new FormDataMultiPart()) {
-      InputStream streamProperties = new FileInputStream(propertiesFile.getJavaFile());
-      StreamDataBodyPart streamPropertiesPart = new StreamDataBodyPart(PROPERTIES_FILE_NAME,
-              streamProperties);
-      streamPropertiesPart.setMediaType(MediaType.APPLICATION_JSON_TYPE);
-      InputStream stream = new ByteArrayInputStream(file);
-      StreamDataBodyPart streamPart = new StreamDataBodyPart(fileName, stream);
-      multipart = (FormDataMultiPart) formDataMultiPart.bodyPart(streamPropertiesPart);
-      multipart.bodyPart(streamPart);
-    }
-    MediaType contentType = MediaType.MULTIPART_FORM_DATA_TYPE;
-    contentType = Boundary.addBoundary(contentType);
-    if(StringUtils.isNotBlank(configuration.getStoreDialogId())) {
-  	  target = target.queryParam(STORE_DIALOG_ID, configuration.getStoreDialogId());
-  	}
-    Response response = prepareRestClient(target, configuration).post(Entity.entity(multipart, contentType));
-    FileUtils.forceDelete(propertiesFile.getJavaFile());
-    Document document = null;
-    if (Status.Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
-      document = response.readEntity(Document.class);
-    } else {
-      DocuWareException exception = handleError(response);
-      throw exception;
-    }
-    response.close();
-    return document;
-  }
+	public Date stringToDate(String dateString) {
+		Date date = null;
+		if (dateString != null) {
+			Matcher matcher = DATE_PATTERN.matcher(dateString);
+			if (matcher.matches()) {
+				long timestamp = Long.parseLong(matcher.group(1));
+				date = new Date(timestamp);
+			}
+		}
+		return date;
+	}
 
-  public static DocuWareException handleError(Response response) {
-    String errXml = response.readEntity(String.class);
-    String httpStatus = String.valueOf(response.getStatus());
-    String msg = "DocuWare Service call failed";
-    DocuWareException exception = new DocuWareException(msg, httpStatus);
-    try {
-      InputStream isr = new ByteArrayInputStream(errXml.getBytes(StandardCharsets.UTF_8));
-      DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-      DocumentBuilder db = dbf.newDocumentBuilder();
-      org.w3c.dom.Document doc = db.parse(isr);
-      Element element = doc.getDocumentElement();
-      if (element != null && element.getNodeName() != null
-              && element.getNodeName().contains(RESPONSE_XML_ERROR_NODE)) {
-        for (int n = 0; n < element.getChildNodes().getLength(); n++) {
-          Node node = element.getChildNodes().item(n);
-          if (node.getNodeName() != null && node.getNodeName().contains(RESPONSE_XML_MESSAGE_NODE)) {
-            if (node.getChildNodes() != null) {
-              Node child = node.getFirstChild();
-              msg = child.getNodeValue();
-              exception = new DocuWareException(msg, httpStatus);
-            }
-          }
-        }
-      }
-    } catch (ParserConfigurationException e) {
-    } catch (SAXException e) {
-    } catch (IOException e) {
-    }
-    return exception;
-  }
+	public Document uploadFile(WebTarget target, java.io.File file,
+			DocuWareEndpointConfiguration configuration,
+			List<DocuWareProperty> properties) throws IOException, DocuWareException {
+		byte[] bytes = Files.readAllBytes(file.toPath());
+		return uploadStream(target, bytes, file.getName(), configuration, properties);
+	}
 
-  public static String getFilenameFromResponseHeader(Response response) {
-    String filename = null;
-    if (response != null) {
-      String disposition = response.getHeaderString(CONTENT_DISPOSITION);
-      filename = disposition.replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
-    }
-    return filename;
-  }
+	public Document uploadStream(WebTarget target, ch.ivyteam.ivy.scripting.objects.List<Byte> fileBytes,
+			String fileName, DocuWareEndpointConfiguration configuration, List<DocuWareProperty> properties)
+					throws IOException, DocuWareException {
+		Byte[] bytes = fileBytes.toArray(new Byte[fileBytes.size()]);
+		byte[] byteArray = ArrayUtils.toPrimitive(bytes);
+		return uploadStream(target, byteArray, fileName, configuration, properties);
+	}
 
-  public static File createPropertiesFile(List<DocuWareProperty> properties) throws IOException {
-    File propertiesFile = getUniquePropertiesFile();
-    DocuWareProperties docuWareproperties = new DocuWareProperties();
-    docuWareproperties.setProperties(properties);
-    FileUtils.write(propertiesFile.getJavaFile(), JsonUtils.serializeProperties(docuWareproperties),
-            PROPERTIES_FILE_CHARSET);
-    return propertiesFile;
-  }
+	public Document uploadStream(WebTarget target, byte[] file, String fileName,
+			DocuWareEndpointConfiguration configuration, List<DocuWareProperty> properties)
+					throws IOException, DocuWareException {
+		FormDataMultiPart multipart;
+		File propertiesFile = createPropertiesFile(properties);
+		try (FormDataMultiPart formDataMultiPart = new FormDataMultiPart()) {
+			InputStream streamProperties = new FileInputStream(propertiesFile.getJavaFile());
+			StreamDataBodyPart streamPropertiesPart = new StreamDataBodyPart(PROPERTIES_FILE_NAME,
+					streamProperties);
+			streamPropertiesPart.setMediaType(MediaType.APPLICATION_JSON_TYPE);
+			InputStream stream = new ByteArrayInputStream(file);
+			StreamDataBodyPart streamPart = new StreamDataBodyPart(fileName, stream);
+			multipart = (FormDataMultiPart) formDataMultiPart.bodyPart(streamPropertiesPart);
+			multipart.bodyPart(streamPart);
+		}
+		MediaType contentType = MediaType.MULTIPART_FORM_DATA_TYPE;
+		contentType = Boundary.addBoundary(contentType);
+		if(StringUtils.isNotBlank(configuration.getStoreDialogId())) {
+			target = target.queryParam(STORE_DIALOG_ID, configuration.getStoreDialogId());
+		}
+		Response response = prepareRestClient(target, configuration).post(Entity.entity(multipart, contentType));
+		FileUtils.forceDelete(propertiesFile.getJavaFile());
+		Document document = null;
+		if (Status.Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
+			document = response.readEntity(Document.class);
+		} else {
+			DocuWareException exception = handleError(response);
+			throw exception;
+		}
+		response.close();
+		return document;
+	}
 
-  private static Builder prepareRestClient(WebTarget target, DocuWareEndpointConfiguration configuration) {
-    return target.request().header("X-Requested-By", "ivy").header("MIME-Version", "1.0")
-            .header("Accept", "application/xml").header("Connection", "keep-alive");
-  }
+	public DocuWareException handleError(Response response) {
+		String errXml = response.readEntity(String.class);
+		String httpStatus = String.valueOf(response.getStatus());
+		String msg = "DocuWare Service call failed";
+		DocuWareException exception = new DocuWareException(msg, httpStatus);
+		try {
+			InputStream isr = new ByteArrayInputStream(errXml.getBytes(StandardCharsets.UTF_8));
+			DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+			DocumentBuilder db = dbf.newDocumentBuilder();
+			org.w3c.dom.Document doc = db.parse(isr);
+			Element element = doc.getDocumentElement();
+			if (element != null && element.getNodeName() != null
+					&& element.getNodeName().contains(RESPONSE_XML_ERROR_NODE)) {
+				for (int n = 0; n < element.getChildNodes().getLength(); n++) {
+					Node node = element.getChildNodes().item(n);
+					if (node.getNodeName() != null && node.getNodeName().contains(RESPONSE_XML_MESSAGE_NODE)) {
+						if (node.getChildNodes() != null) {
+							Node child = node.getFirstChild();
+							msg = child.getNodeValue();
+							exception = new DocuWareException(msg, httpStatus);
+						}
+					}
+				}
+			}
+		} catch (ParserConfigurationException e) {
+		} catch (SAXException e) {
+		} catch (IOException e) {
+		}
+		return exception;
+	}
 
-  private static File getUniquePropertiesFile() throws IOException {
-    return new File(PROPERTIES_FILE_NAME + UUID.randomUUID().toString() + PROPERTIES_FILE_EXTENSION, true);
-  }
+	public String getFilenameFromResponseHeader(Response response) {
+		String filename = null;
+		if (response != null) {
+			String disposition = response.getHeaderString(CONTENT_DISPOSITION);
+			filename = disposition.replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
+		}
+		return filename;
+	}
 
-  public static DocuWareEndpointConfiguration initializeDefaultConfiguration() {
-    DocuWareEndpointConfiguration config = new DocuWareEndpointConfiguration();
-    config.setFileCabinetId(Ivy.var().get("docuwareConnector_filecabinetid"));
-    config.setStoreDialogId(Ivy.var().get("docuwareConnector_storedialogid"));
-    return config;
-  }
+	public File createPropertiesFile(List<DocuWareProperty> properties) throws IOException {
+		File propertiesFile = getUniquePropertiesFile();
+		DocuWareProperties docuWareproperties = new DocuWareProperties();
+		docuWareproperties.setProperties(properties);
+		FileUtils.write(propertiesFile.getJavaFile(), serializeProperties(docuWareproperties),
+				PROPERTIES_FILE_CHARSET);
+		return propertiesFile;
+	}
 
-  public static DocuWareEndpointConfiguration initializeConfiguration(DocuWareEndpointConfiguration config) {
-    DocuWareEndpointConfiguration defaultConfig = initializeDefaultConfiguration();
-    if (StringUtils.isBlank(config.getFileCabinetId())) {
-      config.setFileCabinetId(defaultConfig.getFileCabinetId());
-    }
-    if (StringUtils.isBlank(config.getStoreDialogId())) {
-      config.setStoreDialogId(defaultConfig.getStoreDialogId());
-    }
-    return config;
-  }
+	private Builder prepareRestClient(WebTarget target, DocuWareEndpointConfiguration configuration) {
+		return target.request().header("X-Requested-By", "ivy").header("MIME-Version", "1.0")
+				.header("Accept", "application/xml").header("Connection", "keep-alive");
+	}
+
+	private File getUniquePropertiesFile() throws IOException {
+		return new File(PROPERTIES_FILE_NAME + UUID.randomUUID().toString() + PROPERTIES_FILE_EXTENSION, true);
+	}
+
+	public DocuWareEndpointConfiguration initializeDefaultConfiguration() {
+		DocuWareEndpointConfiguration config = new DocuWareEndpointConfiguration();
+		config.setFileCabinetId(Ivy.var().get("docuwareConnector_filecabinetid"));
+		config.setStoreDialogId(Ivy.var().get("docuwareConnector_storedialogid"));
+		return config;
+	}
+
+	public DocuWareEndpointConfiguration initializeConfiguration(DocuWareEndpointConfiguration config) {
+		DocuWareEndpointConfiguration defaultConfig = initializeDefaultConfiguration();
+		if (StringUtils.isBlank(config.getFileCabinetId())) {
+			config.setFileCabinetId(defaultConfig.getFileCabinetId());
+		}
+		if (StringUtils.isBlank(config.getStoreDialogId())) {
+			config.setStoreDialogId(defaultConfig.getStoreDialogId());
+		}
+		return config;
+	}
+
+	/**
+	 * Serializes {@link DocuWareProperties} to {@link String}
+	 *
+	 * @param properties
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	public String serializeProperties(DocuWareProperties properties) throws JsonProcessingException {
+		return getObjectMapper().setSerializationInclusion(Include.NON_NULL).writeValueAsString(properties);
+	}
+
+	/**
+	 * Serializes {@link DocuWarePropertiesUpdate} to {@link String}
+	 *
+	 * @param properties
+	 * @return
+	 * @throws JsonProcessingException
+	 */
+	public String serializeProperties(DocuWarePropertiesUpdate properties) throws JsonProcessingException {
+		return getObjectMapper().setSerializationInclusion(Include.NON_NULL).writeValueAsString(properties);
+	}
+
+	/**
+	 * Registers the timeModule within the class loader
+	 *
+	 * @return
+	 */
+	private Module timeModule() {
+		try {
+			return (Module) StringUtil.class.getClassLoader()
+					.loadClass("com.fasterxml.jackson.datatype.jsr310.JavaTimeModule").getDeclaredConstructor().newInstance();
+		} catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException
+				| NoSuchMethodException | SecurityException | ClassNotFoundException e) {
+			throw new RuntimeException("JSR time module not available", e);
+		}
+	}
+
+	public String writeObjectAsJson(Object entity) {
+		try {
+			return getObjectMapper().writeValueAsString(entity);
+		} catch (JsonProcessingException e) {
+			Ivy.log().warn(e.getMessage());
+		}
+		return null;
+	}
+
+	public <T> T convertJsonToObject(String json, Class<T> objectType) {
+		if (StringUtils.isEmpty(json)) {
+			return null;
+		}
+		try {
+			return getObjectMapper().readValue(json, objectType);
+		} catch (JsonProcessingException e) {
+			Ivy.log().warn(e.getMessage());
+		}
+		return null;
+	}
+
+	public ObjectMapper getObjectMapper() {
+		if (objectMapper == null) {
+			objectMapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+			Module timeModule = timeModule();
+			objectMapper.registerModule(timeModule);
+			objectMapper.registerModule(new com.fasterxml.jackson.datatype.jsr310.JavaTimeModule());
+			objectMapper.configure(DeserializationFeature.READ_DATE_TIMESTAMPS_AS_NANOSECONDS, false);
+			objectMapper.configure(SerializationFeature.FAIL_ON_EMPTY_BEANS, false);
+			objectMapper.setSerializationInclusion(Include.NON_NULL);
+		}
+		return objectMapper;
+	}
+
+
+	public JsonNode parseToJsonNode(String value) {
+		try {
+			var jsonNode = getObjectMapper().readTree(value);
+			Ivy.log().info("JSON Response: " + jsonNode.toPrettyString());
+			return jsonNode;
+		} catch (Exception e) {
+			Ivy.log().error(e);
+		}
+		return null;
+	}
+
 }

@@ -839,7 +839,7 @@
             },
             "code" : [
               "import com.docuware.dev.schema._public.services.platform.FileCabinet;",
-              "ivy.log.info(\"***DocuWareDemo-Cabinet - Found FileCabinest: {0}\", out.fileCabinets.getFileCabinet().size());",
+              "ivy.log.info(\"***DocuWareDemo-Cabinet - Found FileCabinets: {0}\", out.fileCabinets.getFileCabinet().size());",
               "for(FileCabinet fc : out.fileCabinets.getFileCabinet()) {",
               "  ivy.log.info(\"-FileCabinet name: {0}({1})\", fc.getName(), fc.id);",
               "}"

@@ -1,2 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<userConfig/>
+<userConfig>
+    <user>
+        <username>Brian.Ford</username>
+    </user>
+    <user>
+        <username>Elizabeth.Cash</username>
+    </user>
+    <user>
+        <username>Fred.Winner</username>
+    </user>
+    <user>
+        <username>Peggy.Jenkins</username>
+    </user>
+    <user>
+        <username>Peter.King</username>
+    </user>
+    <user>
+        <username>Peter.Sanders</username>
+    </user>
+    <user>
+        <username>Simon.Stone</username>
+    </user>
+</userConfig>
