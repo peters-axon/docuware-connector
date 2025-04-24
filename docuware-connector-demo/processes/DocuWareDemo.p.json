@@ -9,10 +9,10 @@
       "type" : "RequestStart",
       "name" : "start.ivp",
       "config" : {
-        "signature" : "start",
+        "signature" : "basics",
         "request" : {
-          "name" : "Start some DocuWare calls",
-          "description" : "Start a UI to demonstrate some basic UI calls."
+          "name" : "Basic DocuWare calls",
+          "description" : "UI to demonstrate some basic UI calls."
         }
       },
       "tags" : [
@@ -45,86 +45,6 @@
       },
       "connect" : [
         { "id" : "f2", "to" : "f1" }
-      ]
-    }, {
-      "id" : "f5",
-      "type" : "RequestStart",
-      "name" : "organizations.ivp",
-      "config" : {
-        "signature" : "organizations",
-        "input" : {
-          "map" : { },
-          "code" : [
-            "import org.apache.commons.lang3.StringUtils;",
-            "ivy.log.info(\"Username: {0}\", ivy.var.get(\"docuwareConnector.username\"));",
-            "ivy.log.info(\"Password set: {0}\", StringUtils.isNotBlank(ivy.var.get(\"docuwareConnector_password\")));",
-            "ivy.log.info(\"BaseUrl: {0}\", ivy.var.get(\"docuwareConnector_baseurl\"));"
-          ]
-        },
-        "request" : {
-          "name" : "Log Organization names",
-          "description" : "Fetch organizations of this DocuWare instance and log them to the log file."
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 80, "y" : 160 },
-        "labelOffset" : { "x" : 8, "y" : 53 }
-      },
-      "connect" : [
-        { "id" : "f94", "to" : "f86" }
-      ]
-    }, {
-      "id" : "f8",
-      "type" : "TaskEnd",
-      "visual" : {
-        "at" : { "x" : 360, "y" : 160 }
-      }
-    }, {
-      "id" : "f7",
-      "type" : "RequestStart",
-      "name" : "fileCabinets.ivp",
-      "config" : {
-        "signature" : "fileCabinets",
-        "request" : {
-          "name" : "Load File Cabinets",
-          "description" : [
-            "Load FileCabinets",
-            "from your Organization"
-          ]
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 80, "y" : 256 },
-        "labelOffset" : { "x" : 26, "y" : 37 }
-      },
-      "connect" : [
-        { "id" : "f18", "to" : "f17" }
-      ]
-    }, {
-      "id" : "f17",
-      "type" : "RestClientCall",
-      "name" : "Get Organizations",
-      "config" : {
-        "target" : {
-          "clientId" : "02d1eec1-32e9-4316-afc3-793448486203",
-          "path" : "/Organizations",
-          "headers" : {
-            "Accept" : "application/xml"
-          }
-        },
-        "response" : {
-          "entity" : {
-            "type" : "com.docuware.dev.schema._public.services.platform.Organizations",
-            "code" : "out.organizations.getOrganization().addAll(result.getOrganization());"
-          }
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 200, "y" : 256 },
-        "icon" : "res:/webContent/icons/docuware.png"
-      },
-      "connect" : [
-        { "id" : "f95", "to" : "f88" }
       ]
     }, {
       "id" : "f28",
@@ -163,7 +83,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 360, "y" : 352 },
+        "at" : { "x" : 360, "y" : 544 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -177,7 +97,7 @@
         "signature" : "downloadFile"
       },
       "visual" : {
-        "at" : { "x" : 80, "y" : 352 },
+        "at" : { "x" : 80, "y" : 544 },
         "labelOffset" : { "x" : 11, "y" : 48 }
       },
       "connect" : [
@@ -187,7 +107,7 @@
       "id" : "f15",
       "type" : "TaskEnd",
       "visual" : {
-        "at" : { "x" : 1024, "y" : 544 }
+        "at" : { "x" : 1024, "y" : 736 }
       }
     }, {
       "id" : "f31",
@@ -224,7 +144,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 536, "y" : 448 },
+        "at" : { "x" : 536, "y" : 640 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -256,7 +176,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 712, "y" : 448 },
+        "at" : { "x" : 712, "y" : 640 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -294,7 +214,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 888, "y" : 448 },
+        "at" : { "x" : 888, "y" : 640 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -308,7 +228,7 @@
         "signature" : "sections"
       },
       "visual" : {
-        "at" : { "x" : 80, "y" : 448 },
+        "at" : { "x" : 80, "y" : 640 },
         "labelOffset" : { "x" : 16, "y" : 37 }
       },
       "connect" : [
@@ -351,7 +271,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 1064, "y" : 448 },
+        "at" : { "x" : 1064, "y" : 640 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -365,7 +285,7 @@
         "signature" : "dialogs"
       },
       "visual" : {
-        "at" : { "x" : 80, "y" : 544 },
+        "at" : { "x" : 80, "y" : 736 },
         "labelOffset" : { "x" : 12, "y" : 37 }
       },
       "connect" : [
@@ -406,7 +326,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 360, "y" : 544 },
+        "at" : { "x" : 360, "y" : 736 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -438,7 +358,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 536, "y" : 544 },
+        "at" : { "x" : 536, "y" : 736 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -483,7 +403,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 712, "y" : 544 },
+        "at" : { "x" : 712, "y" : 736 },
         "size" : { "width" : 128 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
@@ -529,7 +449,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 888, "y" : 544 },
+        "at" : { "x" : 888, "y" : 736 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -543,7 +463,7 @@
         "signature" : "fileIndexFields"
       },
       "visual" : {
-        "at" : { "x" : 80, "y" : 656 }
+        "at" : { "x" : 80, "y" : 848 }
       },
       "connect" : [
         { "id" : "f44", "to" : "f43" }
@@ -578,7 +498,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 520, "y" : 656 },
+        "at" : { "x" : 520, "y" : 848 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -616,7 +536,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 800, "y" : 656 },
+        "at" : { "x" : 800, "y" : 848 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -643,7 +563,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 1056, "y" : 656 },
+        "at" : { "x" : 1056, "y" : 848 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -653,7 +573,7 @@
       "id" : "f65",
       "type" : "TaskEnd",
       "visual" : {
-        "at" : { "x" : 1440, "y" : 656 }
+        "at" : { "x" : 1440, "y" : 848 }
       }
     }, {
       "id" : "f70",
@@ -665,14 +585,14 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 672, "y" : 656 },
+        "at" : { "x" : 672, "y" : 848 },
         "labelOffset" : { "y" : -16 }
       },
       "connect" : [
         { "id" : "f62", "to" : "f61", "label" : {
             "name" : "yes"
           } },
-        { "id" : "f73", "to" : "f72", "via" : [ { "x" : 672, "y" : 768 } ], "label" : {
+        { "id" : "f73", "to" : "f72", "via" : [ { "x" : 672, "y" : 960 } ], "label" : {
             "name" : "no",
             "segment" : 1.38
           } }
@@ -687,7 +607,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 1184, "y" : 768 }
+        "at" : { "x" : 1184, "y" : 960 }
       },
       "connect" : [
         { "id" : "f68", "to" : "f67" }
@@ -702,14 +622,14 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 928, "y" : 656 },
+        "at" : { "x" : 928, "y" : 848 },
         "labelOffset" : { "y" : -16 }
       },
       "connect" : [
         { "id" : "f64", "to" : "f63", "label" : {
             "name" : "yes"
           } },
-        { "id" : "f77", "to" : "f72", "via" : [ { "x" : 928, "y" : 768 } ], "label" : {
+        { "id" : "f77", "to" : "f72", "via" : [ { "x" : 928, "y" : 960 } ], "label" : {
             "name" : "no",
             "segment" : 1.23
           } }
@@ -724,7 +644,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 1184, "y" : 656 },
+        "at" : { "x" : 1184, "y" : 848 },
         "labelOffset" : { "y" : -16 }
       },
       "connect" : [
@@ -736,124 +656,11 @@
           } }
       ]
     }, {
-      "id" : "f9",
-      "type" : "TaskEnd",
-      "visual" : {
-        "at" : { "x" : 672, "y" : 256 }
-      }
-    }, {
       "id" : "f13",
       "type" : "TaskEnd",
       "visual" : {
-        "at" : { "x" : 824, "y" : 352 }
+        "at" : { "x" : 824, "y" : 544 }
       }
-    }, {
-      "id" : "f21",
-      "type" : "RestClientCall",
-      "name" : [
-        "Read ",
-        "Cabinet"
-      ],
-      "config" : {
-        "target" : {
-          "clientId" : "02d1eec1-32e9-4316-afc3-793448486203",
-          "path" : "/FileCabinets/{FileCabinetId}",
-          "templateParams" : {
-            "FileCabinetId" : "in.fileCabinets.getFileCabinet().get(0).id"
-          },
-          "headers" : {
-            "Accept" : "application/xml"
-          }
-        },
-        "response" : {
-          "entity" : {
-            "type" : "com.docuware.dev.schema._public.services.platform.FileCabinet",
-            "map" : {
-              "out.cabinet" : "result"
-            },
-            "code" : "ivy.log.info(\"-First cabinet: {0}({1})\", out.cabinet.name, out.cabinet.id);"
-          }
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 536, "y" : 256 },
-        "icon" : "res:/webContent/icons/docuware.png"
-      },
-      "connect" : [
-        { "id" : "f85", "to" : "f9" }
-      ]
-    }, {
-      "id" : "f86",
-      "type" : "RestClientCall",
-      "name" : "Get Organizations",
-      "config" : {
-        "target" : {
-          "clientId" : "02d1eec1-32e9-4316-afc3-793448486203",
-          "path" : "/Organizations",
-          "headers" : {
-            "Accept" : "application/xml"
-          }
-        },
-        "response" : {
-          "entity" : {
-            "type" : "com.docuware.dev.schema._public.services.platform.Organizations",
-            "code" : [
-              "import com.docuware.dev.schema._public.services.platform.Organization;",
-              "",
-              "out.organizations.getOrganization().addAll(result.getOrganization());",
-              "ivy.log.info(\"***DocuWareDemo-ORG - Found organizations: {0}\", out.organizations.getOrganization().size());",
-              "for(Organization org : out.organizations.getOrganization()) {",
-              "  ivy.log.info(\"-Organization name: {0} ({1})\", org.name, org.id);",
-              "}"
-            ]
-          }
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 200, "y" : 160 },
-        "icon" : "res:/webContent/icons/docuware.png"
-      },
-      "connect" : [
-        { "id" : "f82", "to" : "f8" }
-      ]
-    }, {
-      "id" : "f88",
-      "type" : "RestClientCall",
-      "name" : "Get FileCabinets",
-      "config" : {
-        "target" : {
-          "clientId" : "02d1eec1-32e9-4316-afc3-793448486203",
-          "path" : "/FileCabinets",
-          "queryParams" : {
-            "orgid" : "in.organizations.getOrganization().get(0).id"
-          },
-          "headers" : {
-            "Accept" : "application/xml"
-          }
-        },
-        "response" : {
-          "entity" : {
-            "type" : "com.docuware.dev.schema._public.services.platform.FileCabinets",
-            "map" : {
-              "out.fileCabinets" : "result"
-            },
-            "code" : [
-              "import com.docuware.dev.schema._public.services.platform.FileCabinet;",
-              "ivy.log.info(\"***DocuWareDemo-Cabinet - Found FileCabinets: {0}\", out.fileCabinets.getFileCabinet().size());",
-              "for(FileCabinet fc : out.fileCabinets.getFileCabinet()) {",
-              "  ivy.log.info(\"-FileCabinet name: {0}({1})\", fc.getName(), fc.id);",
-              "}"
-            ]
-          }
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 360, "y" : 256 },
-        "icon" : "res:/webContent/icons/docuware.png"
-      },
-      "connect" : [
-        { "id" : "f6", "to" : "f21" }
-      ]
     }, {
       "id" : "f22",
       "type" : "RestClientCall",
@@ -884,7 +691,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 360, "y" : 448 },
+        "at" : { "x" : 360, "y" : 640 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -894,7 +701,7 @@
       "id" : "f12",
       "type" : "TaskEnd",
       "visual" : {
-        "at" : { "x" : 1200, "y" : 448 }
+        "at" : { "x" : 1200, "y" : 640 }
       }
     }, {
       "id" : "f11",
@@ -909,7 +716,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 200, "y" : 352 },
+        "at" : { "x" : 200, "y" : 544 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -934,7 +741,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 536, "y" : 352 },
+        "at" : { "x" : 536, "y" : 544 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -953,7 +760,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 200, "y" : 448 },
+        "at" : { "x" : 200, "y" : 640 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -975,7 +782,7 @@
         "sudo" : true
       },
       "visual" : {
-        "at" : { "x" : 712, "y" : 352 }
+        "at" : { "x" : 712, "y" : 544 }
       },
       "connect" : [
         { "id" : "f25", "to" : "f13" }
@@ -993,7 +800,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 200, "y" : 544 },
+        "at" : { "x" : 200, "y" : 736 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -1012,7 +819,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 200, "y" : 656 },
+        "at" : { "x" : 200, "y" : 848 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -1055,7 +862,7 @@
         "sudo" : true
       },
       "visual" : {
-        "at" : { "x" : 360, "y" : 656 }
+        "at" : { "x" : 360, "y" : 848 }
       },
       "connect" : [
         { "id" : "f46", "to" : "f60" }
@@ -1076,7 +883,7 @@
         "sudo" : true
       },
       "visual" : {
-        "at" : { "x" : 1312, "y" : 656 }
+        "at" : { "x" : 1312, "y" : 848 }
       },
       "connect" : [
         { "id" : "f66", "to" : "f65" }
@@ -1085,7 +892,7 @@
       "id" : "f67",
       "type" : "TaskEnd",
       "visual" : {
-        "at" : { "x" : 1312, "y" : 768 }
+        "at" : { "x" : 1312, "y" : 960 }
       }
     }, {
       "id" : "f51",
@@ -1100,12 +907,12 @@
           }
         },
         "request" : {
-          "name" : "DocuWare View/Edit Document",
-          "description" : "UI for viewing or editing document"
+          "name" : "View/Edit Documents",
+          "description" : "UI for viewing or editing documents."
         }
       },
       "visual" : {
-        "at" : { "x" : 80, "y" : 880 }
+        "at" : { "x" : 80, "y" : 192 }
       },
       "connect" : [
         { "id" : "f91", "to" : "f84" }
@@ -1114,7 +921,7 @@
       "id" : "f69",
       "type" : "TaskEnd",
       "visual" : {
-        "at" : { "x" : 1120, "y" : 880 }
+        "at" : { "x" : 1120, "y" : 192 }
       }
     }, {
       "id" : "f74",
@@ -1138,7 +945,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 280, "y" : 880 }
+        "at" : { "x" : 280, "y" : 192 }
       },
       "connect" : [
         { "id" : "f98", "to" : "f81" }
@@ -1165,7 +972,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 456, "y" : 880 }
+        "at" : { "x" : 456, "y" : 192 }
       },
       "connect" : [
         { "id" : "f92", "to" : "f83" }
@@ -1200,7 +1007,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 632, "y" : 880 }
+        "at" : { "x" : 632, "y" : 192 }
       },
       "connect" : [
         { "id" : "f93", "to" : "f89" }
@@ -1216,17 +1023,17 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 160, "y" : 880 },
+        "at" : { "x" : 160, "y" : 192 },
         "labelOffset" : { "y" : -16 }
       },
       "connect" : [
-        { "id" : "f97", "to" : "f83", "via" : [ { "x" : 160, "y" : 816 }, { "x" : 640, "y" : 816 } ], "label" : {
+        { "id" : "f97", "to" : "f83", "via" : [ { "x" : 160, "y" : 128 }, { "x" : 640, "y" : 128 } ], "label" : {
             "name" : "Already has cabinetId",
-            "offset" : { "x" : 241, "y" : -26 }
+            "offset" : { "x" : 65, "y" : -18 }
           } },
-        { "id" : "f90", "to" : "f81", "via" : [ { "x" : 160, "y" : 944 }, { "x" : 456, "y" : 944 } ], "label" : {
+        { "id" : "f90", "to" : "f81", "via" : [ { "x" : 160, "y" : 256 }, { "x" : 456, "y" : 256 } ], "label" : {
             "name" : "Already has organizationId",
-            "offset" : { "x" : 145, "y" : 30 }
+            "offset" : { "x" : 81, "y" : 22 }
           } },
         { "id" : "f96", "to" : "f74" }
       ]
@@ -1244,7 +1051,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 984, "y" : 880 }
+        "at" : { "x" : 984, "y" : 192 }
       },
       "connect" : [
         { "id" : "f100", "to" : "f69" }
@@ -1271,7 +1078,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 808, "y" : 880 }
+        "at" : { "x" : 808, "y" : 192 }
       },
       "connect" : [
         { "id" : "f101", "to" : "f87" }

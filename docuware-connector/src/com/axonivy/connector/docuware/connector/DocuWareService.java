@@ -57,6 +57,9 @@ import ch.ivyteam.ivy.scripting.objects.File;
 import ch.ivyteam.ivy.security.ISecurityConstants;
 import ch.ivyteam.util.StringUtil;
 
+/**
+ * 
+ */
 public class DocuWareService {
 	/*
 	 * This is the format: /Date(1652285631000)/

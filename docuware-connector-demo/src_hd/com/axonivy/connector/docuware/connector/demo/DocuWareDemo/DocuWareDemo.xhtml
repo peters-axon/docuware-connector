@@ -1,61 +1,81 @@
-<html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://xmlns.jcp.org/jsf/core"
-	xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:ic="http://ivyteam.ch/jsf/component"
-	xmlns:p="http://primefaces.org/ui"
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets" xmlns:ic="http://ivyteam.ch/jsf/component" xmlns:p="http://primefaces.org/ui"
 	xmlns:pe="http://primefaces.org/ui/extensions">
 <h:body>
 	<ui:composition template="/layouts/frame-10.xhtml">
 		<ui:define name="title">#{ivy.cms.co('/Dialogs/com/axonivy/connector/docuware/connector/demo/DocuWareDemo/Title')}</ui:define>
 		<ui:define name="content">
+			<h:outputStylesheet name="layouts/styles/toolstyles.css" />
 			<h:form id="form" enctype="multipart/form-data">
 				<p:growl id="messages" showDetail="true" />
+				<div class="card messages">
+					<div class="grid">
+						<div class="col-12 md:col-12 lg:col-12">
+							<p:inputTextarea id="config" value="#{data.ctrl.configurationDescription}" autoResize="true" readonly="true" class="output" />
+						</div>
+					</div>
+					<div class="grid">
+						<div class="col-12 md:col-6 lg:col-2">
+							<p:outputLabel for="@next" value="Org Id" />
+						</div>
+						<div class="col-12 md:col-6 lg:col-2">
+							<p:inputText id="organizationId" value="#{data.ctrl.organizationId}" />
+						</div>
+						<div class="col-12 md:col-6 lg:col-2">
+							<p:outputLabel for="@next" value="Cabinet Id" />
+						</div>
+						<div class="col-12 md:col-6 lg:col-4">
+							<p:inputText id="fileCabinetId" value="#{data.ctrl.fileCabinetId}" />
+						</div>
+					</div>
+				</div>
+
 				<p:fieldset id="commands" legend="Commands" styleClass="p-field">
-					<div class="ui-g">
-						<p:commandButton id="organizations"
-							actionListener="#{logic.organizations}"
-							value="#{ivy.cms.co('/Labels/Organizations')}" update="form" />
-						<p:commandButton id="fileCabinets" styleClass="p-ml-4"
-							actionListener="#{logic.fileCabinets}"
-							value="#{ivy.cms.co('/Labels/FileCabinets')}" update="form" />
+					<div class="grid">
+						<div class="col-12 md:col-6 lg:col-2">
+							<p:commandButton id="organizations" actionListener="#{logic.organizations}" value="Fetch Organizations" update="@form" />
+						</div>
+						<div class="col-12 md:col-6 lg:col-2">
+							<p:commandButton id="fileCabinets" styleClass="p-ml-4" actionListener="#{logic.fileCabinets}" value="Fetch FileCabinets" update="@form" />
+						</div>
 					</div>
+					<p:outputPanel rendered="#{not empty data.ctrl.fileCabinetId}">
+						<div class="grid">
+							<div class="col-12 md:col-6 lg:col-2">
+								<p:fileUpload id="fileUpload" value="#{data.file}" mode="simple" update="messages" skinSimple="true" />
+							</div>
+							<div class="col-12 md:col-6 lg:col-2">
+								<p:commandButton value="Upload File" actionListener="#{logic.fileUpload}" ajax="false" id="fileUploadButton" icon="fa-solid fa-cloud-arrow-up" />
+							</div>
+						</div>
+					</p:outputPanel>
+					<p:outputPanel rendered="#{empty data.ctrl.fileCabinetId}">
+						<div class="grid">
+							<div class="col-12 md:col-6 lg:col-4">Please set a file cabinet Id to enable file upload.</div>
+						</div>
+					</p:outputPanel>
 				</p:fieldset>
 
-				<p:fieldset id="upload" legend="#{ivy.cms.co('/Labels/Upload')}"
-					styleClass="p-field">
-					<div class="ui-g">
-						<div class="ui-g-12">
-							<p:fileUpload id="fileUpload" value="#{data.file}" mode="simple"
-								update="messages" skinSimple="true" />
-						</div>
-						<div class="ui-g-12">
-							<p:commandButton value="#{ivy.cms.co('/Labels/Upload')}"
-								actionListener="#{logic.fileUpload}" ajax="false"
-								id="fileUploadButton" icon="fa-solid fa-cloud-arrow-up" />
-						</div>
-						<div class="ui-g-12">
-							<h:outputText
-								value="#{ivy.cms.co('/Labels/CabinetId', [data.fileCabinetId])}" />
-						</div>
-					</div>
-				</p:fieldset>
-
-				<p:fieldset id="result" legend="#{ivy.cms.co('/Labels/Result')}"
-					styleClass="p-field">
-					<div class="ui-g ui-fluid">
-						<div class="ui-g-12">
-							<pre>
-								<p:inputTextarea value="#{data.result}" />
-							</pre>
-						</div>
-					</div>
-				</p:fieldset>
 				<br />
+
+				<div class="card messages">
+					<div class="grid">
+						<div class="col-12 md:col-12 lg:col-12">
+							<p:inputTextarea id="message" value="#{data.ctrl.message}" autoResize="true" readonly="true" class="output" />
+						</div>
+					</div>
+
+					<div class="grid">
+						<div class="col-12 md:col-12 lg:col-1">
+							<p:commandButton actionListener="#{logic.clearLog}" value="Clear" update="message" />
+						</div>
+					</div>
+				</div>
+
+
 				<div class="command-btns">
-					<p:commandButton id="cancel"
-						actionListener="#{ivyWorkflowView.cancel()}" process="@this"
-						value="#{ivy.cms.co('/Labels/Close')}" icon="fa-solid fa-close" />
+					<p:commandButton id="cancel" actionListener="#{ivyWorkflowView.cancel()}" process="@this" value="#{ivy.cms.co('/Labels/Close')}"
+						icon="fa-solid fa-close" />
 				</div>
 			</h:form>
 		</ui:define>

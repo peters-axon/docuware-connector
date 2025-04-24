@@ -13,7 +13,7 @@
         "signature" : "start",
         "input" : {
           "map" : {
-            "out.fileCabinetId" : "\"\""
+            "out.ctrl" : "new com.axonivy.connector.docuware.connector.demo.ui.DocuWareDemoCtrl()"
           }
         },
         "guid" : "1811FCF74DD97A8C"
@@ -56,7 +56,10 @@
       "type" : "HtmlDialogEventStart",
       "name" : "organizations",
       "config" : {
-        "guid" : "1811FD1597CC29F8"
+        "guid" : "1811FD1597CC29F8",
+        "output" : {
+          "code" : "in.ctrl.clearLog();"
+        }
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 256 },
@@ -76,7 +79,10 @@
       "type" : "HtmlDialogEventStart",
       "name" : "fileCabinets",
       "config" : {
-        "guid" : "1811FD18D28C46E4"
+        "guid" : "1811FD18D28C46E4",
+        "output" : {
+          "code" : "in.ctrl.clearLog();"
+        }
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 352 },
@@ -96,20 +102,23 @@
       "type" : "HtmlDialogEventStart",
       "name" : "fileUpload",
       "config" : {
-        "guid" : "1811FD1B89771D1F"
+        "guid" : "1811FD1B89771D1F",
+        "output" : {
+          "code" : "in.ctrl.clearLog();"
+        }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 448 },
+        "at" : { "x" : 96, "y" : 464 },
         "labelOffset" : { "x" : 11, "y" : 35 }
       },
       "connect" : [
-        { "id" : "f20", "to" : "f19" }
+        { "id" : "f20", "to" : "f26" }
       ]
     }, {
       "id" : "f13",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 352, "y" : 448 }
+        "at" : { "x" : 448, "y" : 464 }
       }
     }, {
       "id" : "f15",
@@ -126,13 +135,14 @@
         "response" : {
           "entity" : {
             "type" : "com.docuware.dev.schema._public.services.platform.Organizations",
-            "map" : {
-              "out.organizations" : "result"
-            },
             "code" : [
               "import com.axonivy.connector.docuware.connector.demo.service.DocuWareDemoService;",
               "",
-              "out.result = DocuWareDemoService.get().getLog(response, result);"
+              "in.ctrl.organizations = result;",
+              "",
+              "in.ctrl.log(\"{0}\", DocuWareDemoService.get().getLog(response));",
+              "",
+              "in.ctrl.log(in.ctrl.organizations);"
             ]
           }
         }
@@ -152,7 +162,7 @@
           "clientId" : "02d1eec1-32e9-4316-afc3-793448486203",
           "path" : "/FileCabinets",
           "queryParams" : {
-            "orgid" : "in.organizations.getOrganization().get(0).id"
+            "orgid" : "in.ctrl.organizationId"
           },
           "headers" : {
             "Accept" : "application/xml"
@@ -161,14 +171,14 @@
         "response" : {
           "entity" : {
             "type" : "com.docuware.dev.schema._public.services.platform.FileCabinets",
-            "map" : {
-              "out.fileCabinetId" : "result.getFileCabinet().get(0).id",
-              "out.fileCabinets" : "result"
-            },
             "code" : [
               "import com.axonivy.connector.docuware.connector.demo.service.DocuWareDemoService;",
               "",
-              "out.result = DocuWareDemoService.get().getLog(response, result);"
+              "in.ctrl.fileCabinets = result;",
+              "",
+              "in.ctrl.log(\"{0}\", DocuWareDemoService.get().getLog(response));",
+              "",
+              "in.ctrl.log(in.ctrl.fileCabinets);"
             ]
           }
         }
@@ -189,8 +199,8 @@
           "clientId" : "02d1eec1-32e9-4316-afc3-793448486203",
           "path" : "/FileCabinets/{FileCabinetId}/Documents",
           "templateParams" : {
-            "fileCabinetId" : "",
-            "FileCabinetId" : "in.fileCabinetId"
+            "FileCabinetId" : "in.ctrl.fileCabinetId",
+            "fileCabinetId" : ""
           },
           "queryParams" : {
             "StoreDialogId" : ""
@@ -213,16 +223,13 @@
         "response" : {
           "entity" : {
             "type" : "com.docuware.dev.schema._public.services.platform.Document",
-            "map" : {
-              "out.documentId" : "result.id.toString()"
-            },
             "code" : [
               "import org.apache.http.HttpStatus;",
               "import javax.faces.application.FacesMessage;",
               "import javax.faces.context.FacesContext;",
               "import com.axonivy.connector.docuware.connector.demo.service.DocuWareDemoService;",
               "",
-              "out.result = DocuWareDemoService.get().getLog(response, result);",
+              "in.ctrl.log(\"{0}\", DocuWareDemoService.get().getLog(response, result));",
               "FacesMessage message;",
               "if (HttpStatus.SC_OK != response.getStatus()) {",
               "  message.severity = FacesMessage.SEVERITY_ERROR;",
@@ -238,10 +245,95 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 448 }
+        "at" : { "x" : 320, "y" : 464 }
       },
       "connect" : [
         { "id" : "f23", "to" : "f13" }
+      ]
+    }, {
+      "id" : "f14",
+      "type" : "HtmlDialogEventStart",
+      "name" : "clearLog",
+      "config" : {
+        "guid" : "1966876CCB3F55FE"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 624 }
+      },
+      "connect" : [
+        { "id" : "f22", "to" : "f24" }
+      ]
+    }, {
+      "id" : "f21",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 624 },
+        "labelOffset" : { "x" : 10, "y" : 30 }
+      }
+    }, {
+      "id" : "f24",
+      "type" : "Script",
+      "name" : "Clear Log",
+      "config" : {
+        "output" : {
+          "code" : "in.ctrl.clearLog();"
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 224, "y" : 624 }
+      },
+      "connect" : [
+        { "id" : "f25", "to" : "f21", "color" : "default" }
+      ]
+    }, {
+      "id" : "f26",
+      "type" : "Alternative",
+      "name" : "Got a file?",
+      "config" : {
+        "conditions" : {
+          "f27" : "in.file.exists()"
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 192, "y" : 464 },
+        "labelOffset" : { "y" : -24 }
+      },
+      "connect" : [
+        { "id" : "f27", "to" : "f19", "label" : {
+            "name" : "yes",
+            "offset" : { "x" : -11, "y" : 14 }
+          }, "color" : "default" },
+        { "id" : "f29", "to" : "f28", "via" : [ { "x" : 192, "y" : 544 } ], "label" : {
+            "name" : "no",
+            "segment" : 1.06,
+            "offset" : { "x" : 4, "y" : -41 }
+          } }
+      ]
+    }, {
+      "id" : "f28",
+      "type" : "Script",
+      "name" : "Show Error",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import javax.faces.context.FacesContext;",
+            "import javax.faces.application.FacesMessage;",
+            "",
+            "FacesMessage message;",
+            "message.severity = FacesMessage.SEVERITY_ERROR;",
+            "message.summary = \"Please select a file first.\";",
+            "",
+            "FacesContext.getCurrentInstance().addMessage(\"\", message);",
+            "",
+            "in.ctrl.log(message.summary);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 320, "y" : 544 }
+      },
+      "connect" : [
+        { "id" : "f30", "to" : "f13", "via" : [ { "x" : 400, "y" : 544 }, { "x" : 400, "y" : 464 } ] }
       ]
     } ]
 }
