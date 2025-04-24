@@ -54,22 +54,24 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 
 import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.scripting.objects.File;
+import ch.ivyteam.ivy.security.ISecurityConstants;
 import ch.ivyteam.util.StringUtil;
 
 public class DocuWareService {
 	/*
 	 * This is the format: /Date(1652285631000)/
 	 */
-	private static final Pattern DATE_PATTERN = Pattern.compile("/Date\\(([0-9]+)\\)/");
-	private static final String PROPERTIES_FILE_NAME = "document";
-	private static final String PROPERTIES_FILE_EXTENSION = ".json";
-	private static final String PROPERTIES_FILE_CHARSET = "UTF-8";
-	private static final String CONTENT_DISPOSITION = "Content-Disposition";
-	private static final String RESPONSE_XML_ERROR_NODE = "Error";
-	private static final String RESPONSE_XML_MESSAGE_NODE = "Message";
-	private static final String STORE_DIALOG_ID = "storeDialogId";
-	private static final DocuWareService INSTANCE = new DocuWareService();
-	private static ObjectMapper objectMapper;
+	protected static final Pattern DATE_PATTERN = Pattern.compile("/Date\\(([0-9]+)\\)/");
+	protected static final String PROPERTIES_FILE_NAME = "document";
+	protected static final String PROPERTIES_FILE_EXTENSION = ".json";
+	protected static final String PROPERTIES_FILE_CHARSET = "UTF-8";
+	protected static final String CONTENT_DISPOSITION = "Content-Disposition";
+	protected static final String RESPONSE_XML_ERROR_NODE = "Error";
+	protected static final String RESPONSE_XML_MESSAGE_NODE = "Message";
+	protected static final String STORE_DIALOG_ID = "storeDialogId";
+	protected static final DocuWareService INSTANCE = new DocuWareService();
+	protected static ObjectMapper objectMapper;
+	public static final String DOCUWARE_ERROR = "docuware:connector:";
 
 	public static DocuWareService get() {
 		return INSTANCE;
@@ -83,9 +85,35 @@ public class DocuWareService {
 		return Ivy.var().set(variable.getVariableName(), value);
 	}
 
-	public GrantType getGrantType() {
+	public GrantType getIvyVarGrantType() {
 		var type = getIvyVar(DocuWareVariable.GRANT_TYPE);
 		return Optional.ofNullable(GrantType.of(type)).orElse(GrantType.PASSWORD);
+	}
+
+	/**
+	 * Get the DocuWare user to use based on the current Ivy user.
+	 * 
+	 * This is useful for trusted grant type, where this will be used for the impersonateName.
+	 * Normal Ivy users will be used with the user-name. Unknown (unauthenticated), system
+	 * or developer user will be matched to the fallback username. 
+	 * 
+	 * @return
+	 */
+	public String getDocuwareUserBasedOnCurrentUser() {
+		var session = Ivy.session();
+
+		String username = null;
+
+		if (session.isSessionUserSystemUser() || session.isSessionUserUnknown()) {
+			username = getIvyVar(DocuWareVariable.USERNAME);
+		}
+		else {
+			username = session.getSessionUserName();
+			if(ISecurityConstants.DEVELOPER_USER_NAME.equals(username)) {
+				username = getIvyVar(DocuWareVariable.USERNAME);
+			}
+		}
+		return username;
 	}
 
 	public JsonNode getWebTargetResponseAsJsonNode(URI targetURI) {
@@ -244,12 +272,12 @@ public class DocuWareService {
 		return propertiesFile;
 	}
 
-	private Builder prepareRestClient(WebTarget target, DocuWareEndpointConfiguration configuration) {
+	protected Builder prepareRestClient(WebTarget target, DocuWareEndpointConfiguration configuration) {
 		return target.request().header("X-Requested-By", "ivy").header("MIME-Version", "1.0")
 				.header("Accept", "application/xml").header("Connection", "keep-alive");
 	}
 
-	private File getUniquePropertiesFile() throws IOException {
+	protected File getUniquePropertiesFile() throws IOException {
 		return new File(PROPERTIES_FILE_NAME + UUID.randomUUID().toString() + PROPERTIES_FILE_EXTENSION, true);
 	}
 
@@ -298,7 +326,7 @@ public class DocuWareService {
 	 *
 	 * @return
 	 */
-	private Module timeModule() {
+	protected Module timeModule() {
 		try {
 			return (Module) StringUtil.class.getClassLoader()
 					.loadClass("com.fasterxml.jackson.datatype.jsr310.JavaTimeModule").getDeclaredConstructor().newInstance();
@@ -343,7 +371,7 @@ public class DocuWareService {
 	}
 
 
-	public JsonNode parseToJsonNode(String value) {
+	protected JsonNode parseToJsonNode(String value) {
 		try {
 			var jsonNode = getObjectMapper().readTree(value);
 			Ivy.log().info("JSON Response: " + jsonNode.toPrettyString());

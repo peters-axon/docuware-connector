@@ -21,7 +21,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status.Family;
 
 import com.axonivy.connector.docuware.connector.DocuWareService;
-import com.axonivy.connector.docuware.connector.auth.OAuth2Feature.AccessTokenByPasswordRequest;
+import com.axonivy.connector.docuware.connector.auth.OAuth2Feature;
 import com.axonivy.connector.docuware.connector.auth.oauth.IdentityServiceContext;
 import com.axonivy.connector.docuware.connector.auth.oauth.Token;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
@@ -89,8 +89,7 @@ public class RequestLoginTokenBean {
 
 		Token token = null;
 		var map = new GenericType<Map<String, Object>>(Map.class);
-		var passwordRequest = new AccessTokenByPasswordRequest(username, password);
-		var paramsMap = passwordRequest.paramsMap();
+		var paramsMap = OAuth2Feature.passwordParamsMap(username, password);
 		var client = ClientBuilder.newClient();
 		Response postResponse = null;
 		try {

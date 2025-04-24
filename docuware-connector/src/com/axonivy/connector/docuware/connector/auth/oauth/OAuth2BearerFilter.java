@@ -11,12 +11,15 @@ import javax.ws.rs.core.Response.Status.Family;
 
 import com.axonivy.connector.docuware.connector.DocuWareService;
 import com.axonivy.connector.docuware.connector.auth.oauth.OAuth2TokenRequester.AuthContext;
-import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
 
+import ch.ivyteam.ivy.application.IApplication;
 import ch.ivyteam.ivy.bpm.error.BpmError;
 import ch.ivyteam.ivy.bpm.error.BpmPublicErrorBuilder;
+import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.rest.client.FeatureConfig;
+import ch.ivyteam.ivy.rest.client.RestClientFactoryConstants;
 import ch.ivyteam.ivy.rest.client.internal.oauth2.RedirectToIdentityProvider;
+import ch.ivyteam.ivy.security.exec.Sudo;
 
 @SuppressWarnings("restriction")
 public class OAuth2BearerFilter implements javax.ws.rs.client.ClientRequestFilter {
@@ -43,21 +46,37 @@ public class OAuth2BearerFilter implements javax.ws.rs.client.ClientRequestFilte
 	}
 
 	private final String getAccessToken(ClientRequestContext context) {
-		VarTokenStore accessTokenStore = VarTokenStore.get(DocuWareVariable.ACCESS_TOKEN.getVariableName());
-		var accessToken = accessTokenStore.getToken();
+		return Sudo.get(() -> {
+			var key = createKey(context);
+			var grantType = DocuWareService.get().getIvyVarGrantType();
 
-		if (accessToken == null || accessToken.isExpired()) {
-			FeatureConfig config = new FeatureConfig(context.getConfiguration(), getSource());
-			accessToken = getNewAccessToken(context.getClient(), config);
-			accessTokenStore.setToken(accessToken);
-		}
+			// For grant type trusted, the token is stored in the session, for all others globally in the application.
+			var store = switch (grantType) {
+			case TRUSTED -> Ivy.session();
+			default -> IApplication.current();
+			};
 
-		if (!accessToken.hasAccessToken()) {
-			accessTokenStore.setToken(null);
-			authError().withMessage("Failed to read 'access_token' from " + accessToken).throwError();
-		}
+			var accessToken = (Token)store.getAttribute(key);
 
-		return accessToken.accessToken();
+			if (accessToken == null || accessToken.isExpired()) {
+				FeatureConfig config = new FeatureConfig(context.getConfiguration(), getSource());
+				accessToken = getNewAccessToken(context.getClient(), config);
+				store.setAttribute(key, accessToken);
+			}
+
+			if (!accessToken.hasAccessToken()) {
+				store.setAttribute(key, null);
+				authError().withMessage("Failed to read 'access_token' from %s".formatted(accessToken)).throwError();
+			}
+
+			return accessToken.accessToken();
+		});
+	}
+
+	private String createKey(ClientRequestContext context) {
+		var cfg = context != null ? context.getConfiguration() : null;
+		var clientId = cfg != null ? cfg.getProperty(RestClientFactoryConstants.PROPERTY_CLIENT_ID) : null;
+		return "%s@%s".formatted(Token.class.getCanonicalName(), clientId);
 	}
 
 	private Class<?> getSource() {
@@ -70,7 +89,7 @@ public class OAuth2BearerFilter implements javax.ws.rs.client.ClientRequestFilte
 	}
 
 	private Token getNewAccessToken(Client client, FeatureConfig config) {
-		var grantType = DocuWareService.get().getGrantType();
+		var grantType = DocuWareService.get().getIvyVarGrantType();
 
 		GenericType<Map<String, Object>> map = new GenericType<>(Map.class);
 

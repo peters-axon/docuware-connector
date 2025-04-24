@@ -50,7 +50,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();"
+            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();"
           ]
         }
       },
@@ -115,7 +115,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();"
+            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();"
           ]
         }
       },
@@ -186,7 +186,7 @@
               "import org.apache.commons.lang3.StringUtils;",
               "import com.axonivy.connector.docuware.connector.DocuWareService;",
               "",
-              "String filename = DocuWareService.getFilenameFromResponseHeader(response);",
+              "String filename = DocuWareService.get().getFilenameFromResponseHeader(response);",
               "",
               "in.file = new File(filename, true);",
               "in.file.createNewFile();",
@@ -199,7 +199,7 @@
           "import com.axonivy.connector.docuware.connector.DocuWareDownloadResult;",
           "",
           "",
-          "DocuWareDownloadResult result = DocuWareService.downloadFile(client, in.configuration, in.downloadFolder);",
+          "DocuWareDownloadResult result = DocuWareService.get().downloadFile(client, in.configuration, in.downloadFolder);",
           "",
           "in.file = result.#file;",
           "in.error = result.#error;"
@@ -272,7 +272,7 @@
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
             "",
-            "in.configuration = DocuWareService.initializeConfiguration(in.configuration);"
+            "in.configuration = DocuWareService.get().initializeConfiguration(in.configuration);"
           ]
         }
       },
@@ -324,7 +324,7 @@
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
             "",
-            "in.configuration = DocuWareService.initializeConfiguration(in.configuration);"
+            "in.configuration = DocuWareService.get().initializeConfiguration(in.configuration);"
           ]
         }
       },

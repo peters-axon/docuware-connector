@@ -20,6 +20,7 @@ import com.axonivy.connector.docuware.connector.constant.Constants;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
 import com.axonivy.connector.docuware.connector.enums.GrantType;
 
+import ch.ivyteam.ivy.bpm.error.BpmError;
 import ch.ivyteam.ivy.rest.client.FeatureConfig;
 
 public class OAuth2Feature implements Feature {
@@ -51,91 +52,64 @@ public class OAuth2Feature implements Feature {
 	 * @param ctxt
 	 * @param uriFactory
 	 */
-	private static Response requestToken(AuthContext ctxt, OAuth2UriProperty uriFactory) {
+	protected Response requestToken(AuthContext ctxt, OAuth2UriProperty uriFactory) {
 		MultivaluedMap<String, String> paramsMap = new MultivaluedHashMap<>();
 		GrantType grantType = ctxt.grantType().orElse(GrantType.PASSWORD);
 		switch (grantType) {
-		case PASSWORD:
+		case PASSWORD: {
 			var username = ctxt.config.readMandatory(Property.USERNAME);
 			var password = ctxt.config.readMandatory(Property.PASSWORD);
-			AccessTokenByPasswordRequest passwordRequest = new AccessTokenByPasswordRequest(username, password);
-			paramsMap = passwordRequest.paramsMap();
-			break;
-		case TRUSTED:
+			paramsMap = passwordParamsMap(username, password);
+		}
+		break;
+		case TRUSTED: {
 			var trustedUsername = ctxt.config.readMandatory(Property.TRUSTED_USERNAME);
 			var trustedPassword = ctxt.config.readMandatory(Property.TRUSTED_PASSWORD);
-			AccessTokenByTrustedRequest trustedRequest = new AccessTokenByTrustedRequest(trustedUsername, trustedPassword);
-			paramsMap = trustedRequest.paramsMap();
-			break;
-		case DW_TOKEN:
+			var username = ctxt.config.readMandatory(Property.USERNAME);
+			paramsMap = trustedParamsMap(trustedUsername, trustedPassword, username);
+		}
+		break;
+		case DW_TOKEN: {
 			var loginToken = DocuWareService.get().getIvyVar(DocuWareVariable.LOGIN_TOKEN);
 			Objects.requireNonNull(loginToken);
-
-			AccessTokenByLoginTokenRequest dwRequest = new AccessTokenByLoginTokenRequest(loginToken);
-			paramsMap = dwRequest.paramsMap();
-			break;
+			paramsMap = dwTokenParamsMap(loginToken);
+		}
+		break;
 		default:
+			BpmError.create(DocuWareService.DOCUWARE_ERROR + "invalidgranttype").withMessage("Invalid grant type: %s".formatted(grantType));
 			break;
 		}
 		return ctxt.target.request().post(Entity.form(paramsMap));
 	}
 
-	public static class AccessTokenByPasswordRequest {
-		String username;
-		String password;
-
-		public AccessTokenByPasswordRequest(String username, String password) {
-			this.username = username;
-			this.password = password;
-		}
-
-		public MultivaluedMap<String, String> paramsMap() {
-			MultivaluedMap<String, String> values = new MultivaluedHashMap<>();
-			values.put(Constants.ACCESS_TOKEN_REQUEST_GRANT_TYPE, List.of(GrantType.PASSWORD.getCode()));
-			values.put(Constants.ACCESS_TOKEN_REQUEST_SCOPE, List.of(Property.SCOPE));
-			values.put(Constants.ACCESS_TOKEN_REQUEST_CLIENT_ID, List.of(Property.CLIENT_ID));
-			values.put(Constants.USERNAME, List.of(this.username));
-			values.put(Constants.PASSWORD, List.of(this.password));
-			return values;
-		}
+	public static MultivaluedMap<String, String> passwordParamsMap(String username, String password) {
+		MultivaluedMap<String, String> values = new MultivaluedHashMap<>();
+		values.put(Constants.ACCESS_TOKEN_REQUEST_GRANT_TYPE, List.of(GrantType.PASSWORD.getCode()));
+		values.put(Constants.ACCESS_TOKEN_REQUEST_SCOPE, List.of(Property.SCOPE));
+		values.put(Constants.ACCESS_TOKEN_REQUEST_CLIENT_ID, List.of(Property.CLIENT_ID));
+		values.put(Constants.USERNAME, List.of(username));
+		values.put(Constants.PASSWORD, List.of(password));
+		return values;
 	}
 
-	public static class AccessTokenByTrustedRequest {
-		String trustedUsername;
-		String trustedPassword;
-
-		public AccessTokenByTrustedRequest(String trustedUsername, String trustedPassword) {
-			this.trustedUsername = trustedUsername;
-			this.trustedPassword = trustedPassword;
-		}
-
-		public MultivaluedMap<String, String> paramsMap() {
-			MultivaluedMap<String, String> values = new MultivaluedHashMap<>();
-			values.put(Constants.ACCESS_TOKEN_REQUEST_GRANT_TYPE, List.of(GrantType.TRUSTED.getCode()));
-			values.put(Constants.ACCESS_TOKEN_REQUEST_SCOPE, List.of(Property.SCOPE));
-			values.put(Constants.ACCESS_TOKEN_REQUEST_CLIENT_ID, List.of(Property.CLIENT_ID));
-			values.put(Constants.ACCESS_TOKEN_REQUEST_IMPERSONATE_NAME, List.of(DocuWareService.get().getIvyVar(DocuWareVariable.USERNAME)));
-			values.put(Constants.USERNAME, List.of(trustedUsername));
-			values.put(Constants.PASSWORD, List.of(trustedPassword));
-			return values;
-		}
+	public MultivaluedMap<String, String> trustedParamsMap(String trustedUsername, String trustedPassword, String username) {
+		MultivaluedMap<String, String> values = new MultivaluedHashMap<>();
+		values.put(Constants.ACCESS_TOKEN_REQUEST_GRANT_TYPE, List.of(GrantType.TRUSTED.getCode()));
+		values.put(Constants.ACCESS_TOKEN_REQUEST_SCOPE, List.of(Property.SCOPE));
+		values.put(Constants.ACCESS_TOKEN_REQUEST_CLIENT_ID, List.of(Property.CLIENT_ID));
+		values.put(Constants.ACCESS_TOKEN_REQUEST_IMPERSONATE_NAME, List.of(DocuWareService.get().getDocuwareUserBasedOnCurrentUser()));
+		values.put(Constants.USERNAME, List.of(trustedUsername));
+		values.put(Constants.PASSWORD, List.of(trustedPassword));
+		return values;
 	}
 
-	public static class AccessTokenByLoginTokenRequest {
-		private String loginToken;
-
-		public AccessTokenByLoginTokenRequest(String loginToken) {
-			this.loginToken = loginToken;
-		}
-
-		public MultivaluedMap<String, String> paramsMap() {
-			MultivaluedMap<String, String> values = new MultivaluedHashMap<>();
-			values.put(Constants.ACCESS_TOKEN_REQUEST_GRANT_TYPE, List.of(GrantType.DW_TOKEN.getCode()));
-			values.put(Constants.ACCESS_TOKEN_REQUEST_SCOPE, List.of(Property.SCOPE));
-			values.put(Constants.ACCESS_TOKEN_REQUEST_CLIENT_ID, List.of(Property.CLIENT_ID));
-			values.put(Constants.ACCESS_TOKEN_REQUEST_IMPERSONATE_NAME, List.of(DocuWareService.get().getIvyVar(DocuWareVariable.USERNAME)));
-			values.put(Constants.ACCESS_TOKEN_REQUEST_TOKEN, List.of(loginToken));
-			return values;
-		}
+	public static MultivaluedMap<String, String> dwTokenParamsMap(String loginToken) {
+		MultivaluedMap<String, String> values = new MultivaluedHashMap<>();
+		values.put(Constants.ACCESS_TOKEN_REQUEST_GRANT_TYPE, List.of(GrantType.DW_TOKEN.getCode()));
+		values.put(Constants.ACCESS_TOKEN_REQUEST_SCOPE, List.of(Property.SCOPE));
+		values.put(Constants.ACCESS_TOKEN_REQUEST_CLIENT_ID, List.of(Property.CLIENT_ID));
+		values.put(Constants.ACCESS_TOKEN_REQUEST_IMPERSONATE_NAME, List.of(DocuWareService.get().getIvyVar(DocuWareVariable.USERNAME)));
+		values.put(Constants.ACCESS_TOKEN_REQUEST_TOKEN, List.of(loginToken));
+		return values;
 	}
 }

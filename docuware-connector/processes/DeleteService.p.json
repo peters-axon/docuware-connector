@@ -48,7 +48,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();"
+            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();"
           ]
         }
       },
@@ -83,7 +83,7 @@
               "",
               "if(response != null){",
               "  if(response.getStatusInfo().getFamily() != Family.SUCCESSFUL){",
-              "     DocuWareException dex = DocuWareService.handleError(response);",
+              "     DocuWareException dex = DocuWareService.get().handleError(response);",
               "     out.error = BpmError.create(DocuWareConstants.ERROR_BASE).withMessage(dex.getErrorMessage()).build();",
               "     out.error.setAttribute(DocuWareConstants.RESPONSE_STATUS_CODE_ATTRIBUTE, dex.getHttpCode());",
               "  }",
@@ -158,7 +158,7 @@
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
             "",
-            "in.configuration = DocuWareService.initializeConfiguration(in.configuration);"
+            "in.configuration = DocuWareService.get().initializeConfiguration(in.configuration);"
           ]
         }
       },

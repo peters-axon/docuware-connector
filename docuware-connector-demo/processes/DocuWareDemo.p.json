@@ -904,7 +904,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();"
+            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();"
           ]
         }
       },
@@ -948,7 +948,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();"
+            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();"
           ]
         }
       },
@@ -988,7 +988,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();"
+            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();"
           ]
         }
       },
@@ -1007,7 +1007,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();"
+            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();"
           ]
         }
       },

@@ -84,7 +84,7 @@
           "import com.axonivy.connector.docuware.connector.DocuWareService;",
           "",
           "try {",
-          "  in.document = DocuWareService.uploadFile(client, in.uploadFile, in.configuration, in.propertiesList);",
+          "  in.document = DocuWareService.get().uploadFile(client, in.uploadFile, in.configuration, in.propertiesList);",
           "} catch(DocuWareException dex) {",
           "  in.error = BpmError.create(\"com:eon:ivy:shared:docuware:rest\").withMessage(dex.getErrorMessage()).build();",
           "  ivy.log.error(\"Document upload failed. Error: \" + dex.getErrorMessage());",
@@ -124,7 +124,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();",
+            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();",
             "",
             "ivy.log.info(\"Filcab\" + in.configuration.fileCabinetId);"
           ]
@@ -180,7 +180,7 @@
         "output" : {
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.initializeDefaultConfiguration();"
+            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();"
           ]
         }
       },
@@ -226,7 +226,7 @@
           "import com.axonivy.connector.docuware.connector.DocuWareService;",
           "",
           "try {",
-          "  in.document = DocuWareService.uploadStream(client, in.file, in.filename, in.configuration, in.propertiesList);",
+          "  in.document = DocuWareService.get().uploadStream(client, in.file, in.filename, in.configuration, in.propertiesList);",
           "} catch(DocuWareException dex) {",
           "  in.error = BpmError.create(\"com:eon:ivy:shared:docuware:rest\").withMessage(dex.getErrorMessage()).build();",
           "  in.error.setAttribute(\"RestClientResponseStatusCode\", dex.httpCode);",
@@ -310,7 +310,7 @@
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
             "",
-            "in.configuration = DocuWareService.initializeConfiguration(in.configuration);"
+            "in.configuration = DocuWareService.get().initializeConfiguration(in.configuration);"
           ]
         }
       },
@@ -367,7 +367,7 @@
           "code" : [
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
             "",
-            "in.configuration = DocuWareService.initializeConfiguration(in.configuration);"
+            "in.configuration = DocuWareService.get().initializeConfiguration(in.configuration);"
           ]
         }
       },
