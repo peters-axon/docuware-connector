@@ -6,52 +6,41 @@ The Axon Ivy DocuWare connector enables efficient integration of DocuWare functi
 
 This connector:
 
-- minimizes your integration effort: use the demo version, which contains examples of the API calls.
+- minimizes your integration effort: use the demo to see examples of API calls.
 - is based on REST web service technologies.
-- gives you access to basic DocuWare functions.
+- gives you access to the DocuWare REST API.
 
 ## Demo
 
-### Features
+The demo offers a GUI to guide you through some basic DocuWare features, a GUI to retrieve a list of documents from your default organization and the first file cabinet found and some workflows with examples of other calls.
 
-1. **Organization Retrieval**  
-   Click the **Organizations** button to retrieve the organization ID. The system will automatically include this ID in subsequent requests.
+### Basic Docuware Features
 
-    ![organization-result](images/get-organization-result.png)
+Start **Basic DocuWare Calls** and either configure a fixed organization and file cabinet in global variables or **Fetch Organizations** and **Fetch FileCabinets** to use the first objects found instead.
+Once you select a file cabinet id, additional functions to **Fetch Documents** will be available. The first document found will be used as the demo document. Nevertheless, you
+can enter ids manually for all input fields to use different objects. Once a document id is set, the document can be downloaded or attached to the current case. If you upload
+a document, it's documentId will be set automatically and you can directly work with it.
 
-2. **File Cabinets Retrieval**  
-    Click the **File Cabinets** button to fetch the cabinet Id of the selected organization. The cabinet Id determines where the file will be uploaded.
+### Document Viewing
 
-    ![file-cabinet-result](images/get-file-cabinet-result.png)
-
-3. **Document Uploading**  
-    Select a file to upload to the chosen DocuWare file cabinet. You can verify the uploaded file on the DocuWare dashboard.
-
-    ![upload-document](images/upload-document-result.png)
-
-4. **Document Retrieval**  
-   Automatically fetch documents using the predefined **organization** and **fileCabinetId** fields from the `variables.yaml` file.
-
-   ![fetch-documents](images/fetch-documents.png)
-
-5. **Document Viewing**  
-   View documents directly within the interface using DocuWare’s document viewer.
+Start **View/Edit Document** to get basic viewer showing how to add, change, view and delete documents. Note, that viewing of documents might require additional setup of your DocuWare installation to allow embedding
+of DocuWare frames into your AxonIvy frames.
 
    ![view-document](images/view-document.png)
 
-6. **Document Properties Editing**  
-   Modify document properties, including metadata and custom fields.
+**Document Properties Editing**  
+Modify document properties, including metadata and custom fields.
 
    ![edit-document-properties](images/edit-document-properties.png)
 
-7. **Document Deletion**  
-   Delete documents from the file cabinet.
+**Document Deletion**  
+Delete documents from the file cabinet.
 
    ![delete-document](images/delete-document.png)
 
-To view and edit documents and their properties, run the process named **DocuWare View/Edit Document**.
+### Other demos
 
-To upload documents and perform actions like retrieving organizations, getting file cabinets, and uploading documents, run the process named **Start some DocuWare calls**.
+Other process starts show examples of DocuWare usage.
 
 ## Setup
 
