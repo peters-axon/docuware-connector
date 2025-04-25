@@ -21,11 +21,19 @@
 						<div class="col-12 md:col-6 lg:col-2">
 							<p:inputText id="organizationId" value="#{data.ctrl.organizationId}" />
 						</div>
+					</div>
+					<div class="grid">
 						<div class="col-12 md:col-6 lg:col-2">
 							<p:outputLabel for="@next" value="Cabinet Id" />
 						</div>
 						<div class="col-12 md:col-6 lg:col-4">
 							<p:inputText id="fileCabinetId" value="#{data.ctrl.fileCabinetId}" />
+						</div>
+						<div class="col-12 md:col-6 lg:col-2">
+							<p:outputLabel for="@next" value="Doc Id" />
+						</div>
+						<div class="col-12 md:col-6 lg:col-4">
+							<p:inputText id="documentId" value="#{data.ctrl.documentId}" />
 						</div>
 					</div>
 				</div>
@@ -42,6 +50,29 @@
 					<p:outputPanel rendered="#{not empty data.ctrl.fileCabinetId}">
 						<div class="grid">
 							<div class="col-12 md:col-6 lg:col-2">
+								<p:commandButton id="documents" actionListener="#{logic.documents}" value="Fetch Documents" update="@form" />
+							</div>
+						</div>
+						<p:outputPanel rendered="#{not empty data.ctrl.documentId}">
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:commandButton value="Fetch and attach Document to case" ajax="true" actionListener="#{logic.downloadAndAttachToCase}" update="@form" />
+								</div>
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:commandButton value="Download Document" ajax="true" actionListener="#{logic.prepareDownload}" update="@form" >
+										<p:fileDownload value="#{data.ctrl.downloadedFile}" />
+									</p:commandButton>
+								</div>
+							</div>
+						</p:outputPanel>
+						<p:outputPanel rendered="#{empty data.ctrl.documentId}">
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-4">Set a document Id to enable document related functions.</div>
+							</div>
+						</p:outputPanel>
+
+						<div class="grid">
+							<div class="col-12 md:col-6 lg:col-2">
 								<p:fileUpload id="fileUpload" value="#{data.file}" mode="simple" update="messages" skinSimple="true" />
 							</div>
 							<div class="col-12 md:col-6 lg:col-2">
@@ -51,7 +82,7 @@
 					</p:outputPanel>
 					<p:outputPanel rendered="#{empty data.ctrl.fileCabinetId}">
 						<div class="grid">
-							<div class="col-12 md:col-6 lg:col-4">Please set a file cabinet Id to enable file upload.</div>
+							<div class="col-12 md:col-6 lg:col-4">Set a file cabinet Id to fetch documents and enable file upload.</div>
 						</div>
 					</p:outputPanel>
 				</p:fieldset>

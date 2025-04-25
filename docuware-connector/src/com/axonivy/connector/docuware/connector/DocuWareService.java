@@ -8,6 +8,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -34,6 +35,7 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.glassfish.jersey.media.multipart.Boundary;
+import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.file.StreamDataBodyPart;
 import org.w3c.dom.Element;
@@ -52,6 +54,7 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import ch.ivyteam.ivy.bpm.error.BpmError;
 import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.scripting.objects.File;
 import ch.ivyteam.ivy.security.ISecurityConstants;
@@ -261,7 +264,16 @@ public class DocuWareService {
 		String filename = null;
 		if (response != null) {
 			String disposition = response.getHeaderString(CONTENT_DISPOSITION);
-			filename = disposition.replaceFirst("(?i)^.*filename=\"?([^\"]+)\"?.*$", "$1");
+
+			try {
+				var cd = new ContentDisposition(disposition);
+				filename = cd.getFileName(true);
+			} catch (ParseException e) {
+				BpmError
+				.create(DOCUWARE_ERROR + "invalidfilename")
+				.withMessage("Could not extract filename of %s header value '%s'".formatted(CONTENT_DISPOSITION, disposition))
+				.throwError();
+			}
 		}
 		return filename;
 	}

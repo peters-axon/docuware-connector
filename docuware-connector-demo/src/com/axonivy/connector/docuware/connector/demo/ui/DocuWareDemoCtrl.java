@@ -1,14 +1,22 @@
 package com.axonivy.connector.docuware.connector.demo.ui;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.MessageFormat;
 
+import javax.ws.rs.core.Response;
+
 import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
+import com.axonivy.connector.docuware.connector.DocuWareService;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
+import com.docuware.dev.schema._public.services.platform.Document;
+import com.docuware.dev.schema._public.services.platform.DocumentsQueryResult;
 import com.docuware.dev.schema._public.services.platform.FileCabinets;
 import com.docuware.dev.schema._public.services.platform.Organizations;
 
@@ -19,9 +27,12 @@ public class DocuWareDemoCtrl {
 	private PrintWriter printWriter = new PrintWriter(stringWriter);
 	private String organizationId;
 	private String fileCabinetId;
+	private String documentId;
 	private Organizations organizations;
 	private FileCabinets fileCabinets;
-
+	private DocumentsQueryResult documents;
+	private Document document;
+	private StreamedContent downloadedFile;
 
 	public DocuWareDemoCtrl() {
 		organizationId = Ivy.var().get("docuwareConnector.organization");
@@ -92,6 +103,31 @@ public class DocuWareDemoCtrl {
 		}
 	}
 
+	public DocumentsQueryResult getDocuments() {
+		return documents;
+	}
+
+	public void setDocuments(DocumentsQueryResult documents) {
+		this.documents = documents;
+		if(documents != null && documents.getItems() != null) {
+			var docs = documents.getItems().getItem();
+			if(docs != null && !docs.isEmpty()) {
+				documentId = ""+docs.get(0).getId();
+			}
+		}
+	}
+
+	public Document getDocument() {
+		return document;
+	}
+
+	public void setDocument(Document document) {
+		this.document = document;
+		if(document != null) {
+			documentId = "" + document.getId();
+		}
+	}
+
 	public String getOrganizationId() {
 		return organizationId;
 	}
@@ -107,6 +143,27 @@ public class DocuWareDemoCtrl {
 	public void setFileCabinetId(String fileCabinetId) {
 		this.fileCabinetId = fileCabinetId;
 	}
+
+	public String getDocumentId() {
+		return documentId;
+	}
+
+	public void setDocumentId(String documentId) {
+		this.documentId = documentId;
+	}
+
+	public StreamedContent getDownloadedFile() {
+		return downloadedFile;
+	}
+
+	public void prepareDownloadedFile(Response response, InputStream result) {
+		if(response != null && response.getStatusInfo().getFamily().equals(Response.Status.Family.SUCCESSFUL)) {
+			downloadedFile = DefaultStreamedContent.builder()
+					.stream(() -> result)
+					.name(DocuWareService.get().getFilenameFromResponseHeader(response)).build();
+		}
+	}
+
 
 	private String safeShow(String sensitive) {
 		return sensitive == null ? null : sensitive.replaceAll(".", "*");
@@ -171,6 +228,32 @@ public class DocuWareDemoCtrl {
 					log("''{0}'', Id: {1}", fc.getName(), fc.getId());
 				}
 			}
+		}
+	}
+
+	public void log(DocumentsQueryResult documents) {
+		log("Documents:");
+		if(documents == null || documents.getItems() == null) {
+			log("null");
+		}
+		else {
+			var docs = documents.getItems().getItem();
+			log("Size: {0}", docs != null ? docs.size() : docs);
+			if(docs != null) {
+				for (var doc : docs) {
+					log("''{0}'', Id: {1}", doc.getTitle(), doc.getId());
+				}
+			}
+		}
+	}
+
+	public void log(Document document) {
+		log("Document:");
+		if(document == null) {
+			log("null");
+		}
+		else {
+			log("''{0}'', Id: {1}", document.getTitle(), document.getId());
 		}
 	}
 
