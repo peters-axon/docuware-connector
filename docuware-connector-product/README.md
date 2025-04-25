@@ -44,27 +44,45 @@ Other process starts show examples of DocuWare usage.
 
 ## Setup
 
-Before any interactions between the Axon Ivy Engine and DocuWare services can be run, they have to be introducted to each other. This can be done as follows:
+Before any interactions between the Axon Ivy Engine and DocuWare services can be run, they have to be introducted to each other.
+All configurations are done in global variables. Whether cloud or on-premise, you must define the `host` which is the hostname of
+your DocuWare installation.
 
-1. Get a DocuWare account and the DocuWare cloud `host`, `user-name`, and `password` to use.
+The connector supports different grant-types. Depending on the grant-type, other credentials are used.
 
-2. Override the global variables for `host`, `username`, and `password` in the demo project as shown in the example below.
+### Grant type `password`
+
+This is the typical type used for cloud solutions. Ivy will use a technical user to connect to DocuWare and all
+calls will be done using this user. The history of a document will show this technical user independent of the
+real Ivy user. For this grant-type you need to set `username` and `password` of the DocuWare user.
+
+### Grant type `trusted`
+
+This can be used in on-premise solutions. It will use a trusted user to connect, but it will impersonate the current
+Ivy user name for calls. Therefore, the history of a document will show the real Ivy user. For this grant-type
+you need to set `trustedUserName`, `trustedUserPassword` and `username` (to be used for special users).
+
+Notes:
+
+* For this to work, the Ivy user must have the same name as the DocuWare user
+* For System user and unauthenticated users, the configured `username` will be used.
+
+### Grant type `dw_token`
+
+This can be used, if you got the user token by some other means. Note, that this use-case is probably not yet fully
+supported and should be seen as a demo. You can start the process **Request a LoginToken for DW-Token** to play
+around with this grant-type.
+
+### Other configuration variables
+
+Other configuration variables are documented directly in the variables supported by the connector. Please see there
+for a description and copy it to your project, if you are using it, so that it will be visible in the Engine cockpit
+for your application.
 
 ```
 @variables.yaml@
 ```
 
-3. DocuWare supports 3 ways to generate an Access Token from the Identity Service:
-
-    3.a Request Token by Username & Password - GrantType is `password`
-    
-    3.b Request Token by a DocuWare Token - GrantType is `dwtoken`
-    
-    3.c Request Token by Username & Password (Trusted User) - GrantType is `trusted`
-
-4. For GrantType is `dwtoken`, we must get a LoginToken. Please start the process startRequestALoginToken.ivp and follow the guide to generate a new LoginToken
-
-If your REST URL does not follow the predefined REST URL pattern of this connector, you can change the URL in the Engine Cockpit. To change the URL in the Designer, you have to unpack the connector project and change it there.
-
-Run `start.ivp` of the DocuWareDemo demo process to test your setup.
+If the connector misses features that you need, you can unpack it to your project and extend it there. In this case
+consider to propose/offer your change to the Axon Ivy market.
 
