@@ -26,8 +26,9 @@ Variables:
     # Use for getting a new DocuWare token by GrantType is dwtoken
     # Please start process startRequestALoginToken.ivp to generate a new LoginToken
     loginToken: ""
-    # Your organization name
+    # A default organization to use
     organization: ""
+    # A default file cabinet id to use
     filecabinetid: ""
     # This property sets the maximum time (in milliseconds) that the client will wait when attempting to establish a connection with the server.
     # The value MUST be an instance convertible to Integer. A value of zero (0) is equivalent to an interval of infinity.

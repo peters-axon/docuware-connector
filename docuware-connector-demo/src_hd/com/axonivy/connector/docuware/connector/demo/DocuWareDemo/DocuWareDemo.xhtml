@@ -42,9 +42,23 @@
 					<div class="grid">
 						<div class="col-12 md:col-6 lg:col-2">
 							<p:commandButton id="organizations" actionListener="#{logic.organizations}" value="Fetch Organizations" update="@form" />
+							<p:tooltip for="@previous" value="Fetch organizations, the user belongs to. Note: many calls will also work without an organization." my="left"
+								at="left top" />
 						</div>
 						<div class="col-12 md:col-6 lg:col-2">
 							<p:commandButton id="fileCabinets" styleClass="p-ml-4" actionListener="#{logic.fileCabinets}" value="Fetch FileCabinets" update="@form" />
+							<p:tooltip for="@previous" value="Fetch file cabinets of the. The id of the first cabinet returned will be inserted into the cabinet id field."
+								my="left" at="left top" />
+						</div>
+						<div class="col-12 md:col-6 lg:col-2"></div>
+							<div class="col-12 md:col-6 lg:col-2">
+							<p:outputPanel rendered="#{data.ctrl.hasAccessToken()}">
+								<p:commandButton id="loginToken" styleClass="p-ml-4" actionListener="#{logic.loginToken}" value="Create login token" update="@form" />
+								<p:tooltip for="@previous" escape="false"
+									value="Create a login token, which can be used in certain URLs (this is not the normal access token used for API calls).
+									&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; this token can only be created when an access token is available (i.e. after at least one API call)!&lt;/p&gt;"
+									my="left" at="left top" />
+							</p:outputPanel>
 						</div>
 					</div>
 					<p:outputPanel rendered="#{not empty data.ctrl.fileCabinetId}">
@@ -59,7 +73,7 @@
 									<p:commandButton value="Fetch and attach Document to case" ajax="true" actionListener="#{logic.downloadAndAttachToCase}" update="@form" />
 								</div>
 								<div class="col-12 md:col-6 lg:col-2">
-									<p:commandButton value="Download Document" ajax="true" actionListener="#{logic.prepareDownload}" update="@form" >
+									<p:commandButton value="Download Document" ajax="true" actionListener="#{logic.prepareDownload}" update="@form">
 										<p:fileDownload value="#{data.ctrl.downloadedFile}" />
 									</p:commandButton>
 								</div>

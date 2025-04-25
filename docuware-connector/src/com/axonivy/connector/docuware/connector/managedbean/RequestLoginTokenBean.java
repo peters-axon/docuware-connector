@@ -1,8 +1,5 @@
 package com.axonivy.connector.docuware.connector.managedbean;
 
-import static com.axonivy.connector.docuware.connector.auth.oauth.OAuth2BearerFilter.AUTHORIZATION;
-import static com.axonivy.connector.docuware.connector.auth.oauth.OAuth2BearerFilter.BEARER;
-
 import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
@@ -12,7 +9,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
 import javax.ws.rs.core.GenericType;
@@ -48,15 +44,9 @@ public class RequestLoginTokenBean {
 
 		Token token = generateNewIdentityToken();
 
-		Client client = ClientBuilder.newClient();
-		Response response = null;
 		try {
-			var target = client.target(IdentityServiceContext.buildOrganizationLoginTokenURI(host));
-			response = target.request(MediaType.APPLICATION_JSON).header(AUTHORIZATION, BEARER + token.accessToken())
-					.post(Entity.json(generateLoginTokenBody()));
-
-			if (Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
-				loginToken = response.readEntity(String.class);
+			loginToken = DocuWareService.get().getLoginTokenString(token);
+			if(loginToken != null) {
 				FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO,
 						Ivy.cms().co("/Dialogs/com/axonivy/market/docuware/connector/RequestLoginToken/GotLoginToken"),
 						Ivy.cms().co(
@@ -66,9 +56,6 @@ public class RequestLoginTokenBean {
 			}
 		} catch (Exception e) {
 			Ivy.log().error(e);
-		} finally {
-			response.close();
-			client.close();
 		}
 	}
 

@@ -25,6 +25,7 @@ import ch.ivyteam.ivy.environment.Ivy;
 public class DocuWareDemoCtrl {
 	private StringWriter stringWriter = new StringWriter();
 	private PrintWriter printWriter = new PrintWriter(stringWriter);
+	private String loginToken;
 	private String organizationId;
 	private String fileCabinetId;
 	private String documentId;
@@ -48,6 +49,7 @@ public class DocuWareDemoCtrl {
 				var pw = new PrintWriter(sw)) {
 			pw.format(
 					"""
+					Global variables:
 					Host: '%s'
 					Platform: '%s'
 					GrantType: '%s'
@@ -55,7 +57,7 @@ public class DocuWareDemoCtrl {
 					Password: '%s'
 					TrustedUserName: '%s'
 					TrustedUserPassword: '%s'
-					LoginToken: '%s'
+					LoginToken: '%s' (note: the login token is usually not stored here and is only needed for special use-cases) 
 					AccessToken: '%s' (note: the access token is usually not stored here but in an application or session attribute)
 					""",
 					DocuWareVariable.HOST.getValue(),
@@ -126,6 +128,18 @@ public class DocuWareDemoCtrl {
 		if(document != null) {
 			documentId = "" + document.getId();
 		}
+	}
+
+	public boolean hasAccessToken() {
+		return DocuWareService.get().getCachedToken() != null;
+	}
+
+	public String getLoginToken() {
+		return loginToken;
+	}
+
+	public void setLoginToken(String loginToken) {
+		this.loginToken = loginToken;
 	}
 
 	public String getOrganizationId() {

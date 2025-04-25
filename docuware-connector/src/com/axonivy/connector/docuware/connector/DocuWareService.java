@@ -1,5 +1,8 @@
 package com.axonivy.connector.docuware.connector;
 
+import static com.axonivy.connector.docuware.connector.auth.oauth.OAuth2BearerFilter.AUTHORIZATION;
+import static com.axonivy.connector.docuware.connector.auth.oauth.OAuth2BearerFilter.BEARER;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -13,6 +16,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
@@ -42,6 +46,8 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
+import com.axonivy.connector.docuware.connector.auth.oauth.IdentityServiceContext;
+import com.axonivy.connector.docuware.connector.auth.oauth.Token;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
 import com.axonivy.connector.docuware.connector.enums.GrantType;
 import com.docuware.dev.schema._public.services.platform.Document;
@@ -54,10 +60,12 @@ import com.fasterxml.jackson.databind.Module;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
+import ch.ivyteam.ivy.application.IApplication;
 import ch.ivyteam.ivy.bpm.error.BpmError;
 import ch.ivyteam.ivy.environment.Ivy;
 import ch.ivyteam.ivy.scripting.objects.File;
 import ch.ivyteam.ivy.security.ISecurityConstants;
+import ch.ivyteam.util.IAttributeStore;
 import ch.ivyteam.util.StringUtil;
 
 /**
@@ -120,6 +128,130 @@ public class DocuWareService {
 			}
 		}
 		return username;
+	}
+
+	/**
+	 * Get the cached token from the grant-type specific store.
+	 * 
+	 * @return
+	 */
+	public Token getCachedToken() {
+		var key = createKey();
+		var store = getGrantTypeStore();
+		return (Token)store.getAttribute(key);
+	}
+
+	/**
+	 * Set the cached token to the grant-type specific store.
+	 * 
+	 * @param token
+	 */
+	public void setCachedToken(Token token) {
+		var key = createKey();
+		var store = getGrantTypeStore();
+		store.setAttribute(key, token);
+	}
+
+	/**
+	 * Get the grant-type specific store.
+	 * 
+	 * For grant type trusted, the token is stored in the session,
+	 * for all others globally in the application.
+	 * 
+	 * @return
+	 */
+	private IAttributeStore<Object> getGrantTypeStore() {
+		var grantType = DocuWareService.get().getIvyVarGrantType();
+
+		return switch (grantType) {
+		case TRUSTED -> Ivy.session();
+		default -> IApplication.current();
+		};
+	}
+
+	private String createKey() {
+		return Token.class.getCanonicalName();
+	}
+
+	/**
+	 * Get a LoginToken based on the current access token.
+	 * 
+	 * @return
+	 */
+	public String getLoginTokenString() {
+		return getLoginTokenString();
+	}
+
+	/**
+	 * Get a LoginToken based on the access token.
+	 * 
+	 * @return
+	 */
+	public String getLoginTokenString(Token token) {
+		String loginToken = null;
+		Response response = null;
+		try {
+			response = getLoginTokenResponse(token);
+
+			if (Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
+				loginToken = response.readEntity(String.class);
+			}
+		} catch (Exception e) {
+			BpmError.create(DOCUWARE_ERROR + "logintoken")
+			.withCause(e)
+			.withMessage("Could not get login token.")
+			.throwError();
+		}
+		return loginToken;
+	}
+
+	/**
+	 * Get a LoginToken based on the current access token.
+	 * 
+	 * @return
+	 */
+	public Response getLoginTokenResponse() {
+		return getLoginTokenResponse(null);
+	}
+	/**
+	 * Get a LoginToken based on the access token.
+	 * 
+	 * @return
+	 */
+	public Response getLoginTokenResponse(Token token) {
+		if(token == null) {
+			token = getCachedToken();
+		}
+		var host = DocuWareService.get().getIvyVar(DocuWareVariable.HOST);
+		var client = ClientBuilder.newClient();
+		Response response = null;
+		try {
+			Objects.requireNonNull(token);
+			var target = client.target(IdentityServiceContext.buildOrganizationLoginTokenURI(host));
+			response = target
+					.request(MediaType.APPLICATION_JSON)
+					.header(AUTHORIZATION, BEARER + token.accessToken())
+					.post(Entity.json(generateLoginTokenBody()));
+
+		} catch (Exception e) {
+			BpmError.create(DOCUWARE_ERROR + "logintoken")
+			.withCause(e)
+			.withMessage("Could not get login token.")
+			.throwError();
+		}
+		return response;
+	}
+
+	private String generateLoginTokenBody() {
+		return """
+				{
+				  "TargetProducts": [
+				      "PlatformService"
+				  ],
+				  "Usage": "Multi",
+				  "Lifetime": "1.00:00:00"
+				}
+				""";
 	}
 
 	public JsonNode getWebTargetResponseAsJsonNode(URI targetURI) {

@@ -108,7 +108,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 752 },
+        "at" : { "x" : 96, "y" : 848 },
         "labelOffset" : { "x" : 11, "y" : 35 }
       },
       "connect" : [
@@ -118,7 +118,7 @@
       "id" : "f13",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 448, "y" : 752 }
+        "at" : { "x" : 448, "y" : 848 }
       }
     }, {
       "id" : "f15",
@@ -251,7 +251,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 320, "y" : 752 }
+        "at" : { "x" : 320, "y" : 848 }
       },
       "connect" : [
         { "id" : "f23", "to" : "f13" }
@@ -264,7 +264,7 @@
         "guid" : "1966876CCB3F55FE"
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 912 }
+        "at" : { "x" : 96, "y" : 1008 }
       },
       "connect" : [
         { "id" : "f22", "to" : "f24" }
@@ -273,7 +273,7 @@
       "id" : "f21",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 352, "y" : 912 },
+        "at" : { "x" : 352, "y" : 1008 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -286,7 +286,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 912 }
+        "at" : { "x" : 224, "y" : 1008 }
       },
       "connect" : [
         { "id" : "f25", "to" : "f21", "color" : "default" }
@@ -301,7 +301,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 192, "y" : 752 },
+        "at" : { "x" : 192, "y" : 848 },
         "labelOffset" : { "y" : -24 }
       },
       "connect" : [
@@ -309,7 +309,7 @@
             "name" : "yes",
             "offset" : { "x" : -11, "y" : 14 }
           }, "color" : "default" },
-        { "id" : "f29", "to" : "f28", "via" : [ { "x" : 192, "y" : 832 } ], "label" : {
+        { "id" : "f29", "to" : "f28", "via" : [ { "x" : 192, "y" : 928 } ], "label" : {
             "name" : "no",
             "segment" : 1.06,
             "offset" : { "x" : 4, "y" : -41 }
@@ -336,10 +336,10 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 320, "y" : 832 }
+        "at" : { "x" : 320, "y" : 928 }
       },
       "connect" : [
-        { "id" : "f30", "to" : "f13", "via" : [ { "x" : 400, "y" : 832 }, { "x" : 400, "y" : 752 } ] }
+        { "id" : "f30", "to" : "f13", "via" : [ { "x" : 400, "y" : 928 }, { "x" : 400, "y" : 848 } ] }
       ]
     }, {
       "id" : "f31",
@@ -352,7 +352,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 448 }
+        "at" : { "x" : 96, "y" : 544 }
       },
       "connect" : [
         { "id" : "f33", "to" : "f34" }
@@ -361,7 +361,7 @@
       "id" : "f32",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 352, "y" : 448 },
+        "at" : { "x" : 352, "y" : 544 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -397,7 +397,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 448 },
+        "at" : { "x" : 224, "y" : 544 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -414,7 +414,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 544 }
+        "at" : { "x" : 96, "y" : 640 }
       },
       "connect" : [
         { "id" : "f38", "to" : "f39" }
@@ -423,7 +423,7 @@
       "id" : "f37",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 352, "y" : 544 },
+        "at" : { "x" : 352, "y" : 640 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -467,7 +467,7 @@
         ]
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 544 },
+        "at" : { "x" : 224, "y" : 640 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
@@ -484,7 +484,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 640 }
+        "at" : { "x" : 96, "y" : 736 }
       },
       "connect" : [
         { "id" : "f43", "to" : "f44" }
@@ -493,7 +493,7 @@
       "id" : "f42",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 352, "y" : 640 },
+        "at" : { "x" : 352, "y" : 736 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -541,11 +541,61 @@
         ]
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 640 },
+        "at" : { "x" : 224, "y" : 736 },
         "icon" : "res:/webContent/icons/docuware.png"
       },
       "connect" : [
         { "id" : "f45", "to" : "f42", "color" : "default" }
+      ]
+    }, {
+      "id" : "f47",
+      "type" : "HtmlDialogEventStart",
+      "name" : "loginToken",
+      "config" : {
+        "guid" : "1966D87C041808EB",
+        "output" : {
+          "code" : "in.ctrl.clearLog();"
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 448 }
+      },
+      "connect" : [
+        { "id" : "f49", "to" : "f46" }
+      ]
+    }, {
+      "id" : "f48",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 448 },
+        "labelOffset" : { "x" : 10, "y" : 30 }
+      }
+    }, {
+      "id" : "f46",
+      "type" : "Script",
+      "name" : "Login Token",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.docuware.connector.demo.service.DocuWareDemoService;",
+            "import javax.ws.rs.core.Response;",
+            "import com.axonivy.connector.docuware.connector.DocuWareService;",
+            "",
+            "Response response = DocuWareService.get().getLoginTokenResponse();",
+            "",
+            "in.ctrl.log(\"{0}\", DocuWareDemoService.get().getLog(response));",
+            "",
+            "in.ctrl.loginToken = response.readEntity(String.class) as String;",
+            "",
+            "in.ctrl.log(\"Fresh Login Token: ''{0}''\", in.ctrl.loginToken);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 224, "y" : 448 }
+      },
+      "connect" : [
+        { "id" : "f50", "to" : "f48" }
       ]
     } ]
 }
