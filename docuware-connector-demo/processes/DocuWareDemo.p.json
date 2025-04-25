@@ -172,7 +172,11 @@
       "type" : "RequestStart",
       "name" : "sections.ivp",
       "config" : {
-        "signature" : "sections"
+        "signature" : "sections",
+        "request" : {
+          "name" : "Example: Work with document sesions",
+          "description" : "Watch the log-files to see results."
+        }
       },
       "tags" : [
         "demo"
@@ -232,7 +236,11 @@
       "type" : "RequestStart",
       "name" : "dialogs.ivp",
       "config" : {
-        "signature" : "dialogs"
+        "signature" : "dialogs",
+        "request" : {
+          "name" : "Example: Work with dialogs",
+          "description" : "Watch the log-files to see results."
+        }
       },
       "tags" : [
         "demo"
@@ -413,7 +421,11 @@
       "type" : "RequestStart",
       "name" : "fileIndexFields.ivp",
       "config" : {
-        "signature" : "fileIndexFields"
+        "signature" : "fileIndexFields",
+        "request" : {
+          "name" : "Example: Work with index fields",
+          "description" : "Watch the log-files to see results."
+        }
       },
       "tags" : [
         "demo"
