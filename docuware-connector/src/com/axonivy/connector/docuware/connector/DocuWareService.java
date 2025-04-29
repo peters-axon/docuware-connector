@@ -11,17 +11,26 @@ import java.lang.reflect.InvocationTargetException;
 import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
+import java.security.MessageDigest;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
+import javax.crypto.Cipher;
+import javax.crypto.spec.IvParameterSpec;
+import javax.crypto.spec.SecretKeySpec;
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.client.Entity;
@@ -38,6 +47,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.http.client.utils.URIBuilder;
 import org.glassfish.jersey.media.multipart.Boundary;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
@@ -68,9 +78,6 @@ import ch.ivyteam.ivy.security.ISecurityConstants;
 import ch.ivyteam.util.IAttributeStore;
 import ch.ivyteam.util.StringUtil;
 
-/**
- * 
- */
 public class DocuWareService {
 	/*
 	 * This is the format: /Date(1652285631000)/
@@ -103,6 +110,244 @@ public class DocuWareService {
 		var type = getIvyVar(DocuWareVariable.GRANT_TYPE);
 		return Optional.ofNullable(GrantType.of(type)).orElse(GrantType.PASSWORD);
 	}
+
+	/**
+	 * Get the DocuWare Base URL.
+	 * 
+	 * @return
+	 */
+	public URIBuilder getBaseUrl() {
+		return new URIBuilder()
+				.setScheme(getIvyVar(DocuWareVariable.SCHEME))
+				.setHost(getIvyVar(DocuWareVariable.HOST))
+				.setPathSegments("DocuWare", "Platform");
+	}
+
+	/**
+	 * Get the WebClient URL including an optional organizationName (if more than one org is available).
+	 * 
+	 * @param organizationName
+	 * @return
+	 */
+	public URIBuilder getWebClientUrl(String organizationName) {
+		var url = getBaseUrl();
+		if(StringUtils.isNotBlank(organizationName)) {
+			addPathSegments(url, organizationName);
+		}
+		addPathSegments(url, "WebClient");
+		return url;
+	}
+
+	/**
+	 * Get the Integration URL for embedding DocuWare into an IFrame including an optional organizationName (if more than one org is available).
+	 * 
+	 * @param organizationName
+	 * @return
+	 */
+	public URIBuilder getIntegrationUrl(String organizationName) {
+		var url = getWebClientUrl(organizationName);
+		addPathSegments(url, "Integration");
+		return url;
+	}
+
+
+	protected URIBuilder addPathSegments(URIBuilder builder, String...pathSegments) {
+		List<String> segs = new ArrayList<>(builder.getPathSegments());
+
+		for (String pathSegment : pathSegments) {
+			segs.add(pathSegment);
+		}
+
+		builder.setPathSegments(segs);
+
+		return builder;
+	}
+
+
+	/**
+	 * Get the URL of a viewer usable for embedding. 
+	 * 
+	 * @param organizationName
+	 * @param loginToken
+	 * @param cabinetId
+	 * @param documentId
+	 * @return
+	 */
+	public String getViewerUrl(String organizationName, String loginToken, String cabinetId, String documentId) {
+		var url = getIntegrationUrl(organizationName);
+
+		var params = new LinkedHashMap<String, String>();
+
+		params.put("p", "V");
+
+		if(StringUtils.isNotBlank(loginToken)) {
+			params.put("lct", loginToken);
+		}
+		if(StringUtils.isNotBlank(cabinetId)) {
+			params.put("fc", cabinetId);
+		}
+		if(StringUtils.isNotBlank(documentId)) {
+			params.put("did", documentId);
+		}
+
+		var clear = params.entrySet().stream().map(e -> "%s=%s".formatted(e.getKey(), e.getValue())).collect(Collectors.joining("&"));
+
+		var ep = dwEncrypt(clear);
+
+		url.addParameter("ep", ep);
+
+		return url.toString();
+	}
+
+
+	/**
+	 * Special variant of Base64 URL encoding with padding digit instead of '=' characters.
+	 * 
+	 * @param input
+	 * @return
+	 */
+	public String dwUrlEncode(byte[] input) {
+		if (input == null || input.length < 1) {
+			return null;
+		}
+
+		var inputBase64 = Base64.getEncoder().encodeToString(input);
+
+		var buf = new StringBuffer(inputBase64);
+		var cnt = 0;
+		while(buf.length() > 0 && buf.charAt(buf.length() - 1) == '=') {
+			buf.deleteCharAt(buf.length() - 1);
+			cnt++;
+		}
+		buf.append((char)('0' + cnt));
+
+		return buf.toString().replace('+', '-').replace('/', '_');
+	}
+
+	/**
+	 * Special variant of Base64 URL decoding with padding digit instead of '=' characters.
+	 * 
+	 * @param input
+	 * @return
+	 */
+	public byte[] dwUrlDecode(String input) {
+		if (input == null || input.length() < 1) {
+			return null;
+		}
+
+		var buf = new StringBuffer(input.replace('-', '+').replace('_', '/'));
+
+		int last = buf.length() - 1;
+		var cnt = buf.charAt(last) - '0';
+		buf.deleteCharAt(last);
+		while(cnt-- > 0) {
+			buf.append('=');
+		}
+
+		return Base64.getDecoder().decode(buf.toString());
+	}
+
+
+
+
+	/**
+	 * Get a {@link Cipher}.
+	 * 
+	 * Use constants {@link Cipher#ENCRYPT_MODE} or {@link Cipher#DECRYPT_MODE} to determine the mode.
+	 * 
+	 * Key and Iv parameter needed for the Cipher are determined by building the SHA-512 hash of the password
+	 * and taking the first 256 bits for the key and the next 128 bits for the Iv parameter.
+	 * 
+	 * @param mode
+	 * @return 
+	 */
+	public Cipher getCipher(int mode) {
+		Cipher cipher = null;
+		var passphrase = DocuWareVariable.INTEGRATION_PASSPHRASE.getValue();
+		if(StringUtils.isBlank(passphrase)) {
+			BpmError
+			.create(DOCUWARE_ERROR + "missingintegrationpassphrase")
+			.withMessage("Integration Passphrase was not set.")
+			.throwError();
+		}
+
+		try {
+			cipher = Cipher.getInstance("AES/CBC/PKCS5Padding");
+			var md = MessageDigest.getInstance("SHA-512");
+			md.reset();
+
+			var passphraseSHA512 = md.digest(passphrase.getBytes(StandardCharsets.UTF_8));
+
+			// Split Hash into key and iv
+			int keySize = 256 / 8;
+			int ivSize = 128 / 8;
+			byte[] key = Arrays.copyOfRange(passphraseSHA512, 0, keySize);
+			byte[] iv = Arrays.copyOfRange(passphraseSHA512, keySize, keySize + ivSize);
+
+			var secretKeySpec = new SecretKeySpec(key, "AES");
+			var ivParameter = new IvParameterSpec(iv);
+
+			cipher.init(mode, secretKeySpec, ivParameter);
+		} catch (Exception e) {
+			BpmError
+			.create(DOCUWARE_ERROR + "ciphercreationerror")
+			.withCause(e)
+			.withMessage("Error while creating the cipher.")
+			.throwError();
+		}
+		return cipher;
+	}
+
+	/**
+	 * Encrypt a String.
+	 * 
+	 * @param clear
+	 * @return
+	 */
+	public String dwEncrypt(String clear) {
+		String encoded = null;
+		var cipher = getCipher(Cipher.ENCRYPT_MODE);
+
+		try {
+			var encrypted = cipher.doFinal(clear.getBytes("UTF-8"));
+			encoded = dwUrlEncode(encrypted);
+		} catch (Exception e) {
+			BpmError
+			.create(DOCUWARE_ERROR + "encrypterror")
+			.withCause(e)
+			.withMessage("Error while encrypting.")
+			.throwError();
+		}
+
+		return encoded;
+	}
+
+	/**
+	 * Decrypt a String.
+	 * 
+	 * @param encrypted
+	 * @return
+	 */
+	public String dwDecrypt(String encrypted) {
+		String decrypted = null;
+
+		var cipher = getCipher(Cipher.DECRYPT_MODE);
+
+		try {
+			var decoded = dwUrlDecode(encrypted);
+			var decryptedBytes = cipher.doFinal(decoded);
+			decrypted = new String(decryptedBytes, StandardCharsets.UTF_8);
+		} catch (Exception e) {
+			BpmError
+			.create(DOCUWARE_ERROR + "decrypterror")
+			.withCause(e)
+			.withMessage("Error while decrypting.")
+			.throwError();
+		}
+
+		return decrypted;
+	}
+
 
 	/**
 	 * Get the DocuWare user to use based on the current Ivy user.
@@ -138,7 +383,13 @@ public class DocuWareService {
 	public Token getCachedToken() {
 		var key = createKey();
 		var store = getGrantTypeStore();
-		return (Token)store.getAttribute(key);
+		Token token = null;
+		try {
+			token = (Token)store.getAttribute(key);
+		} catch (Exception e) {
+			Ivy.log().error("Could not load token from store {0} with key {1}. Note: in the Designer ClassCaseExecptions can occur on source changes.", e, store, key);
+		}
+		return token;
 	}
 
 	/**
@@ -179,7 +430,7 @@ public class DocuWareService {
 	 * @return
 	 */
 	public String getLoginTokenString() {
-		return getLoginTokenString();
+		return getLoginTokenString(null);
 	}
 
 	/**

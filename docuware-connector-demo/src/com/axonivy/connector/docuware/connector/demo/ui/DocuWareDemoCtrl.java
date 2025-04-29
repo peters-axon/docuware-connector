@@ -34,6 +34,7 @@ public class DocuWareDemoCtrl {
 	private DocumentsQueryResult documents;
 	private Document document;
 	private StreamedContent downloadedFile;
+	private String viewerUrl;
 
 	public DocuWareDemoCtrl() {
 		organizationId = Ivy.var().get("docuwareConnector.organization");
@@ -170,6 +171,10 @@ public class DocuWareDemoCtrl {
 		return downloadedFile;
 	}
 
+	public String getViewerUrl() {
+		return viewerUrl;
+	}
+
 	public void prepareDownloadedFile(Response response, InputStream result) {
 		if(response != null && response.getStatusInfo().getFamily().equals(Response.Status.Family.SUCCESSFUL)) {
 			downloadedFile = DefaultStreamedContent.builder()
@@ -194,6 +199,12 @@ public class DocuWareDemoCtrl {
 			}
 		}
 		return result;
+	}
+
+	public void buildViewerUrl() {
+		var dwService = DocuWareService.get();
+		var loginToken = dwService.getLoginTokenString();
+		viewerUrl = dwService.getViewerUrl(null, loginToken, fileCabinetId, documentId);
 	}
 
 	public void log(String format, Object...params) {

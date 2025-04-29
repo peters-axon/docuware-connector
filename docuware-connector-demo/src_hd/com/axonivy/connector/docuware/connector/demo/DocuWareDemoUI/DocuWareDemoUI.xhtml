@@ -47,6 +47,11 @@
 								actionListener="#{docuWareDemoBean.buildDocumentUrl(document.id, data.fileCabinet.id)}"
 								oncomplete="PF('viewDocumentDialog').show()"
 								update=":form:viewDocumentDialog" />
+							<p:commandButton icon="pi pi-eye"
+								title="#{ivy.cms.co('/Dialogs/com/axonivy/connector/docuware/connector/demo/DocuWareDemoUI/DocumentTable/ActionColumn/ViewDocumentBtnTitle')}"
+								actionListener="#{docuWareDemoBean.buildDocumentUrl2(document.id, data.fileCabinet.id)}"
+								oncomplete="PF('viewDocumentDialog').show()"
+								update=":form:viewDocumentDialog" />
 							<p:commandButton icon="pi pi-pencil"
 								title="#{ivy.cms.co('/Dialogs/com/axonivy/connector/docuware/connector/demo/DocuWareDemoUI/DocumentTable/ActionColumn/EditPropertiesBtnTitle')}"
 								actionListener="#{logic.onClickEditDocument(document.id)}"

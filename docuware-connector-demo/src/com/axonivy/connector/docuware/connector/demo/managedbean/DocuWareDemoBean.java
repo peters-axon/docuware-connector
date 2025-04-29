@@ -1,6 +1,7 @@
 package com.axonivy.connector.docuware.connector.demo.managedbean;
 
 import java.io.Serializable;
+import java.net.URISyntaxException;
 
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -8,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import com.axonivy.connector.docuware.connector.DocuWareProperty;
+import com.axonivy.connector.docuware.connector.DocuWareService;
 import com.axonivy.connector.docuware.connector.demo.enums.ItemType;
 
 import ch.ivyteam.ivy.environment.Ivy;
@@ -19,11 +21,20 @@ public class DocuWareDemoBean implements Serializable {
 	private static final long serialVersionUID = 4548574141754643263L;
 
 	private String documentUrl;
-	private final String DOCUMENT_URL_FORMAT = "https://%s/DocuWare/Platform/WebClient/Client/Document?did=%s&fc=%s";
+	private final String DOCUMENT_URL_FORMAT = "https://%s/DocuWare/Platform/WebClient/Client/Document?did=%s&fc=%s&token=%s";
 
 	public void buildDocumentUrl(String documentId, String fileCabinetId) {
+		var token = DocuWareService.get().getLoginTokenString();
 		String host = Ivy.var().get("docuwareConnector.host");
-		this.documentUrl = String.format(DOCUMENT_URL_FORMAT, host, documentId, fileCabinetId);
+		this.documentUrl = DOCUMENT_URL_FORMAT.formatted(host, documentId, fileCabinetId, token);
+	}
+
+	public void buildDocumentUrl2(String documentId, String fileCabinetId) throws URISyntaxException {
+		DocuWareService dwService = DocuWareService.get();
+		var token = dwService.getLoginTokenString();
+		var url = dwService.getIntegrationUrl(Ivy.var().get("docuwareConnector.organization"));
+		url.addParameter("ep", token);
+		this.documentUrl = url.build().toString();
 	}
 
 	public String getDocumentUrl() {

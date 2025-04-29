@@ -3,6 +3,7 @@ package com.axonivy.connector.docuware.connector.enums;
 import ch.ivyteam.ivy.environment.Ivy;
 
 public enum DocuWareVariable {
+	SCHEME("docuwareConnector.scheme"),
 	HOST("docuwareConnector.host"),
 	PLATFORM("docuwareConnector.platform"),
 	USERNAME("docuwareConnector.username"),
@@ -11,7 +12,8 @@ public enum DocuWareVariable {
 	GRANT_TYPE("docuwareConnector.grantType"),
 	TRUSTED_USERNAME("docuwareConnector.trustedUserName"),
 	TRUSTED_USER_PASSWORD("docuwareConnector.trustedUserPassword"),
-	LOGIN_TOKEN("docuwareConnector.loginToken");
+	LOGIN_TOKEN("docuwareConnector.loginToken"),
+	INTEGRATION_PASSPHRASE("docuwareConnector.integrationPassphrase");
 
 	private String variableName;
 

@@ -264,7 +264,7 @@
         "guid" : "1966876CCB3F55FE"
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 1008 }
+        "at" : { "x" : 96, "y" : 1136 }
       },
       "connect" : [
         { "id" : "f22", "to" : "f24" }
@@ -273,7 +273,7 @@
       "id" : "f21",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 352, "y" : 1008 },
+        "at" : { "x" : 352, "y" : 1136 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -286,7 +286,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 1008 }
+        "at" : { "x" : 224, "y" : 1136 }
       },
       "connect" : [
         { "id" : "f25", "to" : "f21", "color" : "default" }
@@ -596,6 +596,49 @@
       },
       "connect" : [
         { "id" : "f50", "to" : "f48" }
+      ]
+    }, {
+      "id" : "f51",
+      "type" : "HtmlDialogEventStart",
+      "name" : "buildViewerUrl",
+      "config" : {
+        "guid" : "1968103BE61A1213"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 1040 }
+      },
+      "connect" : [
+        { "id" : "f53", "to" : "f54" }
+      ]
+    }, {
+      "id" : "f52",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 1040 },
+        "labelOffset" : { "x" : 10, "y" : 30 }
+      }
+    }, {
+      "id" : "f54",
+      "type" : "Script",
+      "name" : "Build Url",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.docuware.connector.demo.service.DocuWareDemoService;",
+            "import javax.ws.rs.core.Response;",
+            "import com.axonivy.connector.docuware.connector.DocuWareService;",
+            "",
+            "in.ctrl.buildViewerUrl();",
+            "",
+            "in.ctrl.log(\"Viewer Url: {0}\", in.ctrl.getViewerUrl());"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 224, "y" : 1040 }
+      },
+      "connect" : [
+        { "id" : "f55", "to" : "f52", "color" : "default" }
       ]
     } ]
 }

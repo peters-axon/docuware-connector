@@ -9,6 +9,8 @@
 Variables:
   docuwareConnector:
     # your docuware instance: e.g. 'acme.docuware.cloud'
+    scheme: "https"
+    # your docuware instance: e.g. 'acme.docuware.cloud'
     host: ""
     # The type of authorization grant to provide.
     # [enum: password, trusted, dwtoken]
@@ -35,3 +37,6 @@ Variables:
     connectTimeout: "0"
     # This property defines the maximum number of characters of an entity that will be logged.
     loggingEntityMaxSize: "8192"
+    # The password used for encrypting parameters of embedded urls (set in Configurations/Organization Settings/Security)
+    #[password]
+    integrationPassphrase: ${encrypt:)tnMBfg"olmT`5_;}
