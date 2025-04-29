@@ -35,6 +35,8 @@ public class DocuWareDemoCtrl {
 	private Document document;
 	private StreamedContent downloadedFile;
 	private String viewerUrl;
+	private String cryptIn;
+	private String cryptOut;
 
 	public DocuWareDemoCtrl() {
 		organizationId = Ivy.var().get("docuwareConnector.organization");
@@ -58,8 +60,6 @@ public class DocuWareDemoCtrl {
 					Password: '%s'
 					TrustedUserName: '%s'
 					TrustedUserPassword: '%s'
-					LoginToken: '%s' (note: the login token is usually not stored here and is only needed for special use-cases) 
-					AccessToken: '%s' (note: the access token is usually not stored here but in an application or session attribute)
 					""",
 					DocuWareVariable.HOST.getValue(),
 					DocuWareVariable.PLATFORM.getValue(),
@@ -67,9 +67,7 @@ public class DocuWareDemoCtrl {
 					DocuWareVariable.USERNAME.getValue(),
 					safeShow(DocuWareVariable.PASSWORD.getValue()),
 					DocuWareVariable.TRUSTED_USERNAME.getValue(),
-					safeShow(DocuWareVariable.TRUSTED_USER_PASSWORD.getValue()),
-					safeToken(DocuWareVariable.LOGIN_TOKEN.getValue()),
-					StringUtils.abbreviateMiddle(safeToken(DocuWareVariable.ACCESS_TOKEN.getValue()), "...", 100)
+					safeShow(DocuWareVariable.TRUSTED_USER_PASSWORD.getValue())
 					);
 			return sw.toString();
 		} catch (IOException e) {
@@ -175,6 +173,26 @@ public class DocuWareDemoCtrl {
 		return viewerUrl;
 	}
 
+	public String getCryptIn() {
+		return cryptIn;
+	}
+
+	public void setCryptIn(String cryptIn) {
+		this.cryptIn = cryptIn;
+	}
+
+	public String getCryptOut() {
+		return cryptOut;
+	}
+
+	public void setCryptOut(String cryptOut) {
+		this.cryptOut = cryptOut;
+	}
+
+	public boolean isIntegrationPasswordSet() {
+		return StringUtils.isNotBlank(DocuWareVariable.INTEGRATION_PASSPHRASE.getValue());
+	}
+
 	public void prepareDownloadedFile(Response response, InputStream result) {
 		if(response != null && response.getStatusInfo().getFamily().equals(Response.Status.Family.SUCCESSFUL)) {
 			downloadedFile = DefaultStreamedContent.builder()
@@ -183,22 +201,8 @@ public class DocuWareDemoCtrl {
 		}
 	}
 
-
 	private String safeShow(String sensitive) {
 		return sensitive == null ? null : sensitive.replaceAll(".", "*");
-	}
-
-	private String safeToken(String token) {
-		var result = token;
-		if(token != null) {
-			int len = 4;
-			if(token.length() > len) {
-				result =
-						StringUtils.substring(token, 0, -len).replaceAll(".",  "*") +
-						StringUtils.substring(token, -len);
-			}
-		}
-		return result;
 	}
 
 	public void buildViewerUrl() {

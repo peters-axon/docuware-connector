@@ -264,7 +264,7 @@
         "guid" : "1966876CCB3F55FE"
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 1136 }
+        "at" : { "x" : 96, "y" : 1328 }
       },
       "connect" : [
         { "id" : "f22", "to" : "f24" }
@@ -273,7 +273,7 @@
       "id" : "f21",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 352, "y" : 1136 },
+        "at" : { "x" : 352, "y" : 1328 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -286,7 +286,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 1136 }
+        "at" : { "x" : 224, "y" : 1328 }
       },
       "connect" : [
         { "id" : "f25", "to" : "f21", "color" : "default" }
@@ -624,10 +624,6 @@
       "config" : {
         "output" : {
           "code" : [
-            "import com.axonivy.connector.docuware.connector.demo.service.DocuWareDemoService;",
-            "import javax.ws.rs.core.Response;",
-            "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "",
             "in.ctrl.buildViewerUrl();",
             "",
             "in.ctrl.log(\"Viewer Url: {0}\", in.ctrl.getViewerUrl());"
@@ -639,6 +635,90 @@
       },
       "connect" : [
         { "id" : "f55", "to" : "f52", "color" : "default" }
+      ]
+    }, {
+      "id" : "f56",
+      "type" : "HtmlDialogEventStart",
+      "name" : "encrypt",
+      "config" : {
+        "guid" : "19681AFD5603E937"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 1136 }
+      },
+      "connect" : [
+        { "id" : "f58", "to" : "f62" }
+      ]
+    }, {
+      "id" : "f57",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 1136 },
+        "labelOffset" : { "x" : 10, "y" : 30 }
+      }
+    }, {
+      "id" : "f59",
+      "type" : "HtmlDialogEventStart",
+      "name" : "decrypt",
+      "config" : {
+        "guid" : "19681AFE017EFCB7"
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 1216 }
+      },
+      "connect" : [
+        { "id" : "f61", "to" : "f64" }
+      ]
+    }, {
+      "id" : "f60",
+      "type" : "HtmlDialogEnd",
+      "visual" : {
+        "at" : { "x" : 352, "y" : 1216 },
+        "labelOffset" : { "x" : 10, "y" : 30 }
+      }
+    }, {
+      "id" : "f62",
+      "type" : "Script",
+      "name" : "Encrypt",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.docuware.connector.DocuWareService;",
+            "",
+            "in.ctrl.cryptOut = DocuWareService.get().dwEncrypt(in.ctrl.cryptIn);",
+            "",
+            "in.ctrl.log(\"Crypt In:  ''{0}''\", in.ctrl.cryptIn);",
+            "in.ctrl.log(\"Crypt Out: ''{0}''\", in.ctrl.cryptOut);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 224, "y" : 1136 }
+      },
+      "connect" : [
+        { "id" : "f63", "to" : "f57", "color" : "default" }
+      ]
+    }, {
+      "id" : "f64",
+      "type" : "Script",
+      "name" : "Decrypt",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import com.axonivy.connector.docuware.connector.DocuWareService;",
+            "",
+            "in.ctrl.cryptOut = DocuWareService.get().dwDecrypt(in.ctrl.cryptIn);",
+            "",
+            "in.ctrl.log(\"Crypt In:  ''{0}''\", in.ctrl.cryptIn);",
+            "in.ctrl.log(\"Crypt Out: ''{0}''\", in.ctrl.cryptOut);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 224, "y" : 1216 }
+      },
+      "connect" : [
+        { "id" : "f65", "to" : "f60", "color" : "default" }
       ]
     } ]
 }

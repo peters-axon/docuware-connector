@@ -38,72 +38,120 @@
 					</div>
 				</div>
 
-				<p:fieldset id="commands" legend="Commands" styleClass="p-field">
-					<div class="grid">
-						<div class="col-12 md:col-6 lg:col-2">
-							<p:commandButton id="organizations" actionListener="#{logic.organizations}" value="Fetch Organizations" update="@form" />
-							<p:tooltip for="@previous" value="Fetch organizations, the user belongs to. Note: many calls will also work without an organization." my="left"
-								at="left top" />
-						</div>
-						<div class="col-12 md:col-6 lg:col-2">
-							<p:commandButton id="fileCabinets" styleClass="p-ml-4" actionListener="#{logic.fileCabinets}" value="Fetch FileCabinets" update="@form" />
-							<p:tooltip for="@previous" value="Fetch file cabinets of the. The id of the first cabinet returned will be inserted into the cabinet id field."
-								my="left" at="left top" />
-						</div>
-						<div class="col-12 md:col-6 lg:col-2"></div>
-						<div class="col-12 md:col-6 lg:col-2">
-							<p:outputPanel rendered="#{data.ctrl.hasAccessToken()}">
-								<p:commandButton id="loginToken" styleClass="p-ml-4" actionListener="#{logic.loginToken}" value="Create login token" update="@form" />
-								<p:tooltip for="@previous" escape="false"
-									value="Create a login token, which can be used in certain URLs (this is not the normal access token used for API calls).
-									&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; this token can only be created when an access token is available (i.e. after at least one API call)!&lt;/p&gt;"
+				<p:tabView multiViewState="true">
+					<p:tab title="Commands">
+						<div class="grid">
+							<div class="col-12 md:col-6 lg:col-2">
+								<p:commandButton id="organizations" actionListener="#{logic.organizations}" value="Fetch Organizations" update="@form" />
+								<p:tooltip for="@previous" value="Fetch organizations, the user belongs to. Note: many calls will also work without an organization."
 									my="left" at="left top" />
+							</div>
+							<div class="col-12 md:col-6 lg:col-2">
+								<p:commandButton id="fileCabinets" styleClass="p-ml-4" actionListener="#{logic.fileCabinets}" value="Fetch FileCabinets" update="@form" />
+								<p:tooltip for="@previous"
+									value="Fetch file cabinets of the. The id of the first cabinet returned will be inserted into the cabinet id field." my="left" at="left top" />
+							</div>
+							<div class="col-12 md:col-6 lg:col-2"></div>
+							<div class="col-12 md:col-6 lg:col-2">
+								<p:outputPanel rendered="#{data.ctrl.hasAccessToken()}">
+									<p:commandButton id="loginToken" styleClass="p-ml-4" actionListener="#{logic.loginToken}" value="Create login token" update="@form" />
+									<p:tooltip for="@previous" escape="false"
+										value="Create a login token, which can be used in certain URLs (this is not the normal access token used for API calls).
+									&lt;p&gt;&lt;b&gt;Note:&lt;/b&gt; this token can only be created when an access token is available (i.e. after at least one API call)!&lt;/p&gt;"
+										my="left" at="left top" />
+								</p:outputPanel>
+							</div>
+						</div>
+						<p:outputPanel rendered="#{not empty data.ctrl.fileCabinetId}">
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:commandButton id="documents" actionListener="#{logic.documents}" value="Fetch Documents" update="@form" />
+								</div>
+							</div>
+							<p:outputPanel rendered="#{not empty data.ctrl.documentId}">
+								<div class="grid">
+									<div class="col-12 md:col-6 lg:col-2">
+										<p:commandButton value="Fetch and attach Document to case" ajax="true" actionListener="#{logic.downloadAndAttachToCase}" update="@form" />
+									</div>
+									<div class="col-12 md:col-6 lg:col-2">
+										<p:commandButton value="Download Document" ajax="true" actionListener="#{logic.prepareDownload}" update="@form">
+											<p:fileDownload value="#{data.ctrl.downloadedFile}" />
+										</p:commandButton>
+									</div>
+									<div class="col-12 md:col-6 lg:col-2">
+										<p:commandButton icon="pi pi-eye" value="Embedded Viewer" actionListener="#{logic.buildViewerUrl}"
+											oncomplete="PF('viewDocumentDialog').show()" update=":form:viewDocumentDialog" />
+									</div>
+								</div>
 							</p:outputPanel>
-						</div>
-					</div>
-					<p:outputPanel rendered="#{not empty data.ctrl.fileCabinetId}">
-						<div class="grid">
-							<div class="col-12 md:col-6 lg:col-2">
-								<p:commandButton id="documents" actionListener="#{logic.documents}" value="Fetch Documents" update="@form" />
-							</div>
-						</div>
-						<p:outputPanel rendered="#{not empty data.ctrl.documentId}">
-							<div class="grid">
-								<div class="col-12 md:col-6 lg:col-2">
-									<p:commandButton value="Fetch and attach Document to case" ajax="true" actionListener="#{logic.downloadAndAttachToCase}" update="@form" />
+							<p:outputPanel rendered="#{empty data.ctrl.documentId}">
+								<div class="grid">
+									<div class="col-12 md:col-6 lg:col-4">Set a document Id to enable document related functions.</div>
 								</div>
-								<div class="col-12 md:col-6 lg:col-2">
-									<p:commandButton value="Download Document" ajax="true" actionListener="#{logic.prepareDownload}" update="@form">
-										<p:fileDownload value="#{data.ctrl.downloadedFile}" />
-									</p:commandButton>
-								</div>
-								<div class="col-12 md:col-6 lg:col-2">
-									<p:commandButton icon="pi pi-eye" value="Embedded Viewer" actionListener="#{logic.buildViewerUrl}"
-										oncomplete="PF('viewDocumentDialog').show()" update=":form:viewDocumentDialog" />
-								</div>
-							</div>
-						</p:outputPanel>
-						<p:outputPanel rendered="#{empty data.ctrl.documentId}">
-							<div class="grid">
-								<div class="col-12 md:col-6 lg:col-4">Set a document Id to enable document related functions.</div>
-							</div>
-						</p:outputPanel>
+							</p:outputPanel>
 
-						<div class="grid">
-							<div class="col-12 md:col-6 lg:col-2">
-								<p:fileUpload id="fileUpload" value="#{data.file}" mode="simple" update="messages" skinSimple="true" />
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:fileUpload id="fileUpload" value="#{data.file}" mode="simple" skinSimple="true" />
+								</div>
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:commandButton value="Upload File" actionListener="#{logic.fileUpload}" ajax="false" id="fileUploadButton"
+										icon="fa-solid fa-cloud-arrow-up" />
+								</div>
 							</div>
-							<div class="col-12 md:col-6 lg:col-2">
-								<p:commandButton value="Upload File" actionListener="#{logic.fileUpload}" ajax="false" id="fileUploadButton" icon="fa-solid fa-cloud-arrow-up" />
+						</p:outputPanel>
+						<p:outputPanel rendered="#{empty data.ctrl.fileCabinetId}">
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-4">Set a file cabinet Id to fetch documents and enable file upload.</div>
+							</div>
+						</p:outputPanel>
+					</p:tab>
+					<p:tab title="Encryption">
+						<div class="grid">
+							<div class="col-12 md:col-6 lg:col-12">
+								If DocuWare is embedded into another page or frame, the DocuWare URL parameters can be encrypted
+								with a DocuWare specific encryption technique.
 							</div>
 						</div>
-					</p:outputPanel>
-					<p:outputPanel rendered="#{empty data.ctrl.fileCabinetId}">
-						<div class="grid">
-							<div class="col-12 md:col-6 lg:col-4">Set a file cabinet Id to fetch documents and enable file upload.</div>
-						</div>
-					</p:outputPanel>
-				</p:fieldset>
+						<p:outputPanel rendered="#{data.ctrl.integrationPasswordSet}">
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:outputLabel for="@next" value="Enter text:" />
+								</div>
+							</div>
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-12">
+									<p:inputText id="cryptIn" value="#{data.ctrl.cryptIn}" />
+								</div>
+							</div>
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:commandButton value="Encrypt" ajax="true" actionListener="#{logic.encrypt}" update="@form" />
+								</div>
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:commandButton value="Decrypt" ajax="true" actionListener="#{logic.decrypt}" update="@form" />
+								</div>
+							</div>
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:outputLabel for="@next" value="Result:" />
+								</div>
+							</div>
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-12">
+									<p:inputText id="cryptOut" value="#{data.ctrl.cryptOut}" readonly="true" disabled="true"/>
+								</div>
+							</div>
+						</p:outputPanel>
+						<p:outputPanel rendered="#{not data.ctrl.integrationPasswordSet}">
+							<div class="grid">
+								<div class="col-12 md:col-6 lg:col-12">
+									To test encryption, please set an integration password!
+								</div>
+							</div>
+						</p:outputPanel>
+					</p:tab>
+				</p:tabView>
 
 				<br />
 
@@ -123,8 +171,10 @@
 
 
 				<div class="command-btns">
-					<p:commandButton id="cancel" actionListener="#{ivyWorkflowView.cancel()}" process="@this" value="#{ivy.cms.co('/Labels/Close')}"
-						icon="fa-solid fa-close" />
+					<div class="col-12 md:col-12 lg:col-1">
+						<p:commandButton id="cancel" actionListener="#{ivyWorkflowView.cancel()}" process="@this" value="#{ivy.cms.co('/Labels/Close')}"
+							icon="fa-solid fa-close" />
+					</div>
 				</div>
 
 
