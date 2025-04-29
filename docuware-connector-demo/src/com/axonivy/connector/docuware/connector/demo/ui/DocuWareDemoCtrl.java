@@ -201,6 +201,10 @@ public class DocuWareDemoCtrl {
 		}
 	}
 
+	public void handleCheckoutResult(Response response, InputStream result) {
+		log("Checked out");
+	}
+
 	private String safeShow(String sensitive) {
 		return sensitive == null ? null : sensitive.replaceAll(".", "*");
 	}
@@ -277,12 +281,11 @@ public class DocuWareDemoCtrl {
 	}
 
 	public void log(Document document) {
-		log("Document:");
 		if(document == null) {
-			log("null");
+			log("Document: null");
 		}
 		else {
-			log("''{0}'', Id: {1}", document.getTitle(), document.getId());
+			log("Document: ''{0}'', Id: {1} Version: {2}.{3}", document.getTitle(), document.getId(), document.getVersion().getMajor(), document.getVersion().getMinor());
 		}
 	}
 

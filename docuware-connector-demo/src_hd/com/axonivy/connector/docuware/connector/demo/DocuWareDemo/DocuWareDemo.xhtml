@@ -74,6 +74,9 @@
 										<p:commandButton value="Fetch and attach Document to case" ajax="true" actionListener="#{logic.downloadAndAttachToCase}" update="@form" />
 									</div>
 									<div class="col-12 md:col-6 lg:col-2">
+										<p:commandButton value="Create new version" ajax="true" actionListener="#{logic.createNewVersion}" update="@form" />
+									</div>
+									<div class="col-12 md:col-6 lg:col-2">
 										<p:commandButton value="Download Document" ajax="true" actionListener="#{logic.prepareDownload}" update="@form">
 											<p:fileDownload value="#{data.ctrl.downloadedFile}" />
 										</p:commandButton>
