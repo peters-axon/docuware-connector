@@ -851,6 +851,7 @@
           "  in.ctrl.checkedOutFilename,",
           "  new ByteArrayInputStream(in.ctrl.checkedOut));",
           "",
+          "",
           "in.ctrl.log(\"Received {0} bytes.\", stream.readAllBytes().size());"
         ]
       },

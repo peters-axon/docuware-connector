@@ -615,14 +615,31 @@ public class DocuWareService {
 		return document;
 	}
 
+	private InputStream paramsToJson(CheckInActionParameters params) {
+		var json = """
+				{
+				"DocumentVersion": {
+				"Major": "%d",
+				"Minor": "%d"
+				},
+				"Comments": "%s"
+				}
+
+				""".formatted(params.getDocumentVersion().getMajor(), params.getDocumentVersion().getMinor(), params.getComments());
+		return new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
+	}
+
+
 	public InputStream checkInFromFileSystem(WebTarget target, CheckInActionParameters params, String fileName, InputStream file) throws IOException {
 		InputStream stream = null;
 
-		var checkIn = new ByteArrayInputStream(writeObjectAsJsonBytes(params));
+		// var checkIn = new ByteArrayInputStream(writeObjectAsJsonBytes(params));
+		// TODO find a better way to create the JSON file
+		var checkIn = paramsToJson(params);
 
 		try (var multiPart = new FormDataMultiPart()) {
 			multiPart
-			.bodyPart(new StreamDataBodyPart("CheckIn", checkIn, "checkin.json", MediaType.APPLICATION_JSON_TYPE))
+			.bodyPart(new StreamDataBodyPart("CheckIn", checkIn, "CheckIn.json", MediaType.APPLICATION_JSON_TYPE))
 			.bodyPart(new StreamDataBodyPart("File[]", file, fileName));
 
 			var response = target.request().post(Entity.entity(multiPart, multiPart.getMediaType()));
