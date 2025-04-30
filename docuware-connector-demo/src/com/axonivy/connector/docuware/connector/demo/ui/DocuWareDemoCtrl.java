@@ -5,6 +5,7 @@ import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.MessageFormat;
+import java.time.LocalDateTime;
 
 import javax.ws.rs.core.Response;
 
@@ -15,6 +16,8 @@ import org.primefaces.model.StreamedContent;
 
 import com.axonivy.connector.docuware.connector.DocuWareService;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
+import com.docuware.dev.schema._public.services.platform.CheckInActionParameters;
+import com.docuware.dev.schema._public.services.platform.CheckInReturnDocument;
 import com.docuware.dev.schema._public.services.platform.Document;
 import com.docuware.dev.schema._public.services.platform.DocumentsQueryResult;
 import com.docuware.dev.schema._public.services.platform.FileCabinets;
@@ -37,6 +40,8 @@ public class DocuWareDemoCtrl {
 	private String viewerUrl;
 	private String cryptIn;
 	private String cryptOut;
+	private byte[] checkedOut;
+	private String checkedOutFilename;
 
 	public DocuWareDemoCtrl() {
 		organizationId = Ivy.var().get("docuwareConnector.organization");
@@ -189,6 +194,22 @@ public class DocuWareDemoCtrl {
 		this.cryptOut = cryptOut;
 	}
 
+	public byte[] getCheckedOut() {
+		return checkedOut;
+	}
+
+	public void setCheckedOut(byte[] checkedOut) {
+		this.checkedOut = checkedOut;
+	}
+
+	public String getCheckedOutFilename() {
+		return checkedOutFilename;
+	}
+
+	public void setCheckedOutFilename(String checkedOutFilename) {
+		this.checkedOutFilename = checkedOutFilename;
+	}
+
 	public boolean isIntegrationPasswordSet() {
 		return StringUtils.isNotBlank(DocuWareVariable.INTEGRATION_PASSPHRASE.getValue());
 	}
@@ -201,9 +222,25 @@ public class DocuWareDemoCtrl {
 		}
 	}
 
-	public void handleCheckoutResult(Response response, InputStream result) {
+	public void handleCheckoutResult(Response response, InputStream result) throws IOException {
 		log("Checked out");
+
+		checkedOut = result.readAllBytes();
+		checkedOutFilename = DocuWareService.get().getFilenameFromResponseHeader(response);
+
+		log("Loaded {0} bytes of file ''{1}''", checkedOut.length, checkedOutFilename);
+
 	}
+
+	public CheckInActionParameters createCheckInActionParameters() {
+		var version = document.getVersion();
+		return DocuWareService.get().createCheckInActionParameters(
+				CheckInReturnDocument.CHECKED_IN,
+				"Checked in by AxonIvy at %s".formatted(LocalDateTime.now()),
+				version.getMajor(), 
+				version.getMinor() + 1);
+	}
+
 
 	private String safeShow(String sensitive) {
 		return sensitive == null ? null : sensitive.replaceAll(".", "*");

@@ -60,8 +60,11 @@ import com.axonivy.connector.docuware.connector.auth.oauth.IdentityServiceContex
 import com.axonivy.connector.docuware.connector.auth.oauth.Token;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
 import com.axonivy.connector.docuware.connector.enums.GrantType;
+import com.docuware.dev.schema._public.services.platform.CheckInActionParameters;
+import com.docuware.dev.schema._public.services.platform.CheckInReturnDocument;
 import com.docuware.dev.schema._public.services.platform.Document;
 import com.docuware.dev.schema._public.services.platform.DocumentIndexField;
+import com.docuware.dev.schema._public.services.platform.DocumentVersion;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -612,6 +615,49 @@ public class DocuWareService {
 		return document;
 	}
 
+	public InputStream checkInFromFileSystem(WebTarget target, CheckInActionParameters params, String fileName, InputStream file) throws IOException {
+		InputStream stream = null;
+
+		var checkIn = new ByteArrayInputStream(writeObjectAsJsonBytes(params));
+
+		try (var multiPart = new FormDataMultiPart()) {
+			multiPart
+			.bodyPart(new StreamDataBodyPart("CheckIn", checkIn, "checkin.json", MediaType.APPLICATION_JSON_TYPE))
+			.bodyPart(new StreamDataBodyPart("File[]", file, fileName));
+
+			var response = target.request().post(Entity.entity(multiPart, multiPart.getMediaType()));
+			if (Status.Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
+				stream = response.readEntity(InputStream.class);
+			} else {
+				BpmError.create(DOCUWARE_ERROR + "checkin").build();
+			}
+		} 
+		return stream;
+	}
+
+	/**
+	 * Create check-in parameters.
+	 * 
+	 * @param checkInReturnDocument
+	 * @param comments
+	 * @param major
+	 * @param minor
+	 * @return
+	 */
+	public CheckInActionParameters createCheckInActionParameters(CheckInReturnDocument checkInReturnDocument, String comments, int major, int minor) {
+		var params = new CheckInActionParameters();
+		params.setCheckInReturnDocument(checkInReturnDocument);
+		params.setComments(comments);
+		var version = new DocumentVersion();
+		version.setMajor(major);
+		version.setMinor(minor);
+		params.setDocumentVersion(version);
+
+		return params;
+	}
+
+
+
 	public DocuWareException handleError(Response response) {
 		String errXml = response.readEntity(String.class);
 		String httpStatus = String.valueOf(response.getStatus());
@@ -737,6 +783,15 @@ public class DocuWareService {
 	public String writeObjectAsJson(Object entity) {
 		try {
 			return getObjectMapper().writeValueAsString(entity);
+		} catch (JsonProcessingException e) {
+			Ivy.log().warn(e.getMessage());
+		}
+		return null;
+	}
+
+	public byte[] writeObjectAsJsonBytes(Object entity) {
+		try {
+			return getObjectMapper().writeValueAsBytes(entity);
 		} catch (JsonProcessingException e) {
 			Ivy.log().warn(e.getMessage());
 		}
