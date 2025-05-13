@@ -14,9 +14,9 @@ import org.apache.commons.lang3.StringUtils;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
+import com.axonivy.connector.docuware.connector.DocuWareCheckInActionParameters;
 import com.axonivy.connector.docuware.connector.DocuWareService;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
-import com.docuware.dev.schema._public.services.platform.CheckInActionParameters;
 import com.docuware.dev.schema._public.services.platform.CheckInReturnDocument;
 import com.docuware.dev.schema._public.services.platform.Document;
 import com.docuware.dev.schema._public.services.platform.DocumentsQueryResult;
@@ -232,7 +232,7 @@ public class DocuWareDemoCtrl {
 
 	}
 
-	public CheckInActionParameters createCheckInActionParameters() {
+	public DocuWareCheckInActionParameters createCheckInActionParameters() {
 		var version = document.getVersion();
 		return DocuWareService.get().createCheckInActionParameters(
 				CheckInReturnDocument.CHECKED_IN,

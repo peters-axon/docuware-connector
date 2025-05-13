@@ -60,11 +60,9 @@ import com.axonivy.connector.docuware.connector.auth.oauth.IdentityServiceContex
 import com.axonivy.connector.docuware.connector.auth.oauth.Token;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
 import com.axonivy.connector.docuware.connector.enums.GrantType;
-import com.docuware.dev.schema._public.services.platform.CheckInActionParameters;
 import com.docuware.dev.schema._public.services.platform.CheckInReturnDocument;
 import com.docuware.dev.schema._public.services.platform.Document;
 import com.docuware.dev.schema._public.services.platform.DocumentIndexField;
-import com.docuware.dev.schema._public.services.platform.DocumentVersion;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -615,27 +613,10 @@ public class DocuWareService {
 		return document;
 	}
 
-	private InputStream paramsToJson(CheckInActionParameters params) {
-		var json = """
-				{
-				"DocumentVersion": {
-				"Major": "%d",
-				"Minor": "%d"
-				},
-				"Comments": "%s"
-				}
-
-				""".formatted(params.getDocumentVersion().getMajor(), params.getDocumentVersion().getMinor(), params.getComments());
-		return new ByteArrayInputStream(json.getBytes(StandardCharsets.UTF_8));
-	}
-
-
-	public InputStream checkInFromFileSystem(WebTarget target, CheckInActionParameters params, String fileName, InputStream file) throws IOException {
+	public InputStream checkInFromFileSystem(WebTarget target, DocuWareCheckInActionParameters params, String fileName, InputStream file) throws IOException {
 		InputStream stream = null;
 
-		// var checkIn = new ByteArrayInputStream(writeObjectAsJsonBytes(params));
-		// TODO find a better way to create the JSON file
-		var checkIn = paramsToJson(params);
+		var checkIn = new ByteArrayInputStream(writeObjectAsJsonBytes(params));
 
 		try (var multiPart = new FormDataMultiPart()) {
 			multiPart
@@ -661,11 +642,11 @@ public class DocuWareService {
 	 * @param minor
 	 * @return
 	 */
-	public CheckInActionParameters createCheckInActionParameters(CheckInReturnDocument checkInReturnDocument, String comments, int major, int minor) {
-		var params = new CheckInActionParameters();
-		params.setCheckInReturnDocument(checkInReturnDocument);
+	public DocuWareCheckInActionParameters createCheckInActionParameters(CheckInReturnDocument checkInReturnDocument, String comments, int major, int minor) {
+		var params = new DocuWareCheckInActionParameters();
+		// params.setCheckInReturnDocument(checkInReturnDocument);
 		params.setComments(comments);
-		var version = new DocumentVersion();
+		var version = new DocuWareDocumentVersion();
 		version.setMajor(major);
 		version.setMinor(minor);
 		params.setDocumentVersion(version);
