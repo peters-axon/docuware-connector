@@ -1,11 +1,14 @@
 package com.axonivy.connector.docuware.connector.demo.ui;
 
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.ws.rs.core.Response;
 
@@ -15,6 +18,8 @@ import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
 import com.axonivy.connector.docuware.connector.DocuWareCheckInActionParameters;
+import com.axonivy.connector.docuware.connector.DocuWareProperties;
+import com.axonivy.connector.docuware.connector.DocuWareProperty;
 import com.axonivy.connector.docuware.connector.DocuWareService;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
 import com.docuware.dev.schema._public.services.platform.CheckInReturnDocument;
@@ -42,10 +47,16 @@ public class DocuWareDemoCtrl {
 	private String cryptOut;
 	private byte[] checkedOut;
 	private String checkedOutFilename;
+	private List<Field> fields;
+	private static final int MAX_FIELDS = 5;
 
 	public DocuWareDemoCtrl() {
 		organizationId = Ivy.var().get("docuwareConnector.organization");
 		fileCabinetId = Ivy.var().get("docuwareConnector.filecabinetid");
+		fields = new ArrayList<>();
+		for(int i=0; i<MAX_FIELDS; i++) {
+			fields.add(new Field());
+		}
 	}
 
 	public String getMessage() {
@@ -210,15 +221,25 @@ public class DocuWareDemoCtrl {
 		this.checkedOutFilename = checkedOutFilename;
 	}
 
+	public List<Field> getFields() {
+		return fields;
+	}
+
+	public void setFields(List<Field> fields) {
+		this.fields = fields;
+	}
+
 	public boolean isIntegrationPasswordSet() {
 		return StringUtils.isNotBlank(DocuWareVariable.INTEGRATION_PASSPHRASE.getValue());
 	}
 
-	public void prepareDownloadedFile(Response response, InputStream result) {
+	public void prepareDownloadedFile(Response response, InputStream result) throws IOException {
 		if(response != null && response.getStatusInfo().getFamily().equals(Response.Status.Family.SUCCESSFUL)) {
+			var content = new ByteArrayInputStream(result.readAllBytes());
 			downloadedFile = DefaultStreamedContent.builder()
-					.stream(() -> result)
-					.name(DocuWareService.get().getFilenameFromResponseHeader(response)).build();
+					.stream(() -> content)
+					.name(DocuWareService.get().getFilenameFromResponseHeader(response))
+					.build();
 		}
 	}
 
@@ -241,6 +262,19 @@ public class DocuWareDemoCtrl {
 				version.getMinor() + 1);
 	}
 
+	public DocuWareProperties createProperties() {
+		var props = new DocuWareProperties();
+
+		props.setProperties(new ArrayList<>());
+
+		for (var field : fields) {
+			if(StringUtils.isNotBlank(field.getName())) {
+				props.getProperties().add(new DocuWareProperty(field.getName(), field.getValue(), "String"));
+			}
+		}
+
+		return props;
+	}
 
 	private String safeShow(String sensitive) {
 		return sensitive == null ? null : sensitive.replaceAll(".", "*");
@@ -329,5 +363,26 @@ public class DocuWareDemoCtrl {
 	public void clearLog() {
 		stringWriter = new StringWriter();
 		printWriter = new PrintWriter(stringWriter);
+	}
+
+	public static class Field {
+		private String name;
+		private String value;
+
+		public String getName() {
+			return name;
+		}
+
+		public void setName(String name) {
+			this.name = name;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+		public void setValue(String value) {
+			this.value = value;
+		}
 	}
 }

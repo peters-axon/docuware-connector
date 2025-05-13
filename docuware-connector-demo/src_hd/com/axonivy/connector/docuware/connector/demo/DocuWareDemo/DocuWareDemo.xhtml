@@ -101,7 +101,30 @@
 									<p:commandButton value="Upload File" actionListener="#{logic.fileUpload}" ajax="false" id="fileUploadButton"
 										icon="fa-solid fa-cloud-arrow-up" />
 								</div>
+								<div class="col-12 md:col-6 lg:col-2">
+									<p:commandButton value="Upload File with Index fields" actionListener="#{logic.fileUploadAndFields}" ajax="false" id="fileUploadAndFieldsButton"
+										icon="fa-solid fa-cloud-arrow-up" />
+								</div>
 							</div>
+							<div class="grid">
+								<div class="col-12 md:col-12 lg:col-12">
+									Set fields. Notes: use technical field names which can be found by inspecting available fields of the cabinet.
+								</div>
+							</div>
+							<div class="grid">
+								<p:dataTable value="#{data.ctrl.fields}" var="field">
+									<p:column>
+										<p:outputLabel for="@next" value="Name"/>
+										<p:inputText value="#{field.name}"/>
+									</p:column>
+									<p:column>
+										<p:outputLabel for="@next" value="Value"/>
+										<p:inputText value="#{field.value}"/>
+									</p:column>
+								</p:dataTable>
+							</div>
+							
+							
 						</p:outputPanel>
 						<p:outputPanel rendered="#{empty data.ctrl.fileCabinetId}">
 							<div class="grid">
