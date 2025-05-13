@@ -34,7 +34,8 @@
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 64 },
-        "labelOffset" : { "x" : 121, "y" : 33 }
+        "labelOffset" : { "x" : 121, "y" : 33 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f6", "to" : "f5" }
@@ -167,7 +168,8 @@
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 240 },
-        "labelOffset" : { "x" : 97, "y" : 41 }
+        "labelOffset" : { "x" : 97, "y" : 41 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f9", "to" : "f8" }
@@ -296,7 +298,8 @@
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 152 },
-        "labelOffset" : { "x" : 73, "y" : 33 }
+        "labelOffset" : { "x" : 73, "y" : 33 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f16", "to" : "f15" }
@@ -353,7 +356,8 @@
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 328 },
-        "labelOffset" : { "x" : 97, "y" : 41 }
+        "labelOffset" : { "x" : 97, "y" : 41 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f20", "to" : "f19" }

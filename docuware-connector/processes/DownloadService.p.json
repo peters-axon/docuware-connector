@@ -31,7 +31,8 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 64 }
+        "at" : { "x" : 96, "y" : 64 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f4", "to" : "f3" }
@@ -157,7 +158,8 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 88, "y" : 264 }
+        "at" : { "x" : 88, "y" : 264 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f9", "to" : "f8" }
@@ -258,7 +260,8 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 160 }
+        "at" : { "x" : 96, "y" : 160 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f16", "to" : "f13" }
@@ -310,7 +313,8 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 80, "y" : 368 }
+        "at" : { "x" : 80, "y" : 368 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f24", "to" : "f23" }

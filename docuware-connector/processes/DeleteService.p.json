@@ -29,7 +29,8 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 64 }
+        "at" : { "x" : 96, "y" : 64 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f4", "to" : "f3" }
@@ -144,7 +145,8 @@
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 144 },
-        "labelOffset" : { "x" : 17, "y" : 33 }
+        "labelOffset" : { "x" : 17, "y" : 33 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
         { "id" : "f9", "to" : "f8" }
