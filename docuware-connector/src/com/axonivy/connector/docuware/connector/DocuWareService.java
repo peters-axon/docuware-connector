@@ -638,7 +638,7 @@ public class DocuWareService {
 	 */
 	public DocuWareCheckInActionParameters createCheckInActionParameters(CheckInReturnDocument checkInReturnDocument, String comments, int major, int minor) {
 		var params = new DocuWareCheckInActionParameters();
-		// params.setCheckInReturnDocument(checkInReturnDocument);
+		params.setCheckInReturnDocument(checkInReturnDocument);
 		params.setComments(comments);
 		var version = new DocuWareDocumentVersion();
 		version.setMajor(major);
