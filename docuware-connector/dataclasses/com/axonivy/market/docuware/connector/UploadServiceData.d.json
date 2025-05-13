@@ -7,8 +7,8 @@
     "name" : "uploadFile",
     "type" : "java.io.File"
   }, {
-    "name" : "propertiesList",
-    "type" : "List<com.axonivy.connector.docuware.connector.DocuWareProperty>"
+    "name" : "properties",
+    "type" : "com.axonivy.connector.docuware.connector.DocuWareProperties"
   }, {
     "name" : "error",
     "type" : "ch.ivyteam.ivy.bpm.error.BpmError"

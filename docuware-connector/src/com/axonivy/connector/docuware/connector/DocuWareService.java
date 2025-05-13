@@ -4,7 +4,6 @@ import static com.axonivy.connector.docuware.connector.auth.oauth.OAuth2BearerFi
 import static com.axonivy.connector.docuware.connector.auth.oauth.OAuth2BearerFilter.BEARER;
 
 import java.io.ByteArrayInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.InvocationTargetException;
@@ -48,7 +47,6 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.client.utils.URIBuilder;
-import org.glassfish.jersey.media.multipart.Boundary;
 import org.glassfish.jersey.media.multipart.ContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataMultiPart;
 import org.glassfish.jersey.media.multipart.file.StreamDataBodyPart;
@@ -567,13 +565,13 @@ public class DocuWareService {
 
 	public Document uploadFile(WebTarget target, java.io.File file,
 			DocuWareEndpointConfiguration configuration,
-			List<DocuWareProperty> properties) throws IOException, DocuWareException {
+			DocuWareProperties properties) throws IOException, DocuWareException {
 		byte[] bytes = Files.readAllBytes(file.toPath());
 		return uploadStream(target, bytes, file.getName(), configuration, properties);
 	}
 
 	public Document uploadStream(WebTarget target, ch.ivyteam.ivy.scripting.objects.List<Byte> fileBytes,
-			String fileName, DocuWareEndpointConfiguration configuration, List<DocuWareProperty> properties)
+			String fileName, DocuWareEndpointConfiguration configuration, DocuWareProperties properties)
 					throws IOException, DocuWareException {
 		Byte[] bytes = fileBytes.toArray(new Byte[fileBytes.size()]);
 		byte[] byteArray = ArrayUtils.toPrimitive(bytes);
@@ -581,35 +579,31 @@ public class DocuWareService {
 	}
 
 	public Document uploadStream(WebTarget target, byte[] file, String fileName,
-			DocuWareEndpointConfiguration configuration, List<DocuWareProperty> properties)
+			DocuWareEndpointConfiguration configuration, DocuWareProperties properties)
 					throws IOException, DocuWareException {
-		FormDataMultiPart multipart;
-		File propertiesFile = createPropertiesFile(properties);
-		try (FormDataMultiPart formDataMultiPart = new FormDataMultiPart()) {
-			InputStream streamProperties = new FileInputStream(propertiesFile.getJavaFile());
-			StreamDataBodyPart streamPropertiesPart = new StreamDataBodyPart(PROPERTIES_FILE_NAME,
-					streamProperties);
-			streamPropertiesPart.setMediaType(MediaType.APPLICATION_JSON_TYPE);
-			InputStream stream = new ByteArrayInputStream(file);
-			StreamDataBodyPart streamPart = new StreamDataBodyPart(fileName, stream);
-			multipart = (FormDataMultiPart) formDataMultiPart.bodyPart(streamPropertiesPart);
-			multipart.bodyPart(streamPart);
-		}
-		MediaType contentType = MediaType.MULTIPART_FORM_DATA_TYPE;
-		contentType = Boundary.addBoundary(contentType);
-		if(StringUtils.isNotBlank(configuration.getStoreDialogId())) {
-			target = target.queryParam(STORE_DIALOG_ID, configuration.getStoreDialogId());
-		}
-		Response response = prepareRestClient(target, configuration).post(Entity.entity(multipart, contentType));
-		FileUtils.forceDelete(propertiesFile.getJavaFile());
+		var propertiesStream = new ByteArrayInputStream(writeObjectAsJsonBytes(properties));
+		var fileStream = new ByteArrayInputStream(file);
 		Document document = null;
-		if (Status.Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
-			document = response.readEntity(Document.class);
-		} else {
-			DocuWareException exception = handleError(response);
-			throw exception;
+
+		try (var multiPart = new FormDataMultiPart()) {
+			multiPart
+			.bodyPart(new StreamDataBodyPart(PROPERTIES_FILE_NAME, propertiesStream, "Properties.json", MediaType.APPLICATION_JSON_TYPE))
+			.bodyPart(new StreamDataBodyPart("File[]", fileStream, fileName));
+
+			if(StringUtils.isNotBlank(configuration.getStoreDialogId())) {
+				target = target.queryParam(STORE_DIALOG_ID, configuration.getStoreDialogId());
+			}
+
+			var response = prepareRestClient(target).post(Entity.entity(multiPart, multiPart.getMediaType()));
+
+
+			if (Status.Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
+				document = response.readEntity(Document.class);
+			} else {
+				throw handleError(response);
+			}
+			response.close();
 		}
-		response.close();
 		return document;
 	}
 
@@ -714,9 +708,11 @@ public class DocuWareService {
 		return propertiesFile;
 	}
 
-	protected Builder prepareRestClient(WebTarget target, DocuWareEndpointConfiguration configuration) {
-		return target.request().header("X-Requested-By", "ivy").header("MIME-Version", "1.0")
-				.header("Accept", "application/xml").header("Connection", "keep-alive");
+	protected Builder prepareRestClient(WebTarget target) {
+		return target.request()
+				.header("X-Requested-By", "ivy")
+				.header("MIME-Version", "1.0")
+				.header("Accept", "application/xml");
 	}
 
 	protected File getUniquePropertiesFile() throws IOException {

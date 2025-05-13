@@ -17,7 +17,7 @@
             { "name" : "indexFields", "type" : "List<com.axonivy.connector.docuware.connector.DocuWareProperty>", "desc" : "" }
           ],
           "map" : {
-            "out.propertiesList" : "param.#indexFields",
+            "out.properties.properties" : "param.#indexFields",
             "out.uploadFile" : "param.#file"
           }
         },
@@ -84,7 +84,7 @@
           "import com.axonivy.connector.docuware.connector.DocuWareService;",
           "",
           "try {",
-          "  in.document = DocuWareService.get().uploadFile(client, in.uploadFile, in.configuration, in.propertiesList);",
+          "  in.document = DocuWareService.get().uploadFile(client, in.uploadFile, in.configuration, in.properties);",
           "} catch(DocuWareException dex) {",
           "  in.error = BpmError.create(DocuWareService.DOCUWARE_ERROR + \":rest\").withCause(dex).withMessage(dex.getErrorMessage()).build();",
           "  ivy.log.error(\"Document upload failed.\", dex);",
@@ -151,7 +151,7 @@
           "map" : {
             "out.file" : "param.#file",
             "out.filename" : "param.#filename",
-            "out.propertiesList" : "param.#indexFields"
+            "out.properties.properties" : "param.#indexFields"
           }
         },
         "result" : {
@@ -226,7 +226,7 @@
           "import com.axonivy.connector.docuware.connector.DocuWareService;",
           "",
           "try {",
-          "  in.document = DocuWareService.get().uploadStream(client, in.file, in.filename, in.configuration, in.propertiesList);",
+          "  in.document = DocuWareService.get().uploadStream(client, in.file, in.filename, in.configuration, in.properties);",
           "} catch(DocuWareException dex) {",
           "  in.error = BpmError.create(DocuWareService.DOCUWARE_ERROR + \":rest\").withCause(dex).withMessage(dex.getErrorMessage()).build();",
           "  in.error.setAttribute(\"RestClientResponseStatusCode\", dex.httpCode);",
@@ -279,7 +279,7 @@
           ],
           "map" : {
             "out.configuration" : "param.configuration",
-            "out.propertiesList" : "param.#indexFields",
+            "out.properties.properties" : "param.#indexFields",
             "out.uploadFile" : "param.#file"
           }
         },
@@ -337,7 +337,7 @@
             "out.configuration" : "param.configuration",
             "out.file" : "param.#file",
             "out.filename" : "param.#filename",
-            "out.propertiesList" : "param.#indexFields"
+            "out.properties.properties" : "param.#indexFields"
           }
         },
         "result" : {
