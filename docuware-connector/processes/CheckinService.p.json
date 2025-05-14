@@ -76,26 +76,30 @@
     }, {
       "id" : "f15",
       "type" : "CallSubStart",
-      "name" : "checkInFromFileSystem(File,DocuWareEndpointConfiguration,DocuWareCheckInActionParameters)",
+      "name" : "checkInFromFileSystem(String,File,DocuWareEndpointConfiguration,DocuWareCheckInActionParameters)",
       "config" : {
         "signature" : "checkInFromFileSystem",
         "input" : {
           "params" : [
+            { "name" : "documentId", "type" : "String", "desc" : "" },
             { "name" : "file", "type" : "File", "desc" : "" },
             { "name" : "configuration", "type" : "com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration", "desc" : "null for default values" },
             { "name" : "checkInParameters", "type" : "com.axonivy.connector.docuware.connector.DocuWareCheckInActionParameters", "desc" : "" }
           ],
           "map" : {
             "out.checkInParameters" : "param.#checkInParameters",
-            "out.configuration" : "param.#configuration"
+            "out.configuration" : "param.#configuration",
+            "out.documentId" : "param.documentId"
           }
         },
         "result" : {
           "params" : [
-            { "name" : "document", "type" : "com.docuware.dev.schema._public.services.platform.Document", "desc" : "" }
+            { "name" : "document", "type" : "com.docuware.dev.schema._public.services.platform.Document", "desc" : "" },
+            { "name" : "error", "type" : "ch.ivyteam.ivy.bpm.error.BpmError", "desc" : "" }
           ],
           "map" : {
-            "result.document" : "in.document"
+            "result.document" : "in.#document",
+            "result.error" : "in.#error"
           }
         }
       },
@@ -295,11 +299,12 @@
     }, {
       "id" : "f2",
       "type" : "CallSubStart",
-      "name" : "checkInFromFileSystem(String,InputStream,DocuWareEndpointConfiguration,DocuWareCheckInActionParameters)",
+      "name" : "checkInFromFileSystem(String,String,InputStream,DocuWareEndpointConfiguration,DocuWareCheckInActionParameters)",
       "config" : {
         "signature" : "checkInFromFileSystem",
         "input" : {
           "params" : [
+            { "name" : "documentId", "type" : "String", "desc" : "" },
             { "name" : "fileName", "type" : "String", "desc" : "" },
             { "name" : "stream", "type" : "java.io.InputStream", "desc" : "" },
             { "name" : "configuration", "type" : "com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration", "desc" : "null for default values" },
@@ -307,15 +312,18 @@
           ],
           "map" : {
             "out.checkInParameters" : "param.#checkInParameters",
-            "out.configuration" : "param.#configuration"
+            "out.configuration" : "param.#configuration",
+            "out.documentId" : "param.documentId"
           }
         },
         "result" : {
           "params" : [
-            { "name" : "document", "type" : "com.docuware.dev.schema._public.services.platform.Document", "desc" : "" }
+            { "name" : "document", "type" : "com.docuware.dev.schema._public.services.platform.Document", "desc" : "" },
+            { "name" : "error", "type" : "ch.ivyteam.ivy.bpm.error.BpmError", "desc" : "" }
           ],
           "map" : {
-            "result.document" : "in.document"
+            "result.document" : "in.#document",
+            "result.error" : "in.#error"
           }
         }
       },

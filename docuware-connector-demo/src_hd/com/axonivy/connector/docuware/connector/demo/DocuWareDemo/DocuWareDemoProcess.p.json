@@ -775,7 +775,7 @@
         "at" : { "x" : 224, "y" : 1504 }
       },
       "connect" : [
-        { "id" : "f70", "to" : "f73", "color" : "default" }
+        { "id" : "f70", "to" : "f76", "color" : "default" }
       ]
     }, {
       "id" : "f73",
@@ -845,14 +845,11 @@
           "in.ctrl.log(\"Checking in file ''{0}''\", in.ctrl.checkedOutFilename);",
           "",
           "DocuWareService svc = DocuWareService.get();",
-          "InputStream stream = svc.checkInFromFileSystem(",
+          "svc.checkInFromFileSystem(",
           "  client,",
           "  in.ctrl.createCheckInActionParameters(),",
           "  in.ctrl.checkedOutFilename,",
-          "  new ByteArrayInputStream(in.ctrl.checkedOut));",
-          "",
-          "",
-          "in.ctrl.log(\"Received {0} bytes.\", stream.readAllBytes().size());"
+          "  new ByteArrayInputStream(in.ctrl.checkedOut));"
         ]
       },
       "visual" : {
@@ -918,6 +915,72 @@
       },
       "connect" : [
         { "id" : "f82", "to" : "f13", "via" : [ { "x" : 400, "y" : 1024 }, { "x" : 400, "y" : 928 } ], "color" : "default" }
+      ]
+    }, {
+      "id" : "f76",
+      "type" : "SubProcessCall",
+      "name" : "Check out",
+      "config" : {
+        "processCall" : "CheckinService:checkOutToFileSystemAsStream(String,com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration)",
+        "call" : {
+          "map" : {
+            "param.documentId" : "in.ctrl.documentId",
+            "param.configuration.fileCabinetId" : "in.ctrl.fileCabinetId"
+          }
+        },
+        "output" : {
+          "map" : {
+            "out" : "in",
+            "out.ctrl.checkedOutFilename" : "result.fileName",
+            "out.ctrl.checkedOutStream" : "result.stream"
+          },
+          "code" : [
+            "import ch.ivyteam.ivy.bpm.error.BpmError;",
+            "",
+            "if(result.#error != null) {",
+            "  ivy.log.error(\"There was an error checking out.\", result.error);",
+            "  BpmError.create(result.error).throwError();",
+            "}"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 392, "y" : 1616 }
+      },
+      "connect" : [
+        { "id" : "f84", "to" : "f83" }
+      ]
+    }, {
+      "id" : "f83",
+      "type" : "SubProcessCall",
+      "name" : "Check in",
+      "config" : {
+        "processCall" : "CheckinService:checkInFromFileSystem(String,String,java.io.InputStream,com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration,com.axonivy.connector.docuware.connector.DocuWareCheckInActionParameters)",
+        "call" : {
+          "map" : {
+            "param.documentId" : "in.ctrl.documentId",
+            "param.fileName" : "in.ctrl.checkedOutFilename",
+            "param.stream" : "in.ctrl.checkedOutStream",
+            "param.configuration.fileCabinetId" : "in.ctrl.fileCabinetId",
+            "param.checkInParameters" : "in.ctrl.createCheckInActionParameters()"
+          }
+        },
+        "output" : {
+          "code" : [
+            "import ch.ivyteam.ivy.bpm.error.BpmError;",
+            "",
+            "if(result.#error != null) {",
+            "  ivy.log.error(\"There was an error checking in.\", result.error);",
+            "  BpmError.create(result.error).throwError();",
+            "}"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 552, "y" : 1616 }
+      },
+      "connect" : [
+        { "id" : "f85", "to" : "f67" }
       ]
     } ]
 }

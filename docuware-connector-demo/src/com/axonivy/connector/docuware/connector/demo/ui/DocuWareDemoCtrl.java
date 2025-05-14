@@ -46,6 +46,7 @@ public class DocuWareDemoCtrl {
 	private String cryptIn;
 	private String cryptOut;
 	private byte[] checkedOut;
+	private InputStream checkedOutStream;
 	private String checkedOutFilename;
 	private List<Field> fields;
 	private static final int MAX_FIELDS = 5;
@@ -219,6 +220,14 @@ public class DocuWareDemoCtrl {
 
 	public void setCheckedOutFilename(String checkedOutFilename) {
 		this.checkedOutFilename = checkedOutFilename;
+	}
+
+	public InputStream getCheckedOutStream() {
+		return checkedOutStream;
+	}
+
+	public void setCheckedOutStream(InputStream checkedOutStream) {
+		this.checkedOutStream = checkedOutStream;
 	}
 
 	public List<Field> getFields() {
