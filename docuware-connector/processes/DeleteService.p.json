@@ -6,59 +6,11 @@
     "data" : "com.axonivy.market.docuware.connector.DeleteServiceData"
   },
   "elements" : [ {
-      "id" : "f0",
-      "type" : "CallSubStart",
-      "name" : "deleteDocument(String)",
-      "config" : {
-        "signature" : "deleteDocument",
-        "input" : {
-          "params" : [
-            { "name" : "documentId", "type" : "String", "desc" : "" }
-          ],
-          "map" : {
-            "out.documentId" : "param.#documentId"
-          }
-        },
-        "result" : {
-          "params" : [
-            { "name" : "error", "type" : "ch.ivyteam.ivy.bpm.error.BpmError", "desc" : "" }
-          ],
-          "map" : {
-            "result.error" : "in.#error"
-          }
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 96, "y" : 64 },
-        "icon" : "res:/webContent/icons/docuware.png?small"
-      },
-      "connect" : [
-        { "id" : "f4", "to" : "f3" }
-      ]
-    }, {
       "id" : "f1",
       "type" : "CallSubEnd",
       "visual" : {
         "at" : { "x" : 688, "y" : 64 }
       }
-    }, {
-      "id" : "f3",
-      "type" : "Script",
-      "name" : "initialize",
-      "config" : {
-        "output" : {
-          "code" : [
-            "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.get().initializeDefaultConfiguration();"
-          ]
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 328, "y" : 64 }
-      },
-      "connect" : [
-        { "id" : "f6", "to" : "f5" }
-      ]
     }, {
       "id" : "f5",
       "type" : "RestClientCall",
@@ -130,7 +82,7 @@
             { "name" : "configuration", "type" : "com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration", "desc" : "" }
           ],
           "map" : {
-            "out.configuration" : "param.configuration",
+            "out.configuration" : "param.#configuration",
             "out.documentId" : "param.#documentId"
           }
         },
@@ -144,7 +96,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 144 },
+        "at" : { "x" : 96, "y" : 64 },
         "labelOffset" : { "x" : 17, "y" : 33 },
         "icon" : "res:/webContent/icons/docuware.png?small"
       },
@@ -165,10 +117,10 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 328, "y" : 144 }
+        "at" : { "x" : 328, "y" : 64 }
       },
       "connect" : [
-        { "id" : "f10", "to" : "f5", "via" : [ { "x" : 432, "y" : 144 }, { "x" : 432, "y" : 64 } ] }
+        { "id" : "f10", "to" : "f5" }
       ]
     } ]
 }

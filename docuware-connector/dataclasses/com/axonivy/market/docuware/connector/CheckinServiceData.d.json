@@ -1,0 +1,22 @@
+{
+  "$schema" : "https://json-schema.axonivy.com/data-class/12.0.0/data-class.json",
+  "simpleName" : "CheckinServiceData",
+  "namespace" : "com.axonivy.market.docuware.connector",
+  "isBusinessCaseData" : false,
+  "fields" : [ {
+    "name" : "configuration",
+    "type" : "com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration"
+  }, {
+    "name" : "documentId",
+    "type" : "String"
+  }, {
+    "name" : "error",
+    "type" : "ch.ivyteam.ivy.bpm.error.BpmError"
+  }, {
+    "name" : "file",
+    "type" : "File"
+  }, {
+    "name" : "checkInParameters",
+    "type" : "com.axonivy.connector.docuware.connector.DocuWareCheckInActionParameters"
+  } ]
+}

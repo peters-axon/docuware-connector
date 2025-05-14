@@ -719,22 +719,38 @@ public class DocuWareService {
 		return new File(PROPERTIES_FILE_NAME + UUID.randomUUID().toString() + PROPERTIES_FILE_EXTENSION, true);
 	}
 
-	public DocuWareEndpointConfiguration initializeDefaultConfiguration() {
-		DocuWareEndpointConfiguration config = new DocuWareEndpointConfiguration();
-		config.setFileCabinetId(Ivy.var().get("docuwareConnector_filecabinetid"));
-		config.setStoreDialogId(Ivy.var().get("docuwareConnector_storedialogid"));
-		return config;
+	/**
+	 * Initialize the default configuration from global vars.
+	 * 
+	 * @return
+	 */
+	public DocuWareEndpointConfiguration initializeConfiguration() {
+		return initializeConfiguration(null);
 	}
 
+	/**
+	 * Initialize the configuration overriding defaults.
+	 * 
+	 * @param config
+	 * @return
+	 */
 	public DocuWareEndpointConfiguration initializeConfiguration(DocuWareEndpointConfiguration config) {
-		DocuWareEndpointConfiguration defaultConfig = initializeDefaultConfiguration();
-		if (StringUtils.isBlank(config.getFileCabinetId())) {
-			config.setFileCabinetId(defaultConfig.getFileCabinetId());
+		var result = new DocuWareEndpointConfiguration();
+
+		if(config != null && StringUtils.isNotBlank(config.getFileCabinetId())) {
+			result.setFileCabinetId(config.getFileCabinetId());
 		}
-		if (StringUtils.isBlank(config.getStoreDialogId())) {
-			config.setStoreDialogId(defaultConfig.getStoreDialogId());
+		else {
+			result.setFileCabinetId(Ivy.var().get("docuwareConnector_filecabinetid"));
 		}
-		return config;
+
+		if(config != null && StringUtils.isNotBlank(config.getStoreDialogId())) {
+			result.setStoreDialogId(config.getStoreDialogId());
+		}
+		else {
+			result.setStoreDialogId(Ivy.var().get("docuwareConnector_storedialogid"));
+		}
+		return result;
 	}
 
 	/**
