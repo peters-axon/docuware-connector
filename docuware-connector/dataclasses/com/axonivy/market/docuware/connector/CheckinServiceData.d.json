@@ -18,5 +18,8 @@
   }, {
     "name" : "checkInParameters",
     "type" : "com.axonivy.connector.docuware.connector.DocuWareCheckInActionParameters"
+  }, {
+    "name" : "document",
+    "type" : "com.docuware.dev.schema._public.services.platform.Document"
   } ]
 }

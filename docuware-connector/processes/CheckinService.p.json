@@ -34,10 +34,21 @@
             "out.configuration" : "param.#configuration",
             "out.documentId" : "param.documentId"
           }
+        },
+        "result" : {
+          "params" : [
+            { "name" : "file", "type" : "File", "desc" : "" },
+            { "name" : "error", "type" : "ch.ivyteam.ivy.bpm.error.BpmError", "desc" : "" }
+          ],
+          "map" : {
+            "result.file" : "in.#file",
+            "result.error" : "in.#error"
+          }
         }
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 64 },
+        "labelOffset" : { "x" : 153, "y" : -39 },
         "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
@@ -77,10 +88,19 @@
             "out.checkInParameters" : "param.#checkInParameters",
             "out.configuration" : "param.#configuration"
           }
+        },
+        "result" : {
+          "params" : [
+            { "name" : "document", "type" : "com.docuware.dev.schema._public.services.platform.Document", "desc" : "" }
+          ],
+          "map" : {
+            "result.document" : "in.document"
+          }
         }
       },
       "visual" : {
         "at" : { "x" : 96, "y" : 192 },
+        "labelOffset" : { "x" : 249, "y" : -39 },
         "icon" : "res:/webContent/icons/docuware.png?small"
       },
       "connect" : [
@@ -188,7 +208,8 @@
         },
         "response" : {
           "entity" : {
-            "type" : "com.docuware.dev.schema._public.services.platform.Document"
+            "type" : "com.docuware.dev.schema._public.services.platform.Document",
+            "code" : "in.document = result;"
           }
         },
         "code" : [
