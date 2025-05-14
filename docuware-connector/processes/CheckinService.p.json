@@ -313,7 +313,9 @@
           "map" : {
             "out.checkInParameters" : "param.#checkInParameters",
             "out.configuration" : "param.#configuration",
-            "out.documentId" : "param.documentId"
+            "out.documentId" : "param.documentId",
+            "out.fileName" : "param.fileName",
+            "out.stream" : "param.stream"
           }
         },
         "result" : {
