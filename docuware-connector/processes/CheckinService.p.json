@@ -16,7 +16,7 @@
       "id" : "f4",
       "type" : "CallSubEnd",
       "visual" : {
-        "at" : { "x" : 656, "y" : 192 },
+        "at" : { "x" : 656, "y" : 432 },
         "labelOffset" : { "x" : 13, "y" : 33 }
       }
     }, {
@@ -31,6 +31,7 @@
             { "name" : "configuration", "type" : "com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration", "desc" : "null for default values" }
           ],
           "map" : {
+            "out.checkOutAsStream" : "false",
             "out.configuration" : "param.#configuration",
             "out.documentId" : "param.documentId"
           }
@@ -99,7 +100,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 192 },
+        "at" : { "x" : 96, "y" : 432 },
         "labelOffset" : { "x" : 249, "y" : -39 },
         "icon" : "res:/webContent/icons/docuware.png?small"
       },
@@ -113,13 +114,18 @@
       "config" : {
         "output" : {
           "code" : [
+            "import java.io.ByteArrayInputStream;",
             "import com.axonivy.connector.docuware.connector.DocuWareService;",
-            "in.configuration = DocuWareService.get().initializeConfiguration(in.configuration);"
+            "",
+            "in.configuration = DocuWareService.get().initializeConfiguration(in.configuration);",
+            "",
+            "in.fileName = in.file.getName();",
+            "in.stream = new ByteArrayInputStream(in.file.readBinary());"
           ]
         }
       },
       "visual" : {
-        "at" : { "x" : 232, "y" : 192 }
+        "at" : { "x" : 232, "y" : 432 }
       },
       "connect" : [
         { "id" : "f18", "to" : "f71", "color" : "default" }
@@ -147,11 +153,17 @@
             "code" : [
               "import com.axonivy.connector.docuware.connector.DocuWareService;",
               "",
-              "String filename = DocuWareService.get().getFilenameFromResponseHeader(response);",
+              "String fileName = DocuWareService.get().getFilenameFromResponseHeader(response);",
               "",
-              "in.file = new File(filename, true);",
-              "in.file.createNewFile();",
-              "in.file.writeBinary(result.readAllBytes());"
+              "if(in.checkOutAsStream) {",
+              "  in.fileName = fileName;",
+              "  in.stream = result;",
+              "}",
+              "else {",
+              "  in.file = new File(fileName, true);",
+              "  in.file.createNewFile();",
+              "  in.file.writeBinary(result.readAllBytes());",
+              "}"
             ]
           }
         }
@@ -206,29 +218,19 @@
             "type" : "com.docuware.dev.schema._public.services.platform.DocumentIdCheckInFromFileSystemBody"
           }
         },
-        "response" : {
-          "entity" : {
-            "type" : "com.docuware.dev.schema._public.services.platform.Document",
-            "code" : "in.document = result;"
-          }
-        },
         "code" : [
-          "import java.io.InputStream;",
-          "import java.io.ByteArrayInputStream;",
           "import com.axonivy.connector.docuware.connector.DocuWareService;",
           "",
-          "",
-          "",
           "DocuWareService svc = DocuWareService.get();",
-          "InputStream stream = svc.checkInFromFileSystem(",
+          "in.document = svc.checkInFromFileSystem(",
           "  client,",
           "  in.checkInParameters,",
-          "  in.file.getName(),",
-          "  new ByteArrayInputStream(in.file.readBinary()));"
+          "  in.fileName,",
+          "  in.stream);"
         ]
       },
       "visual" : {
-        "at" : { "x" : 448, "y" : 192 }
+        "at" : { "x" : 448, "y" : 432 }
       },
       "boundaries" : [ {
           "id" : "f17",
@@ -242,7 +244,7 @@
             }
           },
           "visual" : {
-            "at" : { "x" : 480, "y" : 232 },
+            "at" : { "x" : 480, "y" : 472 },
             "labelOffset" : { "x" : 13, "y" : 33 }
           },
           "connect" : [
@@ -251,6 +253,98 @@
         } ],
       "connect" : [
         { "id" : "f22", "to" : "f4", "color" : "default" }
+      ]
+    }, {
+      "id" : "f5",
+      "type" : "CallSubStart",
+      "name" : "checkOutToFileSystemAsStream(String,DocuWareEndpointConfiguration)",
+      "config" : {
+        "signature" : "checkOutToFileSystemAsStream",
+        "input" : {
+          "params" : [
+            { "name" : "documentId", "type" : "String", "desc" : "" },
+            { "name" : "configuration", "type" : "com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration", "desc" : "null for default values" }
+          ],
+          "map" : {
+            "out.checkOutAsStream" : "true",
+            "out.configuration" : "param.#configuration",
+            "out.documentId" : "param.documentId"
+          }
+        },
+        "result" : {
+          "params" : [
+            { "name" : "stream", "type" : "java.io.InputStream", "desc" : "" },
+            { "name" : "error", "type" : "ch.ivyteam.ivy.bpm.error.BpmError", "desc" : "" },
+            { "name" : "fileName", "type" : "String", "desc" : "" }
+          ],
+          "map" : {
+            "result.stream" : "in.#stream",
+            "result.error" : "in.#error",
+            "result.fileName" : "in.#fileName"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 160 },
+        "labelOffset" : { "x" : 153, "y" : -39 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
+      },
+      "connect" : [
+        { "id" : "f0", "to" : "f11", "via" : [ { "x" : 144, "y" : 160 }, { "x" : 144, "y" : 64 } ] }
+      ]
+    }, {
+      "id" : "f2",
+      "type" : "CallSubStart",
+      "name" : "checkInFromFileSystem(String,InputStream,DocuWareEndpointConfiguration,DocuWareCheckInActionParameters)",
+      "config" : {
+        "signature" : "checkInFromFileSystem",
+        "input" : {
+          "params" : [
+            { "name" : "fileName", "type" : "String", "desc" : "" },
+            { "name" : "stream", "type" : "java.io.InputStream", "desc" : "" },
+            { "name" : "configuration", "type" : "com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration", "desc" : "null for default values" },
+            { "name" : "checkInParameters", "type" : "com.axonivy.connector.docuware.connector.DocuWareCheckInActionParameters", "desc" : "" }
+          ],
+          "map" : {
+            "out.checkInParameters" : "param.#checkInParameters",
+            "out.configuration" : "param.#configuration"
+          }
+        },
+        "result" : {
+          "params" : [
+            { "name" : "document", "type" : "com.docuware.dev.schema._public.services.platform.Document", "desc" : "" }
+          ],
+          "map" : {
+            "result.document" : "in.document"
+          }
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 96, "y" : 560 },
+        "labelOffset" : { "x" : 249, "y" : -39 },
+        "icon" : "res:/webContent/icons/docuware.png?small"
+      },
+      "connect" : [
+        { "id" : "f6", "to" : "f3" }
+      ]
+    }, {
+      "id" : "f3",
+      "type" : "Script",
+      "name" : "initialize",
+      "config" : {
+        "output" : {
+          "code" : [
+            "import java.io.ByteArrayInputStream;",
+            "import com.axonivy.connector.docuware.connector.DocuWareService;",
+            "in.configuration = DocuWareService.get().initializeConfiguration(in.configuration);"
+          ]
+        }
+      },
+      "visual" : {
+        "at" : { "x" : 232, "y" : 560 }
+      },
+      "connect" : [
+        { "id" : "f7", "to" : "f71", "via" : [ { "x" : 336, "y" : 560 }, { "x" : 336, "y" : 432 } ] }
       ]
     } ]
 }

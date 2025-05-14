@@ -22,10 +22,13 @@
     "name" : "configuration",
     "type" : "com.axonivy.connector.docuware.connector.DocuWareEndpointConfiguration"
   }, {
-    "name" : "file",
-    "type" : "List<Byte>"
+    "name" : "fileStream",
+    "type" : "java.io.InputStream"
   }, {
-    "name" : "filename",
+    "name" : "fileName",
     "type" : "String"
+  }, {
+    "name" : "file",
+    "type" : "List<java.lang.Byte>"
   } ]
 }

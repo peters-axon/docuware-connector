@@ -563,26 +563,83 @@ public class DocuWareService {
 		return date;
 	}
 
+	/**
+	 * Upload a file.
+	 * 
+	 * @deprecated use {@link #upload(WebTarget, InputStream, String, DocuWareProperties)}
+	 * 
+	 * @param target
+	 * @param file
+	 * @param configuration
+	 * @param properties
+	 * @return
+	 * @throws IOException
+	 * @throws DocuWareException
+	 */
+	@Deprecated
 	public Document uploadFile(WebTarget target, java.io.File file,
 			DocuWareEndpointConfiguration configuration,
 			DocuWareProperties properties) throws IOException, DocuWareException {
 		byte[] bytes = Files.readAllBytes(file.toPath());
-		return uploadStream(target, bytes, file.getName(), configuration, properties);
+		return uploadStream(target, bytes, file.getName(), properties);
 	}
 
+	/**
+	 * Upload a file.
+	 * 
+	 * @deprecated use {@link #upload(WebTarget, InputStream, String, DocuWareProperties)}
+	 * 
+	 * @param target
+	 * @param fileBytes
+	 * @param fileName
+	 * @param configuration
+	 * @param properties
+	 * @return
+	 * @throws IOException
+	 * @throws DocuWareException
+	 */
+	@Deprecated
 	public Document uploadStream(WebTarget target, ch.ivyteam.ivy.scripting.objects.List<Byte> fileBytes,
 			String fileName, DocuWareEndpointConfiguration configuration, DocuWareProperties properties)
 					throws IOException, DocuWareException {
 		Byte[] bytes = fileBytes.toArray(new Byte[fileBytes.size()]);
 		byte[] byteArray = ArrayUtils.toPrimitive(bytes);
-		return uploadStream(target, byteArray, fileName, configuration, properties);
+		return uploadStream(target, byteArray, fileName, properties);
 	}
 
-	public Document uploadStream(WebTarget target, byte[] file, String fileName,
-			DocuWareEndpointConfiguration configuration, DocuWareProperties properties)
-					throws IOException, DocuWareException {
+	/**
+	 * Upload a file.
+	 * 
+	 * @deprecated use {@link #upload(WebTarget, InputStream, String, DocuWareProperties)}
+	 * 
+	 * @param target
+	 * @param file
+	 * @param fileName
+	 * @param properties
+	 * @return
+	 * @throws IOException
+	 * @throws DocuWareException
+	 */
+	@Deprecated
+	public Document uploadStream(WebTarget target, byte[] file, String fileName, DocuWareProperties properties)
+			throws IOException, DocuWareException {
+		return upload(target, new ByteArrayInputStream(file), fileName, properties);
+	}
+
+	/**
+	 * Upload a document.
+	 * 
+	 * @param target
+	 * @param fileStream
+	 * @param fileName
+	 * @param properties
+	 * @return
+	 * @throws IOException
+	 * @throws DocuWareException
+	 */
+	public Document upload(WebTarget target, InputStream fileStream, String fileName, DocuWareProperties properties)
+			throws IOException, DocuWareException {
 		var propertiesStream = new ByteArrayInputStream(writeObjectAsJsonBytes(properties));
-		var fileStream = new ByteArrayInputStream(file);
 		Document document = null;
 
 		try (var multiPart = new FormDataMultiPart()) {
@@ -590,12 +647,7 @@ public class DocuWareService {
 			.bodyPart(new StreamDataBodyPart(PROPERTIES_FILE_NAME, propertiesStream, "Properties.json", MediaType.APPLICATION_JSON_TYPE))
 			.bodyPart(new StreamDataBodyPart("File[]", fileStream, fileName));
 
-			if(StringUtils.isNotBlank(configuration.getStoreDialogId())) {
-				target = target.queryParam(STORE_DIALOG_ID, configuration.getStoreDialogId());
-			}
-
 			var response = prepareRestClient(target).post(Entity.entity(multiPart, multiPart.getMediaType()));
-
 
 			if (Status.Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
 				document = response.readEntity(Document.class);
@@ -607,8 +659,8 @@ public class DocuWareService {
 		return document;
 	}
 
-	public InputStream checkInFromFileSystem(WebTarget target, DocuWareCheckInActionParameters params, String fileName, InputStream file) throws IOException {
-		InputStream stream = null;
+	public Document checkInFromFileSystem(WebTarget target, DocuWareCheckInActionParameters params, String fileName, InputStream file) throws IOException {
+		Document document = null;
 
 		var checkIn = new ByteArrayInputStream(writeObjectAsJsonBytes(params));
 
@@ -619,12 +671,12 @@ public class DocuWareService {
 
 			var response = target.request().post(Entity.entity(multiPart, multiPart.getMediaType()));
 			if (Status.Family.SUCCESSFUL == response.getStatusInfo().getFamily()) {
-				stream = response.readEntity(InputStream.class);
+				document = response.readEntity(Document.class);
 			} else {
 				BpmError.create(DOCUWARE_ERROR + "checkin").build();
 			}
 		} 
-		return stream;
+		return document;
 	}
 
 	/**

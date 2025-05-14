@@ -21,5 +21,14 @@
   }, {
     "name" : "document",
     "type" : "com.docuware.dev.schema._public.services.platform.Document"
+  }, {
+    "name" : "checkOutAsStream",
+    "type" : "Boolean"
+  }, {
+    "name" : "stream",
+    "type" : "java.io.InputStream"
+  }, {
+    "name" : "fileName",
+    "type" : "String"
   } ]
 }
