@@ -133,6 +133,9 @@
           }
         }
       },
+      "tags" : [
+        "connector"
+      ],
       "visual" : {
         "at" : { "x" : 88, "y" : 64 },
         "icon" : "res:/webContent/icons/docuware.png?small"

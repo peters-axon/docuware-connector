@@ -112,6 +112,9 @@
           }
         }
       },
+      "tags" : [
+        "connector"
+      ],
       "visual" : {
         "at" : { "x" : 96, "y" : 208 },
         "labelOffset" : { "x" : 217, "y" : -39 },
@@ -174,6 +177,9 @@
           }
         }
       },
+      "tags" : [
+        "connector"
+      ],
       "visual" : {
         "at" : { "x" : 96, "y" : 80 },
         "labelOffset" : { "x" : 273, "y" : -39 },

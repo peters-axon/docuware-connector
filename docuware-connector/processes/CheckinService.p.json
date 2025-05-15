@@ -47,6 +47,9 @@
           }
         }
       },
+      "tags" : [
+        "connector"
+      ],
       "visual" : {
         "at" : { "x" : 96, "y" : 64 },
         "labelOffset" : { "x" : 153, "y" : -39 },
@@ -103,6 +106,9 @@
           }
         }
       },
+      "tags" : [
+        "connector"
+      ],
       "visual" : {
         "at" : { "x" : 96, "y" : 432 },
         "labelOffset" : { "x" : 249, "y" : -39 },
@@ -289,6 +295,9 @@
           }
         }
       },
+      "tags" : [
+        "connector"
+      ],
       "visual" : {
         "at" : { "x" : 96, "y" : 160 },
         "labelOffset" : { "x" : 153, "y" : -39 },
@@ -330,6 +339,9 @@
           }
         }
       },
+      "tags" : [
+        "connector"
+      ],
       "visual" : {
         "at" : { "x" : 96, "y" : 560 },
         "labelOffset" : { "x" : 249, "y" : -39 },
