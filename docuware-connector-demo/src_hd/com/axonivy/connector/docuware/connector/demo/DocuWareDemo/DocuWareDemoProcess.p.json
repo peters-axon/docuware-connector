@@ -669,7 +669,7 @@
         "guid" : "19681AFE017EFCB7"
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 1312 }
+        "at" : { "x" : 96, "y" : 1328 }
       },
       "connect" : [
         { "id" : "f61", "to" : "f64" }
@@ -678,7 +678,7 @@
       "id" : "f60",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 352, "y" : 1312 },
+        "at" : { "x" : 352, "y" : 1328 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -720,7 +720,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 1312 }
+        "at" : { "x" : 224, "y" : 1328 }
       },
       "connect" : [
         { "id" : "f65", "to" : "f60", "color" : "default" }
@@ -733,7 +733,7 @@
         "guid" : "19682690F6221D02"
       },
       "visual" : {
-        "at" : { "x" : 96, "y" : 1504 }
+        "at" : { "x" : 96, "y" : 1520 }
       },
       "connect" : [
         { "id" : "f68", "to" : "f69" }
@@ -742,7 +742,7 @@
       "id" : "f67",
       "type" : "HtmlDialogEnd",
       "visual" : {
-        "at" : { "x" : 656, "y" : 1504 },
+        "at" : { "x" : 656, "y" : 1520 },
         "labelOffset" : { "x" : 10, "y" : 30 }
       }
     }, {
@@ -772,91 +772,10 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 224, "y" : 1504 }
+        "at" : { "x" : 224, "y" : 1520 }
       },
       "connect" : [
         { "id" : "f70", "to" : "f76", "color" : "default" }
-      ]
-    }, {
-      "id" : "f73",
-      "type" : "RestClientCall",
-      "name" : "Check out",
-      "config" : {
-        "method" : "POST",
-        "target" : {
-          "clientId" : "02d1eec1-32e9-4316-afc3-793448486203",
-          "path" : "/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckOutToFileSystem",
-          "templateParams" : {
-            "FileCabinetId" : "in.ctrl.fileCabinetId",
-            "DocumentId" : "in.ctrl.documentId"
-          }
-        },
-        "body" : {
-          "type" : "RAW"
-        },
-        "response" : {
-          "entity" : {
-            "type" : "java.io.InputStream",
-            "code" : "in.ctrl.handleCheckoutResult(response, result);"
-          }
-        }
-      },
-      "visual" : {
-        "at" : { "x" : 392, "y" : 1504 }
-      },
-      "connect" : [
-        { "id" : "f74", "to" : "f71" }
-      ]
-    }, {
-      "id" : "f71",
-      "type" : "RestClientCall",
-      "name" : "Check in",
-      "config" : {
-        "method" : "JAX_RS",
-        "target" : {
-          "clientId" : "02d1eec1-32e9-4316-afc3-793448486203",
-          "path" : "/FileCabinets/{FileCabinetId}/Documents/{DocumentId}/CheckInFromFileSystem",
-          "templateParams" : {
-            "FileCabinetId" : "in.ctrl.fileCabinetId",
-            "DocumentId" : "in.ctrl.documentId"
-          }
-        },
-        "body" : {
-          "type" : "FORM",
-          "mediaType" : "multipart/form-data",
-          "form" : {
-            "checkIn" : [ "" ],
-            "file[]" : [ "" ]
-          },
-          "entity" : {
-            "type" : "com.docuware.dev.schema._public.services.platform.DocumentIdCheckInFromFileSystemBody"
-          }
-        },
-        "response" : {
-          "entity" : {
-            "type" : "com.docuware.dev.schema._public.services.platform.Document"
-          }
-        },
-        "code" : [
-          "import java.io.InputStream;",
-          "import java.io.ByteArrayInputStream;",
-          "import com.axonivy.connector.docuware.connector.DocuWareService;",
-          "",
-          "in.ctrl.log(\"Checking in file ''{0}''\", in.ctrl.checkedOutFilename);",
-          "",
-          "DocuWareService svc = DocuWareService.get();",
-          "svc.checkInFromFileSystem(",
-          "  client,",
-          "  in.ctrl.createCheckInActionParameters(),",
-          "  in.ctrl.checkedOutFilename,",
-          "  new ByteArrayInputStream(in.ctrl.checkedOut));"
-        ]
-      },
-      "visual" : {
-        "at" : { "x" : 552, "y" : 1504 }
-      },
-      "connect" : [
-        { "id" : "f72", "to" : "f67", "color" : "default" }
       ]
     }, {
       "id" : "f75",
@@ -931,8 +850,8 @@
         "output" : {
           "map" : {
             "out" : "in",
-            "out.ctrl.checkedOutFilename" : "result.fileName",
-            "out.ctrl.checkedOutStream" : "result.stream"
+            "out.ctrl.checkedOut" : "result.stream.readAllBytes()",
+            "out.ctrl.checkedOutFilename" : "result.fileName"
           },
           "code" : [
             "import ch.ivyteam.ivy.bpm.error.BpmError;",
@@ -945,7 +864,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 392, "y" : 1616 }
+        "at" : { "x" : 392, "y" : 1520 }
       },
       "connect" : [
         { "id" : "f84", "to" : "f83" }
@@ -960,7 +879,7 @@
           "map" : {
             "param.documentId" : "in.ctrl.documentId",
             "param.fileName" : "in.ctrl.checkedOutFilename",
-            "param.stream" : "in.ctrl.checkedOutStream",
+            "param.stream" : "new java.io.ByteArrayInputStream(in.ctrl.checkedOut)",
             "param.configuration.fileCabinetId" : "in.ctrl.fileCabinetId",
             "param.checkInParameters" : "in.ctrl.createCheckInActionParameters()"
           }
@@ -977,7 +896,7 @@
         }
       },
       "visual" : {
-        "at" : { "x" : 552, "y" : 1616 }
+        "at" : { "x" : 552, "y" : 1520 }
       },
       "connect" : [
         { "id" : "f85", "to" : "f67" }

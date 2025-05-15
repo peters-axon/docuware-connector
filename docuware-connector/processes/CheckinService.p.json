@@ -155,13 +155,14 @@
           "entity" : {
             "type" : "java.io.InputStream",
             "code" : [
+              "import java.io.ByteArrayInputStream;",
               "import com.axonivy.connector.docuware.connector.DocuWareService;",
               "",
               "String fileName = DocuWareService.get().getFilenameFromResponseHeader(response);",
               "",
               "if(in.checkOutAsStream) {",
               "  in.fileName = fileName;",
-              "  in.stream = result;",
+              "  in.stream = new ByteArrayInputStream(result.readAllBytes());",
               "}",
               "else {",
               "  in.file = new File(fileName, true);",
