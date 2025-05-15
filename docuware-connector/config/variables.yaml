@@ -39,4 +39,4 @@ Variables:
     loggingEntityMaxSize: "8192"
     # The password used for encrypting parameters of embedded urls (set in Configurations/Organization Settings/Security)
     #[password]
-    integrationPassphrase: ${encrypt:)tnMBfg"olmT`5_;}
+    integrationPassphrase: ""
