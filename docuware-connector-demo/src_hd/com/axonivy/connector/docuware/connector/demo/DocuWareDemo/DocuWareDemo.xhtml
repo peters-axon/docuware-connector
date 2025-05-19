@@ -83,7 +83,11 @@
 									</div>
 									<div class="col-12 md:col-6 lg:col-2">
 										<p:commandButton icon="pi pi-eye" value="Embedded Viewer" actionListener="#{logic.buildViewerUrl}"
-											oncomplete="PF('viewDocumentDialog').show()" update=":form:viewDocumentDialog" />
+											oncomplete="PF('viewDocumentDialog').show()" update="@form" />
+									</div>
+									<div class="col-12 md:col-6 lg:col-2">
+										<p:commandButton icon="pi pi-eye" value="Embedded Result List And Viewer" actionListener="#{logic.buildResultListAndViewerUrl}"
+											oncomplete="PF('viewDocumentDialog').show()" update="@form" />
 									</div>
 								</div>
 							</p:outputPanel>

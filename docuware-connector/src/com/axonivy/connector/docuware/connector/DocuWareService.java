@@ -198,6 +198,38 @@ public class DocuWareService {
 		return url.toString();
 	}
 
+	/**
+	 * Get the URL of a viewer usable for embedding. 
+	 * 
+	 * @param organizationName
+	 * @param loginToken
+	 * @param cabinetId
+	 * @param documentId
+	 * @return
+	 */
+	public String getResultListAndViewerUrl(String organizationName, String loginToken, String cabinetId, String documentId) {
+		var url = getIntegrationUrl(organizationName);
+
+		var params = new LinkedHashMap<String, String>();
+
+		params.put("p", "RLV");
+
+		if(StringUtils.isNotBlank(loginToken)) {
+			params.put("lct", loginToken);
+		}
+		if(StringUtils.isNotBlank(cabinetId)) {
+			params.put("fc", cabinetId);
+		}
+
+		var clear = params.entrySet().stream().map(e -> "%s=%s".formatted(e.getKey(), e.getValue())).collect(Collectors.joining("&"));
+
+		var ep = dwEncrypt(clear);
+
+		url.addParameter("ep", ep);
+
+		return url.toString();
+	}
+
 
 	/**
 	 * Special variant of Base64 URL encoding with padding digit instead of '=' characters.

@@ -9,6 +9,7 @@ import java.text.MessageFormat;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import javax.ws.rs.core.Response;
 
@@ -50,6 +51,7 @@ public class DocuWareDemoCtrl {
 	private String checkedOutFilename;
 	private List<Field> fields;
 	private static final int MAX_FIELDS = 5;
+	private static final Random RND = new Random();
 
 	public DocuWareDemoCtrl() {
 		organizationId = Ivy.var().get("docuwareConnector.organization");
@@ -264,11 +266,22 @@ public class DocuWareDemoCtrl {
 
 	public DocuWareCheckInActionParameters createCheckInActionParameters() {
 		var version = document.getVersion();
+
+		var maj = version.getMajor();
+		var min = version.getMinor();
+
+		if(RND.nextInt() % 10 < 7) {
+			min++;
+		}
+		else {
+			min = 0;
+			maj++;
+		}
+
 		return DocuWareService.get().createCheckInActionParameters(
 				CheckInReturnDocument.CHECKED_IN,
 				"Checked in by AxonIvy at %s".formatted(LocalDateTime.now()),
-				version.getMajor(), 
-				version.getMinor() + 1);
+				maj, min);
 	}
 
 	public DocuWareProperties createProperties() {
@@ -293,6 +306,12 @@ public class DocuWareDemoCtrl {
 		var dwService = DocuWareService.get();
 		var loginToken = dwService.getLoginTokenString();
 		viewerUrl = dwService.getViewerUrl(null, loginToken, fileCabinetId, documentId);
+	}
+
+	public void buildResultListAndViewerUrl() {
+		var dwService = DocuWareService.get();
+		var loginToken = dwService.getLoginTokenString();
+		viewerUrl = dwService.getResultListAndViewerUrl(null, loginToken, fileCabinetId, documentId);
 	}
 
 	public void log(String format, Object...params) {
