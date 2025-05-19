@@ -69,12 +69,6 @@ public class IdentityServiceContext {
 		return UriBuilder.fromPath(identityServiceUrl).path(OPEN_ID_CONFIGURATION_URL).build();
 	}
 
-	public static URI buildOrganizationLoginTokenURI(String host) {
-		Objects.requireNonNull(host, "Host must not be empty");
-		return UriBuilder.fromPath(HTTPS_PROTOCOL).path(host).path(DEFAULT_PLATFORM).path(ORG_LOGIN_TOKEN_URL)
-				.build();
-	}
-
 	public enum IdentityServiceProperty {
 		IDENTITY_SERVICE_PROPERTY("IdentityServiceUrl"), TOKEN_ENDPOINT("token_endpoint");
 

@@ -81,6 +81,7 @@ public class DocuWareService {
 	/*
 	 * This is the format: /Date(1652285631000)/
 	 */
+	protected static UUID CLIENT_ID = UUID.fromString("02d1eec1-32e9-4316-afc3-793448486203");
 	protected static final Pattern DATE_PATTERN = Pattern.compile("/Date\\(([0-9]+)\\)/");
 	protected static final String PROPERTIES_FILE_NAME = "document";
 	protected static final String PROPERTIES_FILE_EXTENSION = ".json";
@@ -150,6 +151,12 @@ public class DocuWareService {
 	}
 
 
+	public WebTarget getClient() {
+		var host = DocuWareService.get().getIvyVar(DocuWareVariable.HOST);
+		return Ivy.rest().client(CLIENT_ID).resolveTemplate("host", host);
+
+	}
+	
 	protected URIBuilder addPathSegments(URIBuilder builder, String...pathSegments) {
 		List<String> segs = new ArrayList<>(builder.getPathSegments());
 
@@ -501,18 +508,12 @@ public class DocuWareService {
 	 * @return
 	 */
 	public Response getLoginTokenResponse(Token token) {
-		if(token == null) {
-			token = getCachedToken();
-		}
-		var host = DocuWareService.get().getIvyVar(DocuWareVariable.HOST);
-		var client = ClientBuilder.newClient();
+		var client = getClient();
 		Response response = null;
 		try {
-			Objects.requireNonNull(token);
-			var target = client.target(IdentityServiceContext.buildOrganizationLoginTokenURI(host));
-			response = target
+			response = client
+					.path("Organization/LoginToken")
 					.request(MediaType.APPLICATION_JSON)
-					.header(AUTHORIZATION, BEARER + token.accessToken())
 					.post(Entity.json(generateLoginTokenBody()));
 
 		} catch (Exception e) {
