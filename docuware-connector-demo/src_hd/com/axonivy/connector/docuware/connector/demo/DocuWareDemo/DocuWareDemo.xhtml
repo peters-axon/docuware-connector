@@ -32,13 +32,16 @@
 						<div class="col-12 md:col-6 lg:col-2">
 							<p:outputLabel for="@next" value="Doc Id" />
 						</div>
-						<div class="col-12 md:col-6 lg:col-4">
+						<div class="col-12 md:col-6 lg:col-3">
 							<p:inputText id="documentId" value="#{data.ctrl.documentId}" />
+						</div>
+						<div class="col-12 md:col-6 lg:col-1">
+							<p:commandButton update="commands" icon="fa-solid fa-refresh" />
 						</div>
 					</div>
 				</div>
 
-				<p:tabView multiViewState="true">
+				<p:tabView id="commands" multiViewState="true">
 					<p:tab title="Commands">
 						<div class="grid">
 							<div class="col-12 md:col-6 lg:col-2">
@@ -89,6 +92,9 @@
 										<p:commandButton icon="pi pi-eye" value="Embedded Result List And Viewer" actionListener="#{logic.buildResultListAndViewerUrl}"
 											oncomplete="PF('viewDocumentDialog').show()" update="@form" />
 									</div>
+									<div class="col-12 md:col-6 lg:col-2">
+										<a href="#{data.ctrl.buildViewerUrl()}" target="_blank">Open document #{data.ctrl.documentId} in new tab</a>
+									</div>
 								</div>
 							</p:outputPanel>
 							<p:outputPanel rendered="#{empty data.ctrl.documentId}">
@@ -117,12 +123,10 @@
 							</div>
 							<div class="grid">
 								<p:dataTable value="#{data.ctrl.fields}" var="field">
-									<p:column>
-										<p:outputLabel for="@next" value="Name"/>
+									<p:column headerText="Name">
 										<p:inputText value="#{field.name}"/>
 									</p:column>
-									<p:column>
-										<p:outputLabel for="@next" value="Value"/>
+									<p:column headerText="Value">
 										<p:inputText value="#{field.value}"/>
 									</p:column>
 								</p:dataTable>

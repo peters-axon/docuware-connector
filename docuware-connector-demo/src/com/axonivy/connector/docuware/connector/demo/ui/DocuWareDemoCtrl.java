@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.text.MessageFormat;
 import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -50,16 +51,17 @@ public class DocuWareDemoCtrl {
 	private InputStream checkedOutStream;
 	private String checkedOutFilename;
 	private List<Field> fields;
-	private static final int MAX_FIELDS = 5;
 	private static final Random RND = new Random();
 
 	public DocuWareDemoCtrl() {
 		organizationId = Ivy.var().get("docuwareConnector.organization");
 		fileCabinetId = Ivy.var().get("docuwareConnector.filecabinetid");
 		fields = new ArrayList<>();
-		for(int i=0; i<MAX_FIELDS; i++) {
-			fields.add(new Field());
-		}
+		fields.add(Field.create("SUBJECT", "Ivy Test File %s".formatted(LocalDateTime.now().truncatedTo(ChronoUnit.MINUTES))));
+		fields.add(Field.create("STATUS", "neu"));
+		fields.add(Field.create("", ""));
+		fields.add(Field.create("", ""));
+		fields.add(Field.create("", ""));
 	}
 
 	public String getMessage() {
@@ -302,18 +304,20 @@ public class DocuWareDemoCtrl {
 		return sensitive == null ? null : sensitive.replaceAll(".", "*");
 	}
 
-	public void buildViewerUrl() {
+	public String buildViewerUrl() {
 		var dwService = DocuWareService.get();
 		var loginToken = dwService.getLoginTokenString();
 		viewerUrl = dwService.getViewerUrl(null, loginToken, fileCabinetId, documentId);
+		return viewerUrl;
 	}
 
-	public void buildResultListAndViewerUrl() {
+	public String buildResultListAndViewerUrl() {
 		var dwService = DocuWareService.get();
 		var loginToken = dwService.getLoginTokenString();
 		viewerUrl = dwService.getResultListAndViewerUrl(null, loginToken, fileCabinetId, documentId);
+		return viewerUrl;
 	}
-
+	
 	public void log(String format, Object...params) {
 		if(params.length > 0) {
 			Ivy.log().info(format, params);
@@ -341,7 +345,7 @@ public class DocuWareDemoCtrl {
 			log("Size: {0}", orgs != null ? orgs.size() : orgs);
 			if(orgs != null) {
 				for (var org : orgs) {
-					log("''{0}'', Id: {1}, Guid: {2}", org.getName(), org.getId(), org.getGuid());
+					log("Id: {0} - ''{1}'', Guid: {2}", org.getId(), org.getName(), org.getGuid());
 				}
 			}
 		}
@@ -357,7 +361,7 @@ public class DocuWareDemoCtrl {
 			log("Size: {0}", fcs != null ? fcs.size() : fcs);
 			if(fcs != null) {
 				for (var fc : fcs) {
-					log("''{0}'', Id: {1}", fc.getName(), fc.getId());
+					log("Id: {0} - ''{1}''", fc.getId(), fc.getName());
 				}
 			}
 		}
@@ -373,7 +377,7 @@ public class DocuWareDemoCtrl {
 			log("Size: {0}", docs != null ? docs.size() : docs);
 			if(docs != null) {
 				for (var doc : docs) {
-					log("''{0}'', Id: {1}", doc.getTitle(), doc.getId());
+					log("Id: {0} - ''{1}''", doc.getId(), doc.getTitle());
 				}
 			}
 		}
@@ -384,7 +388,7 @@ public class DocuWareDemoCtrl {
 			log("Document: null");
 		}
 		else {
-			log("Document: ''{0}'', Id: {1} Version: {2}.{3}", document.getTitle(), document.getId(), document.getVersion().getMajor(), document.getVersion().getMinor());
+			log("Document: Id: {0} - ''{1}'' Version: {2}.{3}", document.getId(), document.getTitle(), document.getVersion().getMajor(), document.getVersion().getMinor());
 		}
 	}
 
@@ -397,6 +401,13 @@ public class DocuWareDemoCtrl {
 		private String name;
 		private String value;
 
+		public static Field create(String name, String value) {
+			var field = new Field();
+			field.setName(name);
+			field.setValue(value);
+			return field;
+		}
+		
 		public String getName() {
 			return name;
 		}
