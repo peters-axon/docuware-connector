@@ -214,7 +214,7 @@ public class DocuWareService {
 	 * @param documentId
 	 * @return
 	 */
-	public String getResultListAndViewerUrl(String organizationName, String loginToken, String cabinetId, String documentId) {
+	public String getCabinetResultListAndViewerUrl(String organizationName, String loginToken, String cabinetId) {
 		var url = getIntegrationUrl(organizationName);
 
 		var params = new LinkedHashMap<String, String>();

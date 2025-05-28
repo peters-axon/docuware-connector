@@ -26,6 +26,7 @@ import com.axonivy.connector.docuware.connector.DocuWareService;
 import com.axonivy.connector.docuware.connector.enums.DocuWareVariable;
 import com.docuware.dev.schema._public.services.platform.CheckInReturnDocument;
 import com.docuware.dev.schema._public.services.platform.Document;
+import com.docuware.dev.schema._public.services.platform.DocumentIndexField;
 import com.docuware.dev.schema._public.services.platform.DocumentsQueryResult;
 import com.docuware.dev.schema._public.services.platform.FileCabinets;
 import com.docuware.dev.schema._public.services.platform.Organizations;
@@ -45,6 +46,7 @@ public class DocuWareDemoCtrl {
 	private Document document;
 	private StreamedContent downloadedFile;
 	private String viewerUrl;
+	private String resultListUrl;
 	private String cryptIn;
 	private String cryptOut;
 	private byte[] checkedOut;
@@ -193,6 +195,10 @@ public class DocuWareDemoCtrl {
 	public String getViewerUrl() {
 		return viewerUrl;
 	}
+	
+	public String getResultListUrl() {
+		return resultListUrl;
+	}
 
 	public String getCryptIn() {
 		return cryptIn;
@@ -311,11 +317,11 @@ public class DocuWareDemoCtrl {
 		return viewerUrl;
 	}
 
-	public String buildResultListAndViewerUrl() {
+	public String buildCabinetResultListAndViewerUrl() {
 		var dwService = DocuWareService.get();
 		var loginToken = dwService.getLoginTokenString();
-		viewerUrl = dwService.getResultListAndViewerUrl(null, loginToken, fileCabinetId, documentId);
-		return viewerUrl;
+		resultListUrl = dwService.getCabinetResultListAndViewerUrl(null, loginToken, fileCabinetId);
+		return resultListUrl;
 	}
 	
 	public void log(String format, Object...params) {
@@ -389,7 +395,42 @@ public class DocuWareDemoCtrl {
 		}
 		else {
 			log("Document: Id: {0} - ''{1}'' Version: {2}.{3}", document.getId(), document.getTitle(), document.getVersion().getMajor(), document.getVersion().getMinor());
+			for(var field : document.getFields().getField()) {
+				log("Field: {0} ({1}) Value: {2}", field.getFieldLabel(), field.getFieldName(), toString(field));
+			}
 		}
+	}
+	
+	private String toString(DocumentIndexField field) {
+		String result = field.toString();
+		if(field.getDate() != null) {
+			result = field.getDate().toString();
+		}
+		else if(field.getDateTime() != null) {
+			result = field.getDateTime().toString();
+		}
+		else if(field.getDecimal() != null) {
+			result = field.getDecimal().toString();
+		}
+		else if(field.getInt() != null) {
+			result = field.getInt().toString();
+		}
+		else if(field.getKeywords() != null) {
+			result = field.getKeywords().toString();
+		}
+		else if(field.getMemo() != null) {
+			result = field.getMemo().toString();
+		}
+		else if(field.getPointAndShootInfo() != null) {
+			result = field.getPointAndShootInfo().toString();
+		}
+		else if(field.getString() != null) {
+			result = field.getString().toString();
+		}
+		else if(field.getTable() != null) {
+			result = field.getTable().toString();
+		}
+		return result;
 	}
 
 	public void clearLog() {

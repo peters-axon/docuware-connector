@@ -74,10 +74,7 @@
 							<p:outputPanel rendered="#{not empty data.ctrl.documentId}">
 								<div class="grid">
 									<div class="col-12 md:col-6 lg:col-2">
-										<p:commandButton value="Fetch and attach Document to case" ajax="true" actionListener="#{logic.downloadAndAttachToCase}" update="@form" />
-									</div>
-									<div class="col-12 md:col-6 lg:col-2">
-										<p:commandButton value="Create new version" ajax="true" actionListener="#{logic.createNewVersion}" update="@form" />
+										<p:commandButton value="Get document Info" ajax="true" actionListener="#{logic.getDocumentInfo}" update="@form" />
 									</div>
 									<div class="col-12 md:col-6 lg:col-2">
 										<p:commandButton value="Download Document" ajax="true" actionListener="#{logic.prepareDownload}" update="@form">
@@ -85,15 +82,23 @@
 										</p:commandButton>
 									</div>
 									<div class="col-12 md:col-6 lg:col-2">
+										<p:commandButton value="Create new version" ajax="true" actionListener="#{logic.createNewVersion}" update="@form" />
+									</div>
+									<div class="col-12 md:col-6 lg:col-2">
+										<p:commandButton value="Fetch and attach Document to case" ajax="true" actionListener="#{logic.downloadAndAttachToCase}" update="@form" />
+									</div>
+								</div>
+								<div class="grid">
+									<div class="col-12 md:col-6 lg:col-2">
 										<p:commandButton icon="pi pi-eye" value="Embedded Viewer" actionListener="#{logic.buildViewerUrl}"
 											oncomplete="PF('viewDocumentDialog').show()" update="@form" />
 									</div>
 									<div class="col-12 md:col-6 lg:col-2">
-										<p:commandButton icon="pi pi-eye" value="Embedded Result List And Viewer" actionListener="#{logic.buildResultListAndViewerUrl}"
-											oncomplete="PF('viewDocumentDialog').show()" update="@form" />
+										<a href="#{data.ctrl.buildViewerUrl()}" target="_blank">Open document #{data.ctrl.documentId} in new tab</a>
 									</div>
 									<div class="col-12 md:col-6 lg:col-2">
-										<a href="#{data.ctrl.buildViewerUrl()}" target="_blank">Open document #{data.ctrl.documentId} in new tab</a>
+										<p:commandButton icon="pi pi-eye" value="Embedded Cabinet List And Viewer" actionListener="#{logic.buildCabinetResultListAndViewerUrl}"
+											oncomplete="PF('viewResultListDialog').show()" update="@form" />
 									</div>
 								</div>
 							</p:outputPanel>
@@ -214,6 +219,9 @@
 
 				<p:dialog id="viewDocumentDialog" widgetVar="viewDocumentDialog" modal="true" resizable="false" header="Viewer" width="90vw" height="80vh">
 					<iframe src="#{data.ctrl.viewerUrl}" width="100%" height="99%" class="document-viewer" />
+				</p:dialog>
+				<p:dialog id="viewResultListDialog" widgetVar="viewResultListDialog" modal="true" resizable="false" header="Result List Viewer" width="90vw" height="80vh">
+					<iframe src="#{data.ctrl.resultListUrl}" width="100%" height="99%" class="document-viewer" />
 				</p:dialog>
 
 			</h:form>
